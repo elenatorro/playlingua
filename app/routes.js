@@ -1,8 +1,10 @@
 var User       = require('../app/models/user');
-var Friend       = require('../app/models/friend');
+var Friend     = require('../app/models/friend');
+
 async = require("async");
 var path = require('path'),
     fs = require('fs');
+    
 module.exports = function(app, passport,server) {
 	app.get('/', function(request, response) {
 		response.render('index.html');
@@ -16,7 +18,7 @@ module.exports = function(app, passport,server) {
 
 	app.get('/image.png', function (req, res) {
     		res.sendfile(path.resolve('./uploads/image_'+req.user._id));
-	}); 
+	});
 
 
 	app.get('/edit', auth, function(request, response) {
@@ -39,8 +41,8 @@ module.exports = function(app, passport,server) {
 		});
 
 		app.post('/login', passport.authenticate('login', {
-			successRedirect : '/about', 
-			failureRedirect : '/login', 
+			successRedirect : '/about',
+			failureRedirect : '/login',
 			failureFlash : true
 		}));
 
@@ -51,8 +53,8 @@ module.exports = function(app, passport,server) {
 
 		app.post('/signup', passport.authenticate('signup', {
 			successRedirect : '/about',
-			failureRedirect : '/signup', 
-			failureFlash : true 
+			failureRedirect : '/signup',
+			failureFlash : true
 		}));
 		app.get('/edit', function(request, response) {
 			response.render('edit.html', { message: request.flash('updateerror') });
@@ -75,7 +77,7 @@ module.exports = function(app, passport,server) {
 
                          });
   		});
-		
+
 		app.get('/profile', auth, function(request, response) {
 			var query = Friend.find({'friend.mainfriendid': request.user._id}, { 'friend.anotherfriendid': 1 });
 			query.exec(function(err, friends) {
@@ -114,7 +116,7 @@ module.exports = function(app, passport,server) {
    		var regex = new RegExp(req.query["term"], 'i');
 
    		var query = User.find({ $and: [ {'user.name': regex}, { _id: { $ne: req.user._id } } ] } ).limit(20);
-        
+
       // Execute query in a callback and return users list
   		query.exec(function(err, users) {
       		if (!err) {
@@ -165,8 +167,8 @@ module.exports = function(app, passport,server) {
 // login page. Otherwise, the primary route function function will be called,
 // which, in this example, will redirect the user to the home page.
 		app.get('/auth/facebook/callback',
-  			passport.authenticate('facebook', { 
-				successRedirect : '/about', 	
+  			passport.authenticate('facebook', {
+				successRedirect : '/about',
 				failureRedirect: '/login' }));
 
 
@@ -187,8 +189,8 @@ app.get('/auth/twitter',
 // login page. Otherwise, the primary route function function will be called,
 // which, in this example, will redirect the user to the home page.
 app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { 
-				successRedirect : '/about', 	
+  passport.authenticate('twitter', {
+				successRedirect : '/about',
 				failureRedirect: '/login' }));
 
 
@@ -206,8 +208,8 @@ app.get('/auth/google',
 // login page. Otherwise, the primary route function function will be called,
 // which, in this example, will redirect the user to the home page.
 app.get('/auth/google/callback',
-  passport.authenticate('google', { 
-				successRedirect : '/about', 	
+  passport.authenticate('google', {
+				successRedirect : '/about',
 				failureRedirect: '/login' }));
 
 
