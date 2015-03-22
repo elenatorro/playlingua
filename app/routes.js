@@ -1,10 +1,11 @@
 var User       = require('../app/models/user');
 var Friend     = require('../app/models/friend');
+var Text       = require('../app/models/text');
 
-async = require("async");
+   async = require("async");
 var path = require('path'),
-    fs = require('fs');
-    
+      fs = require('fs');
+
 module.exports = function(app, passport,server) {
 	app.get('/', function(request, response) {
 		response.render('index.html');
@@ -14,6 +15,16 @@ module.exports = function(app, passport,server) {
 			user : request.user
 		});
 	});
+
+  app.get('/synonyms', auth, function(request, response) {
+    response.render('synonyms/index.html', {
+      user: request.user
+    });
+  });
+
+  app.param('level', function(request, response) {
+    response.locals.level = request.params['level'];
+  })
 
 
 	app.get('/image.png', function (req, res) {
@@ -41,7 +52,7 @@ module.exports = function(app, passport,server) {
 		});
 
 		app.post('/login', passport.authenticate('login', {
-			successRedirect : '/about',
+			successRedirect : '/user',
 			failureRedirect : '/login',
 			failureFlash : true
 		}));
@@ -231,8 +242,8 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
   });
 });
-
 };
+
 function auth(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')

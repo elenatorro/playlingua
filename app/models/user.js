@@ -3,11 +3,22 @@ var bcrypt   = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
     user             : {
-	username     :String,
-        email        : String,
-        password     : String,
-	name	     : String,
-	address      : String
+  	  username     : String,
+      email        : String,
+      password     : String,
+  	  name	       : String,
+  	  address      : String,
+      game : {
+        totalScore   : Number,
+        excercises   : [{
+          name : String,
+          levels : [{
+            lastScore   : Number,
+            maxScore    : Number,
+            timesPlayed : Number
+          }],
+        }]
+      }
     }
 });
 

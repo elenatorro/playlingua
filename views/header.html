@@ -1,53 +1,30 @@
-<!-- <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="description" content="">
-	<title>Knoldus Login Form</title>
-
-<link rel="stylesheet" type="text/css" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/css/structure.css" />
-
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-
-<script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/menu.js"></script>
- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-</head> -->
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
-	<meta name="author" content="">
-
+	<meta name="author" content="Elena Torro">
 	<title>Playlingua</title>
-
 	<!-- Bootstrap Core CSS -->
+	<link href="css/component.css" rel="stylesheet">
 	<link href="css/bootswatch.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-
+	<link href="css/excercises.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-
+	<script src="fake/text.js"></script>
 </head>
 <body>
-		<!-- Navigation -->
+	<div ng-controller="TextCtrl">
 		<nav class="navbar navbar-inverse" role="navigation">
 			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Menu</span>
@@ -56,19 +33,9 @@
 						<span class="icon-bar"></span>
 					</button>
 				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<a class="navbar-brand" href="#">Playlingua</a>
+					<a class="navbar-brand" href="/">Playlingua</a>
 					<ul class="nav navbar-nav">
-						<li>
-							<a href="#">Hola, <%= user.user.username %></a>
-						</li>
-						<li>
-							<a href="#">Tu perfil</a>
-						</li>
-						<li>
-							<a href="#">¿Quieres participar?</a>
-						</li>
 						<li>
 							<a href="/user">Tu Perfil</a>
 						</li>
@@ -79,14 +46,9 @@
 							<a href="/password">Configuración</a>
 						</li>
 						<li>
-							<a href="/chat">Chat!</a>
-						</li>
-						<li>
 							<a href="/logout">Salir</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-</body>
-</html>

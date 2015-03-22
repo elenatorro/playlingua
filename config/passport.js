@@ -39,17 +39,17 @@ module.exports = function(passport) {
 
      passport.use('login', new LocalStrategy({
         usernameField : 'email',
-        passReqToCallback : true 
+        passReqToCallback : true
     },
     function(req, email, password, done) {
        process.nextTick(function() {
             User.findOne({ 'user.email' :  email }, function(err, user) {
                 if (err){ return done(err);}
                 if (!user)
-                    return done(null, false, req.flash('error', 'User does not exist.'));
+                    return done(null, false, req.flash('error', '¡Ese usuario no existe!.'));
 
                 if (!user.verifyPassword(password))
-                    return done(null, false, req.flash('error', 'Enter correct password'));
+                    return done(null, false, req.flash('error', 'El usuario o la contraseña es incorrecto.'));
                else
                     return done(null, user);
             });
@@ -59,24 +59,25 @@ module.exports = function(passport) {
 
      passport.use('signup', new LocalStrategy({
         usernameField : 'email',
-        passReqToCallback : true 
+        passReqToCallback : true
     },
     function(req, email, password, done) {
 
         process.nextTick(function() {
-       
+
             if (!req.user) {
                 User.findOne({ 'user.email' :  email }, function(err, user) {
             	    if (err){ return done(err);}
                     if (user) {
-                        return done(null, false, req.flash('signuperror', 'User already exists'));
+                        return done(null, false, req.flash('signuperror', '¡Ese usuario ya existe!'));
                     } else {
                         var newUser            = new User();
-			newUser.user.username    = req.body.username;
-                        newUser.user.email    = email;
-                        newUser.user.password = newUser.generateHash(password);
-			newUser.user.name	= ''
-			newUser.user.address	= ''
+			                  newUser.user.username  = req.body.username;
+                        newUser.user.email     = email;
+                        newUser.user.password  = newUser.generateHash(password);
+                  			newUser.user.name	     = '';
+                  			newUser.user.address	 = '';
+                        newUser.user.game.totalScore = 0;
                         newUser.save(function(err) {
                             if (err)
                                 throw err;
@@ -125,13 +126,13 @@ module.exports = function(passport) {
                     				if (user) {
                         				return done(null, user);
                     				} else {
-                        				var newUser            = new User();
-							newUser.user.username    = profile.displayName;
-                        				newUser.user.email    = profile.emails[0].value;
-							newUser.user.name	= ''
-							newUser.user.address	= ''
-
-                        				newUser.save(function(err) {
+                        			var newUser            = new User();
+			                         newUser.user.username = profile.displayName;
+                				       newUser.user.email    = profile.emails[0].value;
+			                         newUser.user.name	   = '';
+			                         newUser.user.address	 = '';
+                               newUser.user.game.totalScore = 0;
+                        			newUser.save(function(err) {
                             					if (err)
                                 					throw err;
                             				return done(null, newUser);
@@ -168,7 +169,7 @@ module.exports = function(passport) {
   		function(req,token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
     			process.nextTick(function () {
-      
+
      				 if (!req.user) {
  					User.findOne({ 'user.username' :  profile.displayName }, function(err, user) {
             	    				if (err){ return done(err);}
@@ -176,9 +177,10 @@ module.exports = function(passport) {
                         				return done(null, user);
                     				} else {
                         				var newUser            = new User();
-							newUser.user.username    = profile.displayName;
-					newUser.user.name	= ''
-					newUser.user.address	= ''
+							                  newUser.user.username  = profile.displayName;
+					                      newUser.user.name	     = '';
+					                      newUser.user.address	 = '';
+                                newUser.user.game.totalScore = 0;
 
                         				newUser.save(function(err) {
                             					if (err)
@@ -201,7 +203,7 @@ module.exports = function(passport) {
                 			});
             			}
     			});
-  		}		
+  		}
 	));
 
 // Use the GoogleStrategy within Passport.
@@ -216,7 +218,7 @@ module.exports = function(passport) {
   				function(req, accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     					process.nextTick(function () {
-      
+
      						if (!req.user) {
  							User.findOne({ 'user.email' :  profile.emails[0].value }, function(err, user) {
             	    						if (err){ return done(err);}
@@ -228,7 +230,7 @@ module.exports = function(passport) {
 								newUser.user.email    = profile.emails[0].value;
 								newUser.user.name	= ''
 								newUser.user.address	= ''
-
+                newUser.user.game.totalScore = 0;
                         					newUser.save(function(err) {
                             						if (err)
                                 						throw err;
@@ -250,7 +252,11 @@ module.exports = function(passport) {
                 			});
 
     			}
- 
+
 ));
 
 };
+
+function createUser() {
+
+}

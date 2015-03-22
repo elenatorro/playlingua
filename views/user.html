@@ -2,6 +2,11 @@
 <div id="main-content" class="container">
 	<div class="row">
 		<div class="col-lg-3">
+			<div class="panel panel-info info">
+				<div class="panel-body">
+					<h4>Hola, <%= user.user.username %></h4>
+				</div>
+			</div>
 			<div class="panel panel-danger info">
 				<div class="panel-heading">Reto semanal</div>
 				<div class="panel-body">
@@ -41,7 +46,7 @@
 			<div class="panel panel-info info">
 				<div class="panel-heading">Progreso de Juego</div>
 				<div class="panel-body">
-					<h1>Sinónimos</h1>
+					<a href="/synonyms"><h1>Sinónimos</h1></a>
 					<img src="css/icons/polaroids.png" class="progress-logo-big"/>
 					<div class="row">
 						<div class="col-md-4">
@@ -124,28 +129,4 @@
 		</div>
 	</div>
 </div>
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
-
-<!-- <div class="box profile">
-		<fieldset class="">
-			<div  class="row">
-				<div class="span12">
-					<label><strong>User Name:</strong> <%= user.user.username %></label>
-					<label><strong>Name:</strong> <%= user.user.name %></label>
-					<label><strong>Email:</strong> <%= user.user.email %></label>
-					<label><strong>Location:</strong> <%= user.user.address %></label>
-				</div>
-				<img src="/image.png"   name="userimage" id="userimage"  />
-				<br>
-				<br>
-				<div class="span4">
-					<label><a href="/edit"><strong>Update Profile</strong></a></label>
-				</div>
-			</div>
-		</fieldset>
-	</div>
-</body>
-</html> -->
+<% include footer.html %>

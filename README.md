@@ -1,24 +1,10 @@
-Node.js_UserLogin_Template
+Playlingua
 ==========================
 
-This is Node.js Login Template with a nice User Interface. If you want to use Node.js as plateform  and MongoDB  as Database then this demo project can be used as a starting point for your application.We'll be adding some more features in this application very soon. 
+#Resumen
 
-*************************************************************************************************************
-###Requirements : 
-*************************************************************************************************************
-1.  Node.js
-1.  MongoDB
+El propósito de este trabajo es diseñar y desarrollar una aplicación web, llamada Playlingua, para mejorar el proceso de aprendizaje de la lengua a través de la gamificación. Exploraremos tres aspectos principales: las tecnologías de Procesamiento del Lenguaje Natural (PLN), la gamificación y el Diseño Centrado en el Usuario (UCD) como metodología de desarrollo. En el área del PLN, elegiremos entre las distintas herramientas disponibles dependiendo de cómo pueden ser aplicadas en el proyecto final. Para aumentar la aceptación de la aplicación, estudiaremos las ventajas y los aspectos positivos de usar la gamificación en aplicaciones de aprendizaje y cómo de influyente puede ser en términos de motivación, compromiso, calidad de aprendizaje y entretenimiento. Todo será desarrollado siguiendo el proceso del UCD, cuyo objetivo es construir aplicaciones basadas en la Experiencia del Usuario (UX). Además, estudiaremos las últimas tecnologías web con el objetivo de desarrollar una aplicación que estará disponible para todos, online y gratis.
 
+#Abstract
 
-*************************************************************************************************************
-###Getting Started with Code  : 
-
-
-*************************************************************************************************************
-1.  Set Up MongoDB
-1.  Start mongo: > mongo
-1.  Set Up Node.js
-1.  Clone code from https://github.com/knoldus/Node.js_UserLogin_Template.
-1.  Run <code>npm install</code>
-1.  Run <code>node app</code>
-1.  Go to http://localhost:8080/
+The purpose of this study is to design and develop a web application, named Playlingua, to improve the language learning process through gamification. There are three main aspects to explore: Natural Language Process (NLP) technologies, gamification and User Centered Design (UCD) as a developing methodology. In the NLP area, we will choose between the different available tools depending on how they can be applied in the final project. To increase the acceptance of the application, we will study the advantages and positive effects of using gamification in learning applications and how it influences users in terms of motivation, engagement, learning quality and entertainment. Everything will be developed following the UCD process, whose goal is to build applications based on User Experience (UX). In addition, we will study the latest trending web technologies in order to develop a platform that will be available for everyone, online and free.
