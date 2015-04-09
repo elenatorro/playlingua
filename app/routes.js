@@ -10,49 +10,52 @@ module.exports = function(app, passport,server) {
 	app.get('/', function(request, response) {
 		response.render('index.html');
 	});
+
 	app.get('/user', auth, function(request, response) {
-		response.render('user.html', {
-			user : request.user
-		});
+    response.setHeader('Content-Type', 'application/json');
+    response.end(JSON.stringify({username: request.user.user.username,
+                                 game: request.user.user.game}));
 	});
 
-  app.get('/synonyms', auth, function(request, response) {
-    response.render('synonyms/index.html', {
-      user: request.user
+  app.get('/dashboard/*', auth, function(request, response) {
+    response.render('main.html');
+	});
+
+  /* synonyms game */
+  app.get('/synonym/level/:levelnumber', function(request, response) {
+    var query = Text.find({'name': 'sinonimos', 'content.level': parseInt(request.params.levelnumber)});
+    query.exec(function(err, texts) {
+      response.setHeader('Content-Type', 'application/json;  charset=utf-8');
+      var game = {
+        excercises: texts[0],
+        levelNumber: request.params.levelnumber,
+      };
+      response.end(JSON.stringify(game));
     });
   });
-
-  app.param('level', function(request, response) {
-    response.locals.level = request.params['level'];
-  })
-
 
 	app.get('/image.png', function (req, res) {
     		res.sendfile(path.resolve('./uploads/image_'+req.user._id));
 	});
-
 
 	app.get('/edit', auth, function(request, response) {
 		response.render('edit.html', {
 			user : request.user
 		});
 	});
-	app.get('/about', auth, function(request, response) {
-		response.render('about.html', {
-			user : request.user
-		});
-	});
-	app.get('/logout', function(request, response) {
+
+	app.get('/logout', auth, function(request, response) {
 		request.logout();
 		response.redirect('/');
 	});
 
 		app.get('/login', function(request, response) {
+      if (request.isAuthenticated()) { response.redirect('/dashboard/user'); }
 			response.render('login.html', { message: request.flash('error') });
 		});
 
 		app.post('/login', passport.authenticate('login', {
-			successRedirect : '/user',
+			successRedirect : '/dashboard/user',
 			failureRedirect : '/login',
 			failureFlash : true
 		}));
@@ -61,12 +64,30 @@ module.exports = function(app, passport,server) {
 			response.render('signup.html', { message: request.flash('signuperror') });
 		});
 
+    app.get('/signup/creategames', auth, function(request, response) {
+      User.findById(request.user._id, function(err, data) {
+        if (err) {
+          response.redirect('/signup');
+        };
+        if (data.user.game.excercises.length == 0) {
+          data.user.game.excercises.push({name: 'sinonimos', levels: []});
+          data.user.game.excercises.push({name: 'definiciones', levels: []});
+          data.save(function(err) {
+            if (err) {
+              response.redirect('/signup');            }
+          })
+        }
+        response.redirect('/dashboard/user');
+      })
+  })
+
 
 		app.post('/signup', passport.authenticate('signup', {
-			successRedirect : '/about',
+			successRedirect : '/signup/creategames',
 			failureRedirect : '/signup',
 			failureFlash : true
 		}));
+
 		app.get('/edit', function(request, response) {
 			response.render('edit.html', { message: request.flash('updateerror') });
 		});

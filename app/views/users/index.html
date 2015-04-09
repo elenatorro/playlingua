@@ -1,0 +1,93 @@
+<div id="main-content" class="container">
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="panel panel-info info">
+				<div class="panel-heading">
+					<p>Hola,  {{user.username}}</p>
+				</div>
+				<div class="panel-body">
+					<h4>Tienes {{game.totalScore}} puntos</h4>
+				</div>
+			</div>
+			<div class="panel panel-danger info">
+				<div class="panel-heading">Reto semanal</div>
+				<div class="panel-body">
+					<img src="../assets/icons/unlocked.png" class="progress-logo-small"/>
+					<img src="../assets/icons/unlocked.png" class="progress-logo-small"/>
+					<img src="../assets/icons/locked.png" class="progress-logo-small"/>
+				</div>
+			</div>
+			<div class="panel panel-warning info">
+				<div class="panel-heading">Trofeos</div>
+				<div class="panel-body">
+					<h4>¡Máquina en Sinónimos!</h4>
+					<img src="../assets/icons/trophy.png" class="progress-logo"/>
+				</div>
+			</div>
+			<div class="panel panel-success info">
+				<div class="panel-heading">Estrellas</div>
+				<div class="panel-body">
+					<img src="../assets/icons/star.png" class="progress-logo-small"/>
+					<img src="../assets/icons/star.png" class="progress-logo-small"/>
+					<img src="../assets/icons/star.png" class="progress-logo-small"/>
+				</div>
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading info">Tus amigos</div>
+				<div class="panel-body">
+					<ul>
+						<li>Elena</li>
+						<li>Álvaro</li>
+						<li>Kiko</li>
+						<li>Laura</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-9">
+			<div class="panel panel-info info">
+				<div class="panel-heading">Progreso de Juego</div>
+
+				<div class="panel-body" ng-repeat="excerciseData in game.excercisesData track by $index">
+					<h1>{{excerciseData.name}}</h1>
+					<img src="{{excerciseData.image}}" class="progress-logo-big"/>
+					<div class="row">
+						<div class="col-md-4" ng-repeat="levelData in excerciseData.levels track by $index" ng-init="$parentIndex = $index">
+							<h3>{{levelData.title}}</h3>
+							<img src="{{levelData.image}}" class="progress-logo"/>
+							<div class="progress progress-striped">
+								<div class="progress-bar progress-bar-info" style="width: {{levelData.progress}}%"></div>
+							</div>
+								<a type="button" class="btn btn-default" href="/dashboard/{{excerciseData.url}}/{{$index+1}}">Jugar</a>
+						</div>
+					</div>
+					<!-- <h1>Verbos</h1>
+					<img src="../assets/icons/clock.png" class="progress-logo-big"/>
+					<div class="row">
+						<div class="col-md-4">
+							<h3>Nivel 1</h3>
+							<img src="../assets/icons/anchor.png" class="progress-logo"/>
+							<div class="progress progress-striped">
+								<div class="progress-bar progress-bar-info" style="width: 85%"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h3>Nivel 2</h3>
+							<img src="../assets/icons/cruise.png" class="progress-logo"/>
+							<div class="progress progress-striped">
+								<div class="progress-bar progress-bar-info" style="width: 50%"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h3>Nivel 3</h3>
+							<img src="../assets/icons/submarine.png" class="progress-logo"/>
+							<div class="progress progress-striped">
+								<div class="progress-bar progress-bar-info" style="width: 5%"></div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,27 +1,69 @@
-<% include ../header.html %>
-<script src="dependencies/modernizr.custom.js"></script>
-<script src="dependencies/draggabilly.pkgd.min.js"></script>
-<script src="dependencies/dragdrop.js"></script>
 <div id="main-content" class="container">
   <span class="row">
-    <h3>Nivel: 1</h3>
+    <h3>Nivel: {{level.levelNumber}}</h3>
+    <button ng-click="sliderFx._navigate('next')">Next</button>
     <h2 id="hearts">
-      <i class="fa fa-heart"></i>
-      <i class="fa fa-heart"></i>
-      <i class="fa fa-heart"></i>
+      <i class="fa fa-heart heart" ng-model="level.lifes" ng-repeat="life in level.lifes track by $index"></i>
     </h2>
   </span>
-  <div class="row">
-    <div class="col-lg-3">
-      <section id="grid" class="grid clearfix">
-      </section>
-    </div>
-    <div class="col-lg-9">
-      <section id="drop-area" class="drop-area">
-      </section>
-    </div>
+  <div id="slideshow" class="slideshow">
+    <ul>
+      <!-- <div ng-repeat="slideContent in contentArray"> -->
+      <li ng-repeat="slideContent in contentArray">
+        <div class="slide">
+          <h1>slide 1</h1>
+        </div>
+      </li>
+      <!-- <li>
+        <div class="slide">
+          <h1>slide 2</h1>
+        </div>
+      </li> -->
+      <!--
+      <li>
+        <div class="slide">
+          <h1>slide 3</h1>
+        </div>
+      </li>
+      <li>
+        <div class="slide">
+          <h1>slide 4</h1>
+        </div>
+      </li>
+      <li>
+        <div class="slide">
+          <h1>slide 5</h1>
+        </div>
+      </li>
+      <li>
+        <div class="slide">
+          <h1>slide 6</h1>
+        </div>
+      </li> -->
+    </ul>
   </div>
+</div><!-- /container -->
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-words info">
+        <div class="panel-body">
+          <div class="row">
+            <div ng-repeat="word in dragWords track by $index" ng-drag="true" ng-drag-data="word" data-allow-transform="true" class="bubble drag">
+              {{word.value}}
+            </div>
+          </div>
+				</div>
+      </div>
+
+      <div class="panel panel-words info">
+				<div class="panel-body">
+          <div class="row">
+            <div class="bubble" ng-repeat="word in words track by $index" ng-drop="true" ng-drop-success="onDrop(word, $data)">
+              {{word}}
+            </div>
+          </div>
+				</div>
+			</div>
+    </div>
+  </div> -->
 </div>
-<div class="md-modal md-effect-16" id="modal-16">
-</div>
-<% include ../footer.html %>

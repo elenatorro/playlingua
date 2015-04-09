@@ -9,14 +9,23 @@ var userSchema = mongoose.Schema({
   	  name	       : String,
   	  address      : String,
       game : {
-        totalScore   : Number,
+        totalScore   : { type: Number, default: 0 },
         excercises   : [{
-          name : String,
+          name : {type: String, default: 'sinonimos'},
           levels : [{
-            lastScore   : Number,
-            maxScore    : Number,
-            timesPlayed : Number
-          }],
+            number: Number,
+            lastScore   : { type: Number, default: 0 },
+            maxScore    : { type: Number, default: 0 },
+            timesPlayed : { type: Number, default: 0 }
+            }]
+          },{
+            name : {type: String, default: 'definiciones'},
+            levels : [{
+              number: Number,
+              lastScore   : { type: Number, default: 0 },
+              maxScore    : { type: Number, default: 0 },
+              timesPlayed : { type: Number, default: 0 }
+            }]
         }]
       }
     }

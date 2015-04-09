@@ -8,34 +8,37 @@
 
  @import url(http://fonts.googleapis.com/css?family=Finger+Paint);
 body {
+  background: url('../images/bubbles.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   /*background-image: url('cohete.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-color: #00bfa5;
-  /*background-color: #fff;*/
-  background-color: #E6E6E6;
 
+  // background-color: #fff;
+  // background-image:
+  // linear-gradient(#eee .2em, transparent .2em);
+  // background-size: 100% 2em;
+*/
 }
 
 body.main-page {
-  background-color: #fff;
-  background-image:
-  linear-gradient(#eee .2em, transparent .2em);
-  background-size: 100% 2em;
-}
-
-.panel {
-  border-width: 3px;
-}
-
-.panel-heading {
-  font-size: 1.5em;
-  font-family: 'Finger Paint';
+  background: url('../images/bubbles.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // background-image:
+  // linear-gradient(#eee .2em, transparent .2em);
+  // background-size: 100% 2em;
 }
 
 .navbar {
-  background-color: #00897b;
+  background-color: $main-top-navbar;
   border: none;
 }
 
@@ -45,11 +48,11 @@ body.main-page {
 
 .navbar-brand.main-tittle {
   font-family: 'Finger Paint';
-  color: #eeff41;
+  color: $main-top-navbar-ul;
 }
 
 ul.nav.navbar-nav > li > a {
-  color: #f4ff81;
+  color: $main-top-navbar-ul;
 }
 
 .info {
@@ -113,13 +116,15 @@ ul.nav.navbar-nav > li > a {
 .headline h1 {
   font-size: 130px;
   font-family: 'Finger Paint';
-  color: #eeff41;
+  color: $h1-color;
+  text-shadow: 2px 0px gray;
 }
 
 .headline h2 {
   font-size: 77px;
   font-family: 'Finger Paint';
-  color: #f4ff81;
+  color: $h2-color;
+  text-shadow: 2px 0px gray;
 }
 
 .featurette-divider {

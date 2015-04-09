@@ -1,0 +1,37 @@
+.panel {
+  border-width: 3px;
+  color: #333;
+}
+
+.panel-heading {
+  font-size: 1.5em;
+}
+
+.panel.panel-login {
+  border: 3px solid $palette2;
+  color: $palette2;
+}
+.panel.panel-login > .panel-heading {
+  background-color: $palette2;
+  color: white;
+}
+
+.panel.panel-warning {
+  border-color: $palette3;
+
+  .panel-heading {
+    background-color: $palette3;
+  }
+}
+
+.panel.panel-danger {
+  border-color: $palette1;
+
+  .panel-heading {
+    background-color: $palette1;
+  }
+}
+
+.panel-words {
+  background-color: rgba(255,255,255,0.3);
+}

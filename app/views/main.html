@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Playlingua</title>
+    <!-- styles -->
+    <link href="../../assets/bower_components/css/font-awesome.css" rel="stylesheet">
+    <link href="../../assets/dependencies/styles/dependencies.css" rel="stylesheet">
+    <link href="../../assets/styles/style.css" rel="stylesheet">
+    <link href="../../assets/styles/main.css" rel="stylesheet">
+  </head>
+  <body ng-app="PlaylinguaApp">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <a class="navbar-brand main-tittle" href="/dashboard/user">Playlingua</a>
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/dashboard/user">Tu Perfil</a>
+            </li>
+            <li>
+              <a href="/logout" target="_self">Salir</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      <!-- views -->
+      <div ng-view></div>
+
+    <!-- bower dependencies -->
+    <script src="../../assets/bower_components/js/vendor/jquery.js"></script>
+    <script src="../../assets/bower_components/js/vendor/angular.js"></script>
+    <script src="../../assets/bower_components/js/vendor/angular-resource.js"></script>
+    <script src="../../assets/bower_components/js/vendor/angular-route.js"></script>
+    <script src="../../assets/bower_components/js/vendor/angular-animate.js"></script>
+    <script src="../../assets/bower_components/js/vendor/ngDraggable.js"></script>
+    <script src="../../assets/scripts/angular_bundle.js"></script>
+    <!-- custom dependencies -->
+    <script src="../../assets/dependencies/scripts/dependencies.js"></script>
+  </body>
+</html>

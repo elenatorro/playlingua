@@ -85,6 +85,10 @@
   color: red;
 }
 
+.heart {
+  margin: 5px;
+}
+
 /*.drop-area {
   position: fixed;
   top: 100%;

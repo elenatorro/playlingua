@@ -9,10 +9,10 @@
 
 	<title>Playlingua</title>
 
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/bootswatch.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
-	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/bower_components/css/font-awesome.css" rel="stylesheet">
+	<link href="assets/dependencies/styles/dependencies.css" rel="stylesheet">
+	<link href="assets/styles/style.css" rel="stylesheet">
+	<link href="assets/styles/main.css" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +22,7 @@
 	<![endif]-->
 
 </head>
-<body class="main-page">
+<body class="main-page" ng-app="PlaylinguaApp">
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -77,23 +77,23 @@
 
 		<!-- First Featurette -->
 		<div class="featurette" id="about">
-			<img class="featurette-image img-circle img-responsive pull-right" src="images/fun.jpg">
-			<h2 class="featurette-heading">Jugando se aprende mejor
-			</h2>
-			<p class="lead">"Si la lección es divertida, nunca se olvida."</p>
-		</div>
+			<img class="featurette-image img-circle img-responsive pull-right" src="assets/images/fun.jpg">
+					<h2 class="featurette-heading">Jugando se aprende mejor
+					</h2>
+					<p class="lead">"Si la lección es divertida, nunca se olvida."</p>
+				</div>
 
 
 		<!-- Second Featurette -->
 		<div class="featurette" id="services">
-			<img class="featurette-image img-circle img-responsive pull-left" src="images/class.jpg">
+			<img class="featurette-image img-circle img-responsive pull-left" src="assets/images/class.jpg">
 			<h2 class="featurette-heading">La importancia de hablar bien
 			</h2>
 			<p class="lead">Comunicarse es vital para el ser humano, por eso es importante conocer a fondo nuestra lengua.</p>
 		</div>
 		<!-- Third Featurette -->
 		<div class="featurette" id="contact">
-			<img class="featurette-image img-circle img-responsive pull-right" src="images/community.jpg">
+			<img class="featurette-image img-circle img-responsive pull-right" src="assets/images/community.jpg">
 			<h2 class="featurette-heading">The Third Heading
 				<span class="text-muted">Will Seal the Deal.</span>
 			</h2>
@@ -109,7 +109,12 @@
 			</div>
 		</footer>
 	</div>
-	<script src="dependencies/jquery.js"></script>
-	<script src="dependencies/bootstrap.min.js"></script>
+	<script src="assets/bower_components/js/vendor/jquery.js"></script>
+	<script src="assets/bower_components/js/vendor/angular.js"></script>
+	<script src="assets/bower_components/js/vendor/angular-route.js"></script>
+	<script src="assets/bower_components/js/vendor/angular-animate.js"></script>
+	<script src="assets/bower_components/js/vendor/angular-resource.js"></script>
+	<script src="assets/scripts/angular_bundle.js"></script>
+	<script src="assets/dependencies/scripts/dependencies.js"></script>
 </body>
 </html>
