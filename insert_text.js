@@ -6,18 +6,12 @@
         level: 1,
         $push: {
           elements: {
-            words: 'Estaba tumbado sobre su espalda dura, y en forma de caparazón y, al levantar un poco la cabeza veía un vientre abombado, parduzco, dividido por partes duras en forma de arco',
+            words: 'El viento sur, caliente y perezoso, empujaba las nubes blanquecinas que se rasgaban al correr hacia el norte.',
             selected: {
               $each: [{
-                  word: 'tumbado',
-                  value: 'derribado'
-                },{
-                  word: 'caparazon',
-                  value: 'concha'
-                },{
-                  word: 'dividido',
-                  value: 'partido'
-              }]
+                  word: 'empujaba',
+                  value: 'apretaba'
+                }]
             }
           }
         }
@@ -25,3 +19,20 @@
     }
   }
 }
+
+{
+  name: 'sinonimos',
+    content: [{
+        level: 1,
+          elements: {
+            words: 'Era lo que ansiaban, y por eso se asustaron.',
+            selected: [{
+                  word: 'ansiaban',
+                  value: 'anhelaban'
+                }, {
+                  word: 'asustaron',
+                  value: 'espantaron'
+                }]
+            }
+          }]
+        }

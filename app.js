@@ -1,6 +1,6 @@
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 8030;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -21,7 +21,8 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(express.static(path.join(__dirname, 'bower_components')));
-	app.set('views', __dirname + '/views');
+	app.set('views', __dirname + '/public/views');
+	app.set('view options', {layout: false});
 	app.engine('html', require('ejs').renderFile);
 	app.use(express.session({ secret: 'knoldus' }));
 	app.use(express.bodyParser({uploadDir:'/images'}));

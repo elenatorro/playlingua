@@ -1,6 +1,6 @@
 {
-  "name": "knoldus-login-application",
-  "description": "Login Application in node.js and mongodb",
+  "name": "Playlingua",
+  "description": "Online game to learn advanced spanish",
   "version": "0.0.1",
   "main": "server.js",
   "dependencies": {
@@ -22,11 +22,20 @@
     "browserify": "^9.0.3",
     "connect-livereload": "^0.5.3",
     "gulp": "^3.8.11",
+    "gulp-bower-files": "^0.2.7",
     "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.5.2",
+    "gulp-cssmin": "^0.1.6",
     "gulp-embedlr": "^0.5.2",
+    "gulp-filter": "^2.0.2",
+    "gulp-flatten": "0.0.4",
     "gulp-livereload": "^3.8.0",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^1.3.3",
     "gulp-util": "^3.0.4",
+    "main-bower-files": "^2.6.2",
     "mongodb-schema-miner": "0.0.1",
     "tiny-lr": "^0.1.5"
   }
