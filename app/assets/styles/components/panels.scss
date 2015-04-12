@@ -33,5 +33,27 @@
 }
 
 .panel-words {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255,255,255,0.5);
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.panel-words > .panel-heading {
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 1em;
+}
+
+.panel-words > .panel-body {
+  font-size: 1.7em;
+}
+
+
+.panel-words > .panel-footer {
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

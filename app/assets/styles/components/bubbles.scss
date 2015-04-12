@@ -5,14 +5,20 @@
   margin: 10px;
   padding: 10px;
   min-width: 80px;
-  // -webkit-box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
-  // -moz-box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
-  // box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 0px 7px -1px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 7px -1px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 7px -1px rgba(0,0,0,0.75);
+  border-radius: 10px;
 }
 
 .bubble.drag:hover {
   cursor: move;
+}
+
+[ng-drop].drag-enter {
+  background-color: $palette4;
+}
+
+[ng-drag].dragging {
+  background-color: $palette2;
 }
