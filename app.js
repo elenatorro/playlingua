@@ -18,14 +18,14 @@ require('./config/passport')(passport);
 
 app.configure(function() {
 	app.use(express.cookieParser());
-	app.use(express.bodyParser());
+	app.use(express.json());
+  app.use(express.urlencoded());
 	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(express.static(path.join(__dirname, 'bower_components')));
 	app.set('views', __dirname + '/public/views');
 	app.set('view options', {layout: false});
 	app.engine('html', require('ejs').renderFile);
 	app.use(express.session({ secret: 'knoldus' }));
-	app.use(express.bodyParser({uploadDir:'/images'}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(flash());
@@ -34,4 +34,4 @@ app.configure(function() {
 require('./app/routes.js')(app, passport,server);
 
 server.listen(port);
-console.log('Listening  to  port ' + port);
+console.log('Listening  to  port http://localhost:' + port);

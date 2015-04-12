@@ -1,38 +1,48 @@
 {
   name: 'sinonimos',
-  $push : {
+    $addToSet: {
     content: {
-    $each: [{
+      [{
         level: 1,
         $push: {
           elements: {
-            words: 'El viento sur, caliente y perezoso, empujaba las nubes blanquecinas que se rasgaban al correr hacia el norte.',
+            words: 'Un manto de nieve, raído, agujereado, tenue, cubría la tierra descolorida.',
             selected: {
               $each: [{
-                  word: 'empujaba',
-                  value: 'apretaba'
-                }]
+                    word: 'tenue',
+                    value: 'débil'
+                  }, {
+                    word: 'agujereado',
+                    value: 'perforado'
+                  }]
             }
           }
         }
       }]
     }
-  }
 }
+
+db.objects.update({name: 'sinonimos'}, {'$addToSet': {'content.2.blocks.0.txt': 'hi'}})
+
+
+
+
+
+
 
 {
   name: 'sinonimos',
     content: [{
         level: 1,
           elements: {
-            words: 'Era lo que ansiaban, y por eso se asustaron.',
+            words: 'Se lo podía ver en los días de buen tiempo, cuando el río fluía más lentamente y las aguas barrosas se aclaraban',
             selected: [{
-                  word: 'ansiaban',
-                  value: 'anhelaban'
-                }, {
-                  word: 'asustaron',
-                  value: 'espantaron'
+                  word: 'fluía',
+                  value: 'fluctuaban'
                 }]
             }
           }]
         }
+
+
+db.collection.update({'name': 'sinonimos'},{content.})
