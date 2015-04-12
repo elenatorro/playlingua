@@ -20,7 +20,39 @@ var GOOGLE_CONSUMER_KEY = "<Insert Your Key Here>";
 var GOOGLE_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy
 
-var User       = require('../app/models/user');
+var User            = require('../app/models/user');
+var Excercise       = require('../app/models/excercise');
+
+var createUser = function(req, email, password, done) {
+  var newUser            = new User();
+  newUser.user.username  = req.body.username;
+  newUser.user.email     = email;
+  newUser.user.adress    = '';
+  newUser.user.password  = newUser.generateHash(password);
+  newUser.user.totalScore = 0;
+  newUser.save(function(err) {
+      if (err) {
+        throw err
+      } else {
+        var synonyms = new Excercise();
+        synonyms.name = 'sinonimos';
+        synonyms.title = 'Sinónimos';
+        synonyms.username = req.body.username;
+        synonyms.levels = [{number:1},{number:2},{number:3}];
+        synonyms.save();
+
+        var definitions = new Excercise();
+        definitions.name = 'definiciones';
+        synonyms.title = 'Definiciones';
+        definitions.username = req.body.username;
+        definitions.levels = [{number:1},{number:2},{number:3}];
+        definitions.save();
+
+        return done(null, newUser);
+      }
+
+  });
+};
 
 module.exports = function(passport) {
 
@@ -64,25 +96,13 @@ module.exports = function(passport) {
     function(req, email, password, done) {
 
         process.nextTick(function() {
-
             if (!req.user) {
                 User.findOne({ 'user.email' :  email }, function(err, user) {
             	    if (err){ return done(err);}
                     if (user) {
                         return done(null, false, req.flash('signuperror', '¡Ese usuario ya existe!'));
                     } else {
-                        var newUser            = new User();
-			                  newUser.user.username  = req.body.username;
-                        newUser.user.email     = email;
-                        newUser.user.password  = newUser.generateHash(password);
-                  			newUser.user.name	     = '';
-                  			newUser.user.address	 = '';
-                        newUser.user.game.totalScore = 0;
-                        newUser.save(function(err) {
-                            if (err)
-                                throw err;
-                            return done(null, newUser);
-                        });
+                        createUser(req, email, password, done);
                     }
 
                 });
@@ -126,17 +146,7 @@ module.exports = function(passport) {
                     				if (user) {
                         				return done(null, user);
                     				} else {
-                        			var newUser            = new User();
-			                         newUser.user.username = profile.displayName;
-                				       newUser.user.email    = profile.emails[0].value;
-			                         newUser.user.name	   = '';
-			                         newUser.user.address	 = '';
-                               newUser.user.game.totalScore = 0;
-                        			newUser.save(function(err) {
-                            					if (err)
-                                					throw err;
-                            				return done(null, newUser);
-                        				});
+                              createUser(req, email, password, done);
                     				}
 
                 			});
@@ -176,17 +186,7 @@ module.exports = function(passport) {
                     				if (user) {
                         				return done(null, user);
                     				} else {
-                        				var newUser            = new User();
-							                  newUser.user.username  = profile.displayName;
-					                      newUser.user.name	     = '';
-					                      newUser.user.address	 = '';
-                                newUser.user.game.totalScore = 0;
-
-                        				newUser.save(function(err) {
-                            					if (err)
-                                					throw err;
-                            				return done(null, newUser);
-                        				});
+                              createUser(req, email, password, done);
                     				}
 
                 			});
@@ -225,17 +225,7 @@ module.exports = function(passport) {
                     					if (user) {
                         					return done(null, user);
                     					} else {
-                        					var newUser            = new User();
-								newUser.user.username    = profile.displayName;
-								newUser.user.email    = profile.emails[0].value;
-								newUser.user.name	= ''
-								newUser.user.address	= ''
-                newUser.user.game.totalScore = 0;
-                        					newUser.save(function(err) {
-                            						if (err)
-                                						throw err;
-                            					return done(null, newUser);
-                        					});
+                                createUser(req, email, password, done);
                     					}
 
                 					});
@@ -254,9 +244,4 @@ module.exports = function(passport) {
     			}
 
 ));
-
 };
-
-function createUser() {
-
-}
