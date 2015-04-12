@@ -17,7 +17,7 @@
           templateUrl: "/views/users/index.html",
           controller: "UserController"
         })
-        .when("/dashboard/synonyms/:level", {
+        .when("/dashboard/sinonimos/:level", {
           templateUrl: "/views/synonyms/index.html",
           controller: "SynonymsController"
         })
