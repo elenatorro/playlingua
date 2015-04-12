@@ -53,12 +53,7 @@ var jsDepDest      = "./public/assets/dependencies/scripts"
 var jsDependencies = [jsDepPath + "jquery-1.11.2.min.js",
                       jsDepPath + "modernizr.custom.js",
                       jsDepPath + "bootstrap.min.js",
-                      jsDepPath + "underscore-min.js",
-
-											jsDepPath + "snap.svg-min.js",
-                      jsDepPath + "modernizr.custom.js",
-                      jsDepPath + "classie.js",
-                      jsDepPath + "sliderFx.js"
+                      jsDepPath + "underscore.js"
 											];
 
 gulp.task("jsDependencies", function() {
@@ -85,7 +80,7 @@ var cssDependencies = [
                        cssDepPath + "bootstrap.css",
                        cssDepPath + "bootswatch.css",
 											 cssDepPath + "normalize.css",
-											 cssDepPath + "slideshow.css"
+											 cssDepPath + "hover-min.css"
                      ];
 
  gulp.task("cssDependencies", function() {
@@ -118,6 +113,9 @@ gulp.task("views", function() {
   //all the views
   gulp.src("./app/views/**/*")
   .pipe(gulp.dest("./public/views/"));
+
+	gulp.src("./app/assets/templates/*.html")
+	.pipe(gulp.dest("./public/assets/templates"));
 })
 
 /* images */
@@ -130,7 +128,7 @@ gulp.task("images", function() {
 /* icons */
 gulp.task("icons", function() {
   //index
-  gulp.src("./app/assets/icons/*")
+  gulp.src("./app/assets/icons/**/*.png")
   .pipe(gulp.dest("./public/assets/icons"));
 })
 
@@ -141,7 +139,7 @@ gulp.task('watch', function() {
   gulp.watch(["app/assets/scripts/*.js", "app/assets/scripts/**/*.js"], ["bundle"]);
   gulp.watch("./app/assets/styles/*.css", ["style"]);
   gulp.watch(["./app/assets/styles/*.scss", "./app/assets/styles/**/*.scss"], ["customStyle"]);
-  gulp.watch(["./app/views/**/*", "./app/index.html"], ["views"]);
+  gulp.watch(["./app/views/**/*", "./app/index.html", "./app/assets/templates/*.html"], ["views"]);
   gulp.watch("./app/assets/images/*", ["images"]);
   gulp.watch("./app/assets/icons/*", ["icons"]);
 })
