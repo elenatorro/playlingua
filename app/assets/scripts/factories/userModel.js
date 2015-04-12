@@ -4,20 +4,9 @@ angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', fun
         angular.extend(this, data);
         var self = this;
 
-
         self.getUsername = function() {
           return self.username;
         };
-
-        self.addLevelTo = function(exercise) {
-          var level = {
-            lastScore   : 0,
-            maxScore    : 0,
-            timesPlayed : 0
-          };
-
-
-        }
     };
 
     var resourceUser = $resource(

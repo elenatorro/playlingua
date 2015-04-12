@@ -8,11 +8,25 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           return self.content;
         };
 
-        self.lifes = new Array(5);
+        self.lifes = 5;
+
+        self.updateScore = function(score) {
+          $http.put('/save/' + self.name + '/' + self.level + '/' + score)
+          .success(function(data) {
+            console.log('OK');
+          })
+          .error(function(data) {
+            console.log(data);
+            console.log('error');
+          })
+        };
+
+        self.animal = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
+          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
     };
 
     var resourceLevel = $resource(
-      '/synonym/level/:levelnumber',
+      '/sinonimos/level/:levelnumber',
       {},
       {
         'get':{
@@ -20,7 +34,8 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            return new Level(jsData);
+            delete jsData.excercises[0]._id;
+            return new Level(jsData.excercises[0]);
           }
         }
       });
