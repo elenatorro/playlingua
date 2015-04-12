@@ -8,26 +8,7 @@ var userSchema = mongoose.Schema({
       password     : String,
   	  name	       : String,
   	  address      : String,
-      game : {
-        totalScore   : { type: Number, default: 0 },
-        excercises   : [{
-          name : {type: String, default: 'sinonimos'},
-          levels : [{
-            number: Number,
-            lastScore   : { type: Number, default: 0 },
-            maxScore    : { type: Number, default: 0 },
-            timesPlayed : { type: Number, default: 0 }
-            }]
-          },{
-            name : {type: String, default: 'definiciones'},
-            levels : [{
-              number: Number,
-              lastScore   : { type: Number, default: 0 },
-              maxScore    : { type: Number, default: 0 },
-              timesPlayed : { type: Number, default: 0 }
-            }]
-        }]
-      }
+      totalScore   : { type: Number, default: 0 }
     }
 });
 
@@ -40,13 +21,10 @@ userSchema.methods.verifyPassword = function(password) {
 };
 
 userSchema.methods.updateUser = function(request, response){
-
 	this.user.name = request.body.name;
 	this.user.address = request.body.address;
-	 this.user.save();
+	this.user.save();
 	response.redirect('/user');
 };
-
-
 
 module.exports = mongoose.model('User', userSchema);
