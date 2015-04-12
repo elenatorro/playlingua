@@ -1,6 +1,7 @@
 var User       = require('../app/models/user');
 var Friend     = require('../app/models/friend');
 var Text       = require('../app/models/text');
+var Excercise  = require('../app/models/excercise');
 
    async = require("async");
 var path = require('path'),
@@ -14,24 +15,96 @@ module.exports = function(app, passport,server) {
 	app.get('/user', auth, function(request, response) {
     response.setHeader('Content-Type', 'application/json');
     response.end(JSON.stringify({username: request.user.user.username,
-                                 game: request.user.user.game}));
+                                 totalScore: request.user.user.totalScore}));
 	});
 
   app.get('/dashboard/*', auth, function(request, response) {
     response.render('main.html');
 	});
 
-  /* synonyms game */
-  app.get('/synonym/level/:levelnumber', function(request, response) {
-    var query = Text.find({'name': 'sinonimos', 'content.level': parseInt(request.params.levelnumber)});
+  app.get('/excercises', auth, function(request, response) {
+    var query = Excercise.find({username: request.user.user.username});
+    query.exec(function(err, data) {
+      if (err) {
+        response.end(JSON.stringify(err));
+      } else {
+        response.setHeader('Content-Type', 'application/json;  charset=utf-8');
+        response.end(JSON.stringify(data));
+      }
+    });
+  });
+
+  app.get('/:name/level/:levelnumber', function(request, response) {
+    var query = Text.find({name: request.params.name, level: request.params.levelnumber});
     query.exec(function(err, texts) {
       response.setHeader('Content-Type', 'application/json;  charset=utf-8');
       var game = {
-        excercises: texts[0],
+        excercises: texts,
         levelNumber: request.params.levelnumber,
       };
       response.end(JSON.stringify(game));
     });
+  });
+
+  app.put('/save/:name/:levelnumber/:score', auth, function(request, response) {
+    var userData = request.user;
+    var levelNumber = parseInt(request.params.levelnumber) - 1;
+    var score = parseInt(request.params.score);
+    var name = request.params.name;
+    var totalScore = parseInt(userData.user.totalScore) + parseInt(score);
+    var maxScore, timesPlayed, lastScore, levelField, excerciseScore;
+    var query = User.update({'user.username': userData.user.username},{$set:{'user.totalScore': totalScore}});
+    Excercise.find({'name': name, 'username': userData.user.username}, function(err, excercise) {
+      if (excercise[0].levels[levelNumber]) {
+        maxScore = Math.max(excercise[0].levels[levelNumber].maxScore, score);
+        timesPlayed = excercise[0].levels[levelNumber].timesPlayed;
+        number = excercise[0].levels[levelNumber].number;
+        lastScore = score;
+        excerciseScore = excercise[0].levels[levelNumber].totalScore + score;
+
+      } else {
+        maxScore = score;
+        timesPlayed = 0;
+        lastScore = score;
+        number = levelNumber + 1;
+        excerciseScore = score;
+      }
+
+      levelField = 'levels.' + (levelNumber).toString();
+      timesPlayed++;
+
+      var excerciseData = {
+        name: name,
+        username: userData.user.username
+      };
+
+      var excerciseUpdate = {$set: {}};
+      excerciseUpdate['$set'][levelField] = {
+            maxScore: maxScore,
+            timesPlayed: timesPlayed,
+            number: number,
+            lastScore: lastScore,
+            totalScore: excerciseScore
+          };
+
+      Excercise.update(excerciseData, excerciseUpdate, function(err, data) {
+          if (err) {
+            response.setHeader('Content-Type', 'application/json;  charset=utf-8');
+            response.end(JSON.stringify(err));
+          } else {
+            query.exec(function(err, data) {
+              if (err) {
+                response.setHeader('Content-Type', 'application/json;  charset=utf-8');
+                response.end(JSON.stringify(err));
+              } else {
+                response.setHeader('Content-Type', 'application/json;  charset=utf-8');
+                response.end(JSON.stringify(data));
+              };
+            });
+          };
+      })
+    });
+
   });
 
 	app.get('/image.png', function (req, res) {
@@ -64,26 +137,9 @@ module.exports = function(app, passport,server) {
 			response.render('signup.html', { message: request.flash('signuperror') });
 		});
 
-    app.get('/signup/creategames', auth, function(request, response) {
-      User.findById(request.user._id, function(err, data) {
-        if (err) {
-          response.redirect('/signup');
-        };
-        if (data.user.game.excercises.length == 0) {
-          data.user.game.excercises.push({name: 'sinonimos', levels: []});
-          data.user.game.excercises.push({name: 'definiciones', levels: []});
-          data.save(function(err) {
-            if (err) {
-              response.redirect('/signup');            }
-          })
-        }
-        response.redirect('/dashboard/user');
-      })
-  })
-
 
 		app.post('/signup', passport.authenticate('signup', {
-			successRedirect : '/signup/creategames',
+			successRedirect : '/dashboard/user',
 			failureRedirect : '/signup',
 			failureFlash : true
 		}));
@@ -106,7 +162,6 @@ module.exports = function(app, passport,server) {
                 		if (err){ return done(err);}
                 		if (user)
                     			user.updateUser(req, res)
-
                          });
   		});
 
@@ -268,4 +323,4 @@ io.sockets.on('connection', function (socket) {
 function auth(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
-}
+};
