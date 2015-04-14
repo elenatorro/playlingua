@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "main": "server.js",
   "engines":{
-    "node": "v0.10.29",
+    "node": "0.10.29",
     "npm": "2.5.0"
   },
   "dependencies": {

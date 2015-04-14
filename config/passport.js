@@ -43,7 +43,7 @@ var createUser = function(req, email, password, done) {
 
         var definitions = new Excercise();
         definitions.name = 'definiciones';
-        synonyms.title = 'Definiciones';
+        definitions.title = 'Definiciones';
         definitions.username = req.body.username;
         definitions.levels = [{number:1},{number:2},{number:3}];
         definitions.save();
