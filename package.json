@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "main": "server.js",
   "engines":{
-    "node": "v0.10.29"
+    "node": "v0.10.29",
+    "npm": "2.5.0"
   },
   "dependencies": {
     "express": "3.4.8",
@@ -41,5 +42,9 @@
     "main-bower-files": "^2.6.2",
     "mongodb-schema-miner": "0.0.1",
     "tiny-lr": "^0.1.5"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "postinstall": "bower install && gulp build"
   }
 }
