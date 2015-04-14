@@ -3,6 +3,9 @@
   "description": "Online game to learn advanced spanish",
   "version": "0.0.1",
   "main": "server.js",
+  "engines":{
+    "node": "v0.10.29"
+  },
   "dependencies": {
     "express": "3.4.8",
     "ejs": "0.8.5",
