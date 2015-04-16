@@ -1,0 +1,41 @@
+<div class="sliderPanel">
+  <div class="slide scale-fade" ng-repeat="slideContent in contentarray" ng-show="slideContent.visible">
+    <div class="panel panel-words">
+      <div class="panel-heading">
+        <div class="row">
+          <div ng-repeat="word in dragWords track by $index" ng-drag="true" ng-drag-data="word" data-allow-transform="true" class="bubble drag">
+            <i class="fa fa-hand-o-up"></i> {{word.value}}
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="bubble drop" ng-repeat="word in words track by $index" ng-drop="true" ng-drop-success="onDrop(word, $data)">
+            {{word}}
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="isFinished">
+    <div class="slide scale-fade">
+      <div class="panel panel-words">
+        <div class="panel-heading">
+          <p>Fin del juego</p>
+        </div>
+        <div class="panel-body">
+          <h2>{{message}}</h2>
+          <p>{{score}}</h2>
+        </div>
+        <div class="panel-footer">
+          <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
