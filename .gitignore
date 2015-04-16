@@ -8,3 +8,4 @@ old_public
 public
 insert_text.js
 .DS_Store
+config/database.js
