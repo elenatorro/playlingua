@@ -45,7 +45,6 @@
     "tiny-lr": "^0.1.5"
   },
   "scripts": {
-    "start": "node app.js",
-    "postinstall": "bower install && gulp build"
+    "start": "node app.js"
   }
 }
