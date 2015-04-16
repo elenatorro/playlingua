@@ -34,6 +34,7 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
+            console.log(jsData);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);
           }
