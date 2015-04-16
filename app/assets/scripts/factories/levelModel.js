@@ -13,11 +13,8 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
         self.updateScore = function(score) {
           $http.put('/save/' + self.name + '/' + self.level + '/' + score)
           .success(function(data) {
-            console.log('OK');
           })
           .error(function(data) {
-            console.log(data);
-            console.log('error');
           })
         };
 
@@ -34,7 +31,6 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            console.log(jsData);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);
           }

@@ -6,7 +6,6 @@ angular.module('PlaylinguaApp')
       this.excercises.forEach(function(excercise) {
         excercise = excercise[0];
       })
-      console.log(this);
       var self = this;
 
       self.setExcercises = function(excercises) {
@@ -23,9 +22,7 @@ angular.module('PlaylinguaApp')
 
       self.createLevels = function(name) {
         $http.post('/createlevels/' + name).success(function(data) {
-          console.log(data);
         }).error(function(data) {
-          console.log(data);
         })
       };
 

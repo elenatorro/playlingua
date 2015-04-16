@@ -13,7 +13,6 @@ angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
-            console.log(JSON.parse(response));
             return new Excercises({excercises: JSON.parse(response)});
           }
         }
