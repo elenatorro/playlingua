@@ -2,9 +2,10 @@
   "name": "Playlingua",
   "description": "Online game to learn advanced spanish",
   "version": "0.0.1",
-  "main": "server.js",
+  "license": "MIT",
+  "main": "app.js",
   "engines":{
-    "node": "0.10.29",
+    "node": "0.10.x",
     "npm": "2.5.0"
   },
   "dependencies": {
