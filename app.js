@@ -21,7 +21,6 @@ app.configure(function() {
 	app.use(express.json());
   app.use(express.urlencoded());
 	app.use(express.static(path.join(__dirname, 'public')));
-	app.use(express.static(path.join(__dirname, 'bower_components')));
 	app.set('views', __dirname + '/public/views');
 	app.set('view options', {layout: false});
 	app.engine('html', require('ejs').renderFile);
