@@ -46,6 +46,6 @@
   },
   "scripts": {
     "start": "node app.js",
-    "postinstall": "gulp deploy"
+    "postinstall": "bower install"
   }
 }
