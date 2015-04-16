@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var excerciseSchema = mongoose.Schema({
     name: String,
     username: String,
+    title: String,
     levels : [
       {
       number: Number,

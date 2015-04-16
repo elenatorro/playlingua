@@ -34,7 +34,6 @@ angular.module('PlaylinguaApp')
     Level.get({'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;
-      console.log(level);
     });
 
     User.get().$promise.then(function(user) {
@@ -158,7 +157,6 @@ angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
-            console.log(JSON.parse(response));
             return new Excercises({excercises: JSON.parse(response)});
           }
         }
@@ -177,7 +175,6 @@ angular.module('PlaylinguaApp')
       this.excercises.forEach(function(excercise) {
         excercise = excercise[0];
       })
-      console.log(this);
       var self = this;
 
       self.setExcercises = function(excercises) {
@@ -194,9 +191,7 @@ angular.module('PlaylinguaApp')
 
       self.createLevels = function(name) {
         $http.post('/createlevels/' + name).success(function(data) {
-          console.log(data);
         }).error(function(data) {
-          console.log(data);
         })
       };
 
@@ -306,11 +301,8 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
         self.updateScore = function(score) {
           $http.put('/save/' + self.name + '/' + self.level + '/' + score)
           .success(function(data) {
-            console.log('OK');
           })
           .error(function(data) {
-            console.log(data);
-            console.log('error');
           })
         };
 
@@ -327,7 +319,6 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            console.log(jsData);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);
           }
