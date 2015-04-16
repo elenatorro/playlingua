@@ -1,6 +1,6 @@
 'use strict';
 
-  angular.module('PlaylinguaApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngDraggable'])
+  angular.module('PlaylinguaApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngDraggable', 'ngTouch'])
 
   .config([
     '$locationProvider',
