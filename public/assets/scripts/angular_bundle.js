@@ -17,9 +17,9 @@
           templateUrl: "/views/users/index.html",
           controller: "UserController"
         })
-        .when("/dashboard/sinonimos/:level", {
-          templateUrl: "/views/synonyms/index.html",
-          controller: "SynonymsController"
+        .when("/dashboard/:name/:level", {
+          templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
+          controller: "levelController"
         })
         .otherwise({
            redirectTo: '/dashboard/user'
@@ -28,12 +28,15 @@
   ]);
 
 angular.module('PlaylinguaApp')
-.controller('SynonymsController', [
+.controller('levelController', [
   '$scope', "$http", "$routeParams","User", "Level",
   function($scope, $http, $routeParams, User, Level) {
-    Level.get({'levelnumber': $routeParams.level}).$promise.then(function(level) {
+    console.log($routeParams);
+    Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;
+      console.log(level);
+      console.log($scope.contentArray);
     });
 
     User.get().$promise.then(function(user) {
@@ -50,11 +53,11 @@ angular.module('PlaylinguaApp')
   '$scope', "$http", "User", "Game", "Excercises",
   function($scope, $http, User, Game, Excercises) {
     $scope.test = "Testing...";
-    User.get().$promise.then(function(user) {
-      $scope.user = user;
-      Excercises.get().$promise.then(function(excercises) {
-        $scope.game = new Game(excercises);
-      })
+    $scope.user = User.get();
+
+    Excercises.get().$promise.then(function(excercises) {
+      $scope.game = new Game(excercises);
+      console.log($scope.game);
     });
   }
 ]);
@@ -183,7 +186,19 @@ angular.module('PlaylinguaApp')
 
       self.getExcercises = function() {
         return self.excercises;
-      }
+      };
+
+      self.getExcercise = function(name) {
+        return _.where(self.excercises, {name: name});
+      };
+
+      self.getTotalExcerciseScore = function(excercise) {
+        var totalScore = 0;
+        excercise[0].levels.forEach(function(level) {
+          totalScore += level.totalScore;
+        })
+        return totalScore;
+      };
 
       self.isExcercises = function() {
         return (self.excercises.length!=0);
@@ -224,63 +239,37 @@ angular.module('PlaylinguaApp')
       };
 
       self.getTrophy = function(points) {
-        return self.tropyTitles(points);
+        return self.trophyTitles[points];
       };
 
-      // self.excercisesData = [
-      //   {
-      //     name: 'Sinónimos',
-      //     url: 'synonyms',
-      //     image: "../assets/icons/polaroids.png",
-      //     levels: [
-      //       {
-      //         number: 1,
-      //         title: 'Nivel 1',
-      //         image: '../assets/icons/unicycle.png',
-      //         progress: self.getProgress('sinonimos',0)
-      //         // passed: self.isGold('sinonimos',0)
-      //       },{
-      //         number: 2,
-      //         title: 'Nivel 2',
-      //         image: '../assets/icons/bike.png',
-      //         progress: self.getProgress('sinonimos',1)
-      //         // passed: self.isGold('sinonimos',1)
-      //
-      //       },{
-      //         number: 3,
-      //         title: 'Nivel 3',
-      //         image: '../assets/icons/motorcycle.png',
-      //         progress: self.getProgress('sinonimos',2)
-      //         // passed: self.isGold('sinonimos',2)
-      //       }
-      //     ]
-      //   },{
-      //     name: 'Definiciones',
-      //     url: 'definitions',
-      //     image: "../assets/icons/bookshelf.png",
-      //     levels: [
-      //       {
-      //         number: 1,
-      //         title: 'Nivel 1',
-      //         image: '../assets/icons/plane.png',
-      //         progress: self.getProgress('definiciones',0)
-      //         // passed: self.isGold('definiciones',0)
-      //       },{
-      //         number: 2,
-      //         title: 'Nivel 2',
-      //         image: '../assets/icons/rocket.png',
-      //         progress: self.getProgress('definiciones',1)
-      //         // passed: self.isGold('definiciones',0)
-      //       },{
-      //         number: 3,
-      //         title: 'Nivel 3',
-      //         image: '../assets/icons/spaceshuttle.png',
-      //         progress: self.getProgress('definiciones',2)
-      //         // passed: self.isGold('definiciones',0)
-      //       }
-      //     ]
-      //   }
-      // ]
+      self.getTrophyTitle = function(excercise) {
+        var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
+        for (var points in self.trophyTitles) {
+          if ((score >= (parseInt(points))) && (score < (parseInt(points) + 25))) {
+            return self.trophyTitles[points];
+            break;
+            }
+          }
+        return self.trophyTitles[25];
+      };
+
+      self.getStarsNumber = function() {
+        var stars = 0;
+        self.excercises.forEach(function(excercise) {
+          excercise.levels.forEach(function(level) {
+            if (level.totalScore >= 100) stars++;
+          })
+        })
+        return stars;
+      };
+
+      self.stars = new Array(self.getStarsNumber());
+
+
+      self.getProgress = function(score) {
+        if (score > 100) return 100;
+        else return score;
+      }
     };
 
     return Game;
@@ -311,13 +300,14 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
     };
 
     var resourceLevel = $resource(
-      '/sinonimos/level/:levelnumber',
+      '/:name/level/:levelnumber',
       {},
       {
         'get':{
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
+            console.log(response);
             var jsData = angular.fromJson(response);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);
