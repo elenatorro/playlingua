@@ -17,9 +17,9 @@
           templateUrl: "/views/users/index.html",
           controller: "UserController"
         })
-        .when("/dashboard/sinonimos/:level", {
-          templateUrl: "/views/synonyms/index.html",
-          controller: "SynonymsController"
+        .when("/dashboard/:name/:level", {
+          templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
+          controller: "levelController"
         })
         .otherwise({
            redirectTo: '/dashboard/user'

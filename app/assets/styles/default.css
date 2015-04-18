@@ -1,5 +1,5 @@
 /* General Demo Style */
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Arial:300,400,700);*/
 
 @font-face {
 	font-family: 'codropsicons';
@@ -20,7 +20,7 @@ body, html { font-size: 100%; padding: 0; margin: 0; }
 .clearfix:after { clear: both; }
 
 body {
-	font-family: 'Lato', Calibri, Arial, sans-serif;
+	font-family: 'Arial', Calibri, Arial, sans-serif;
 	color: #fff;
 	background: #e74c3c;
 }
@@ -143,7 +143,7 @@ button {
 	padding: 0.6em 1.2em;
 	background: #c0392b;
 	color: #fff;
-	font-family: 'Lato', Calibri, Arial, sans-serif;
+	font-family: 'Arial', Calibri, Arial, sans-serif;
 	font-size: 1em;
 	letter-spacing: 1px;
 	text-transform: uppercase;
@@ -162,7 +162,7 @@ button:hover {
 		width: 100%;
 		min-width: auto;
 		min-height: auto;
-		padding: 1em; 
+		padding: 1em;
 	}
 
 	.column p {

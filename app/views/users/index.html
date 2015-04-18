@@ -20,27 +20,18 @@
 			<div class="panel panel-warning info">
 				<div class="panel-heading">Trofeos</div>
 				<div class="panel-body">
-					<h4>¡Máquina en Sinónimos!</h4>
+					<div ng-repeat="excercise in game.excercises">
+					<h4>{{game.getTrophyTitle(excercise.name)}} en {{excercise.title}}</h4>
 					<img src="../assets/icons/trophy.png" class="progress-logo"/>
+				</div>
 				</div>
 			</div>
 			<div class="panel panel-success info">
 				<div class="panel-heading">Estrellas</div>
 				<div class="panel-body">
-					<img src="../assets/icons/star.png" class="progress-logo-small"/>
-					<img src="../assets/icons/star.png" class="progress-logo-small"/>
-					<img src="../assets/icons/star.png" class="progress-logo-small"/>
-				</div>
-			</div>
-			<div class="panel panel-info">
-				<div class="panel-heading info">Tus amigos</div>
-				<div class="panel-body">
-					<ul>
-						<li>Elena</li>
-						<li>Álvaro</li>
-						<li>Kiko</li>
-						<li>Laura</li>
-					</ul>
+					<div ng-repeat="star in game.stars track by $index">
+						<img src="../assets/icons/star.png" class="progress-logo-small"/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -55,7 +46,7 @@
 							<h3>Nivel {{$index+1}}</h3>
 							<img ng-src="../assets/icons/{{excercise.name}}/level{{$index+1}}.png"  class="progress-logo hvr-pop"/>
 							<div class="progress progress-striped">
-								<div class="progress-bar progress-bar-info" style="width: {{levelData.totalScore}}%"></div>
+								<div class="progress-bar progress-bar-info" style="width: {{game.getProgress(levelData.totalScore)}}%"></div>
 							</div>
 								<a type="button" class="btn btn-default" href="/dashboard/{{excercise.name}}/{{$index+1}}">Jugar</a>
 						</div>

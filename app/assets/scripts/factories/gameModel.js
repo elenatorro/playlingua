@@ -14,7 +14,19 @@ angular.module('PlaylinguaApp')
 
       self.getExcercises = function() {
         return self.excercises;
-      }
+      };
+
+      self.getExcercise = function(name) {
+        return _.where(self.excercises, {name: name});
+      };
+
+      self.getTotalExcerciseScore = function(excercise) {
+        var totalScore = 0;
+        excercise[0].levels.forEach(function(level) {
+          totalScore += level.totalScore;
+        })
+        return totalScore;
+      };
 
       self.isExcercises = function() {
         return (self.excercises.length!=0);
@@ -55,63 +67,37 @@ angular.module('PlaylinguaApp')
       };
 
       self.getTrophy = function(points) {
-        return self.tropyTitles(points);
+        return self.trophyTitles[points];
       };
 
-      // self.excercisesData = [
-      //   {
-      //     name: 'Sinónimos',
-      //     url: 'synonyms',
-      //     image: "../assets/icons/polaroids.png",
-      //     levels: [
-      //       {
-      //         number: 1,
-      //         title: 'Nivel 1',
-      //         image: '../assets/icons/unicycle.png',
-      //         progress: self.getProgress('sinonimos',0)
-      //         // passed: self.isGold('sinonimos',0)
-      //       },{
-      //         number: 2,
-      //         title: 'Nivel 2',
-      //         image: '../assets/icons/bike.png',
-      //         progress: self.getProgress('sinonimos',1)
-      //         // passed: self.isGold('sinonimos',1)
-      //
-      //       },{
-      //         number: 3,
-      //         title: 'Nivel 3',
-      //         image: '../assets/icons/motorcycle.png',
-      //         progress: self.getProgress('sinonimos',2)
-      //         // passed: self.isGold('sinonimos',2)
-      //       }
-      //     ]
-      //   },{
-      //     name: 'Definiciones',
-      //     url: 'definitions',
-      //     image: "../assets/icons/bookshelf.png",
-      //     levels: [
-      //       {
-      //         number: 1,
-      //         title: 'Nivel 1',
-      //         image: '../assets/icons/plane.png',
-      //         progress: self.getProgress('definiciones',0)
-      //         // passed: self.isGold('definiciones',0)
-      //       },{
-      //         number: 2,
-      //         title: 'Nivel 2',
-      //         image: '../assets/icons/rocket.png',
-      //         progress: self.getProgress('definiciones',1)
-      //         // passed: self.isGold('definiciones',0)
-      //       },{
-      //         number: 3,
-      //         title: 'Nivel 3',
-      //         image: '../assets/icons/spaceshuttle.png',
-      //         progress: self.getProgress('definiciones',2)
-      //         // passed: self.isGold('definiciones',0)
-      //       }
-      //     ]
-      //   }
-      // ]
+      self.getTrophyTitle = function(excercise) {
+        var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
+        for (var points in self.trophyTitles) {
+          if ((score >= (parseInt(points))) && (score < (parseInt(points) + 25))) {
+            return self.trophyTitles[points];
+            break;
+            }
+          }
+        return self.trophyTitles[25];
+      };
+
+      self.getStarsNumber = function() {
+        var stars = 0;
+        self.excercises.forEach(function(excercise) {
+          excercise.levels.forEach(function(level) {
+            if (level.totalScore >= 100) stars++;
+          })
+        })
+        return stars;
+      };
+
+      self.stars = new Array(self.getStarsNumber());
+
+
+      self.getProgress = function(score) {
+        if (score > 100) return 100;
+        else return score;
+      }
     };
 
     return Game;

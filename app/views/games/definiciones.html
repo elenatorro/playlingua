@@ -1,0 +1,14 @@
+<div id="main-content" class="container">
+  <div ng-if="contentArray" class="row">
+    <div class="col-lg-3">
+      <h3>Nivel: {{level.level}}</h3>
+      <h2 id="hearts">
+        <i class="fa fa-heart heart spin-toggle" ng-model="level.lifes" ng-repeat="life in getTimes(level.lifes) track by $index"></i>
+      </h2>
+      <img ng-src="../../../assets/images/{{level.animal}}.png" class="hvr-buzz character"/>
+    </div>
+    <div class="col-lg-9">
+      <sliderpanel level="level" contentarray="contentArray"/>
+    </div>
+  </div>
+</div>

@@ -23,13 +23,14 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
     };
 
     var resourceLevel = $resource(
-      '/sinonimos/level/:levelnumber',
+      '/:name/level/:levelnumber',
       {},
       {
         'get':{
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
+            console.log(response);
             var jsData = angular.fromJson(response);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);
