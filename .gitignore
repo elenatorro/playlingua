@@ -4,7 +4,6 @@ node_modules
 app/assets/bower_components
 test/bower_components
 old_public
-public
 insert_text.js
 .DS_Store
 config/database.js
