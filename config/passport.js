@@ -134,7 +134,7 @@ module.exports = function(passport) {
 	passport.use(new FacebookStrategy({
     		clientID: FACEBOOK_APP_ID,
     		clientSecret: FACEBOOK_APP_SECRET,
-    		callbackURL: "http://localhost:1058/auth/facebook/callback"
+    		callbackURL: "http://playlingua.herokuapp.com/auth/facebook/callback"
   		},
   		function(req, accessToken, refreshToken, profile, done) {
     		// asynchronous verification, for effect...
