@@ -216,8 +216,8 @@ module.exports = function(passport) {
 		passport.use(new GoogleStrategy({
     				clientID: GOOGLE_CONSUMER_KEY,
     				clientSecret: GOOGLE_CONSUMER_SECRET,
-            callbackURL: "http://playlingua.herokuapp.com/auth/twitter/callback"
-      },
+    				callbackURL: "http://playlingua.herokuapp.com/auth/google/callback"
+  				},
   				function(req, accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     					process.nextTick(function () {
