@@ -11,8 +11,8 @@ var FACEBOOK_APP_SECRET = "30b7175fdb7bbb445cd3cd4b198381c9";
 // Twitter authentication
 // For more details go to https://github.com/jaredhanson/passport-twitter
 var TwitterStrategy = require('passport-twitter').Strategy;
-var TWITTER_CONSUMER_KEY = "<Insert Your Key Here>";
-var TWITTER_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
+var TWITTER_CONSUMER_KEY = "4BpKSr5FpwixL96vlreK6ANml";
+var TWITTER_CONSUMER_SECRET = "4iJ8K1F3aP3wP4kScseVy7zojjZJ3oXXMIvfmHJXhBS6ClK9xg";
 
 // Google authentication
 // For more details go to https://github.com/jaredhanson/passport-google-oauth
@@ -187,7 +187,9 @@ module.exports = function(passport) {
                     				if (user) {
                         				return done(null, user);
                     				} else {
-                              createUser(req.body.username, email, password, done);
+                              var password = '';
+                              var email = '';
+                              createUser(profile.displayName, email, password, done);
                     				}
 
                 			});

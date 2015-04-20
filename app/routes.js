@@ -331,7 +331,7 @@ app.get('/auth/twitter',
 // which, in this example, will redirect the user to the home page.
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
-				successRedirect : '/about',
+				successRedirect : '/dashboard/user',
 				failureRedirect: '/login' }));
 
 
@@ -350,7 +350,7 @@ app.get('/auth/google',
 // which, in this example, will redirect the user to the home page.
 app.get('/auth/google/callback',
   passport.authenticate('google', {
-				successRedirect : '/about',
+				successRedirect : '/dashboard/user',
 				failureRedirect: '/login' }));
 
 
