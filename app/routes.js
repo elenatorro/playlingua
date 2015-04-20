@@ -309,7 +309,7 @@ module.exports = function(app, passport,server) {
 // which, in this example, will redirect the user to the home page.
 		app.get('/auth/facebook/callback',
   			passport.authenticate('facebook', {
-				successRedirect : '/about',
+				successRedirect : '/dashboard/user',
 				failureRedirect: '/login' }));
 
 
