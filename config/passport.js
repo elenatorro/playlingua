@@ -16,8 +16,8 @@ var TWITTER_CONSUMER_SECRET = "4iJ8K1F3aP3wP4kScseVy7zojjZJ3oXXMIvfmHJXhBS6ClK9x
 
 // Google authentication
 // For more details go to https://github.com/jaredhanson/passport-google-oauth
-var GOOGLE_CONSUMER_KEY = "<Insert Your Key Here>";
-var GOOGLE_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
+var GOOGLE_CONSUMER_KEY = "77311308950-ah6nj1ml4ethe26ia1uckpuvn96vpass.apps.googleusercontent.com";
+var GOOGLE_CONSUMER_SECRET = "42XRAJMj7Z62n0ZwGLigrX7y";
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy
 
 var User            = require('../app/models/user');
@@ -175,7 +175,7 @@ module.exports = function(passport) {
 			passport.use(new TwitterStrategy({
     			consumerKey: TWITTER_CONSUMER_KEY,
     			consumerSecret: TWITTER_CONSUMER_SECRET,
-    			callbackURL: "http://192.168.1.101:8080/auth/twitter/callback"
+    			callbackURL: "http://playlingua.herokuapp.com/auth/twitter/callback"
   		},
   		function(req,token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
@@ -216,8 +216,8 @@ module.exports = function(passport) {
 		passport.use(new GoogleStrategy({
     				clientID: GOOGLE_CONSUMER_KEY,
     				clientSecret: GOOGLE_CONSUMER_SECRET,
-    				callbackURL: "http://localhost:8080/auth/google/callback"
-  				},
+            callbackURL: "http://playlingua.herokuapp.com/auth/twitter/callback"
+      },
   				function(req, accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     					process.nextTick(function () {
@@ -228,7 +228,7 @@ module.exports = function(passport) {
                     					if (user) {
                         					return done(null, user);
                     					} else {
-                                createUser(req.body.username, email, password, done);
+                                createUser(profile.displayName, profile.emails[0].value, password, done);
                     					}
 
                 					});
