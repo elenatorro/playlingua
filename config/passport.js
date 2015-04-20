@@ -23,9 +23,9 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy
 var User            = require('../app/models/user');
 var Excercise       = require('../app/models/excercise');
 
-var createUser = function(req, email, password, done) {
+var createUser = function(username, email, password, done) {
   var newUser            = new User();
-  newUser.user.username  = req.body.username;
+  newUser.user.username  = username;
   newUser.user.email     = email;
   newUser.user.adress    = '';
   newUser.user.password  = newUser.generateHash(password);
@@ -37,14 +37,14 @@ var createUser = function(req, email, password, done) {
         var synonyms = new Excercise();
         synonyms.name = 'sinonimos';
         synonyms.title = 'Sinónimos';
-        synonyms.username = req.body.username;
+        synonyms.username = username;
         synonyms.levels = [{number:1},{number:2},{number:3}];
         synonyms.save();
 
         var definitions = new Excercise();
         definitions.name = 'definiciones';
         definitions.title = 'Definiciones';
-        definitions.username = req.body.username;
+        definitions.username = username;
         definitions.levels = [{number:1},{number:2},{number:3}];
         definitions.save();
 
@@ -102,7 +102,7 @@ module.exports = function(passport) {
                     if (user) {
                         return done(null, false, req.flash('signuperror', '¡Ese usuario ya existe!'));
                     } else {
-                        createUser(req, email, password, done);
+                        createUser(req.body.username, email, password, done);
                     }
 
                 });
@@ -136,37 +136,36 @@ module.exports = function(passport) {
     		clientSecret: FACEBOOK_APP_SECRET,
     		callbackURL: "http://playlingua.herokuapp.com/auth/facebook/callback"
   		},
-  		function(req, accessToken, refreshToken, profile, done) {
-    		// asynchronous verification, for effect...
+      function(req, accessToken, refreshToken, profile, done) {
+      // asynchronous verification, for effect...
 
-    			process.nextTick(function () {
-            			if (!req.user) {
- 					User.findOne({ 'user.email' :  profile.emails[0].value }, function(err, user) {
-            	    				if (err){ return done(err);}
-                    				if (user) {
-                        				return done(null, user);
-                    				} else {
-                              createUser(req, email, password, done);
-                    				}
+        process.nextTick(function () {
+                if (!req.user) {
+         User.findOne({ 'user.email' :  profile.emails[0].value }, function(err, user) {
+                        if (err){ return done(err);}
+                          if (user) {
+                              return done(null, user);
+                          } else {
+                            var password = '';
+                            createUser(req.body.username, profile.emails[0].value, password, done);
+                          }
 
-                			});
-                         	} else {
-                             console.log(req.user);
-                             console.log(profile);
-					var user            = req.user;
-					user.user.username  = profile.displayName;
-          user.user.email     = profile.emails[0].value;
-					user.user.name	    = ''
-					user.user.address	  = ''
+                    });
+                         } else {
+        var user  = req.user;
+        user.user.username    = profile.displayName;
+                    user.user.email    = profile.emails[0].value;
+        user.user.name	= ''
+        user.user.address	= ''
 
-                			user.save(function(err) {
-                    				if (err)
-                        				throw err;
-                    			return done(null, user);
-                			});
-            			}
-    			});
-  		}
+                    user.save(function(err) {
+                          if (err)
+                              throw err;
+                        return done(null, user);
+                    });
+                }
+        });
+    }
 	));
 
 // Use the TwitterStrategy within Passport.
@@ -188,7 +187,7 @@ module.exports = function(passport) {
                     				if (user) {
                         				return done(null, user);
                     				} else {
-                              createUser(req, email, password, done);
+                              createUser(req.body.username, email, password, done);
                     				}
 
                 			});
@@ -227,7 +226,7 @@ module.exports = function(passport) {
                     					if (user) {
                         					return done(null, user);
                     					} else {
-                                createUser(req, email, password, done);
+                                createUser(req.body.username, email, password, done);
                     					}
 
                 					});
