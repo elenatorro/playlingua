@@ -125,6 +125,12 @@ gulp.task("images", function() {
   .pipe(gulp.dest("./public/assets/images"));
 })
 
+gulp.task("fonts", function() {
+  //index
+  gulp.src("./app/assets/fonts/*")
+  .pipe(gulp.dest("./public/assets/fonts"));
+})
+
 /* icons */
 gulp.task("icons", function() {
   //index
@@ -149,9 +155,9 @@ gulp.task("run", function() {
 })
 
 gulp.task("build", ["bower-files", "jsDependencies", "cssDependencies",
-                      "style", "customStyle", "bundle", "views", "images", "icons"]);
+                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts"]);
 
 gulp.task("deploy", ["jsDependencies", "cssDependencies",
-                      "style", "customStyle", "bundle", "views", "images", "icons"]);
+                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts"]);
 
 gulp.task("default", ["build", "run", "watch"]);

@@ -19,7 +19,11 @@
         })
         .when("/dashboard/:name/:level", {
           templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
-          controller: "levelController"
+          controller: "LevelController"
+        })
+        .when("/dashboard/friends", {
+          templateUrl: "/views/users/friends.html",
+          controller: "FriendsController"
         })
         .otherwise({
            redirectTo: '/dashboard/user'
@@ -28,15 +32,47 @@
   ]);
 
 angular.module('PlaylinguaApp')
-.controller('levelController', [
+.controller('FriendsController', [
+  '$scope', "$http", "User", "Game", "Excercises",
+  function($scope, $http, User, Game, Excercises) {
+    $scope.followingData = [];
+    User.get().$promise.then(function(user) {
+      $scope.user = user;
+      var game;
+      $scope.user.following.forEach(function(user) {
+        Excercises.get({'username': user}).$promise.then(function(excercises) {
+          game = new Game(excercises);
+          $scope.followingData.push({'username': user, 'game': game});
+        })
+      })
+    });
+
+
+    $scope.search = function(username) {
+      $http.get('/userdata/' + username).then(function(user) {
+        $scope.foundUser = user.data;
+        $scope.foundUser.isFriend = _.contains($scope.user.following, user.data.username);
+      });
+    };
+
+    $scope.follow = function(username) {
+      if (!_.contains($scope.user.following, username)) {
+        $http.put('/follow/' + username).then(function(message) {
+          /* TODO   update following data*/
+        });
+      }
+    };
+  }
+]);
+
+angular.module('PlaylinguaApp')
+.controller('LevelController', [
   '$scope', "$http", "$routeParams","User", "Level",
   function($scope, $http, $routeParams, User, Level) {
     console.log($routeParams);
     Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;
-      console.log(level);
-      console.log($scope.contentArray);
     });
 
     User.get().$promise.then(function(user) {
@@ -52,12 +88,10 @@ angular.module('PlaylinguaApp')
 .controller('UserController', [
   '$scope', "$http", "User", "Game", "Excercises",
   function($scope, $http, User, Game, Excercises) {
-    $scope.test = "Testing...";
     $scope.user = User.get();
 
     Excercises.get().$promise.then(function(excercises) {
       $scope.game = new Game(excercises);
-      console.log($scope.game);
     });
   }
 ]);
@@ -149,11 +183,12 @@ angular.module('PlaylinguaApp')
 angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q', function($resource, $http, $q){
     function Excercises(data) {
         angular.extend(this, data);
+        console.log(data);
         var self = this;
     };
 
     var resourceExcercises = $resource(
-      '/excercises',
+      '/excercises/:username',
       {},
       {
         'get':{
@@ -194,11 +229,18 @@ angular.module('PlaylinguaApp')
 
       self.getTotalExcerciseScore = function(excercise) {
         var totalScore = 0;
-        excercise[0].levels.forEach(function(level) {
+        var auxExcercise;
+        if (!excercise.levels) {
+          auxExcercise = excercise[0];
+        } else {
+          auxExcercise = excercise;
+        }
+        auxExcercise.levels.forEach(function(level) {
           totalScore += level.totalScore;
         })
         return totalScore;
       };
+
 
       self.isExcercises = function() {
         return (self.excercises.length!=0);
@@ -340,6 +382,7 @@ angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', fun
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
+            console.log(jsData);
             return new User(jsData);
           }
         }

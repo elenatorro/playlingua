@@ -20,7 +20,7 @@ body, html { font-size: 100%; padding: 0; margin: 0; }
 .clearfix:after { clear: both; }
 
 body {
-	font-family: 'Arial', Calibri, Arial, sans-serif;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
 	color: #fff;
 	background: #e74c3c;
 }
@@ -143,7 +143,7 @@ button {
 	padding: 0.6em 1.2em;
 	background: #c0392b;
 	color: #fff;
-	font-family: 'Arial', Calibri, Arial, sans-serif;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
 	font-size: 1em;
 	letter-spacing: 1px;
 	text-transform: uppercase;

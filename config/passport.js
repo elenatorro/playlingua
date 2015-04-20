@@ -5,8 +5,8 @@ var LocalStrategy    = require('passport-local').Strategy;
 // Facebook authentication
 // For more details go to https://github.com/jaredhanson/passport-facebook
 var FacebookStrategy = require('passport-facebook').Strategy;
-var FACEBOOK_APP_ID = "<Insert Your Key Here>"
-var FACEBOOK_APP_SECRET = "<Insert Your Secret Key Here>";
+var FACEBOOK_APP_ID = "353460018186588";
+var FACEBOOK_APP_SECRET = "30b7175fdb7bbb445cd3cd4b198381c9";
 
 // Twitter authentication
 // For more details go to https://github.com/jaredhanson/passport-twitter
@@ -134,7 +134,7 @@ module.exports = function(passport) {
 	passport.use(new FacebookStrategy({
     		clientID: FACEBOOK_APP_ID,
     		clientSecret: FACEBOOK_APP_SECRET,
-    		callbackURL: "http://localhost:8080/auth/facebook/callback"
+    		callbackURL: "http://localhost:1058/auth/facebook/callback"
   		},
   		function(req, accessToken, refreshToken, profile, done) {
     		// asynchronous verification, for effect...
@@ -151,11 +151,13 @@ module.exports = function(passport) {
 
                 			});
                          	} else {
+                             console.log(req.user);
+                             console.log(profile);
 					var user            = req.user;
-					user.user.username    = profile.displayName;
-                			user.user.email    = profile.emails[0].value;
-					user.user.name	= ''
-					user.user.address	= ''
+					user.user.username  = profile.displayName;
+          user.user.email     = profile.emails[0].value;
+					user.user.name	    = ''
+					user.user.address	  = ''
 
                 			user.save(function(err) {
                     				if (err)

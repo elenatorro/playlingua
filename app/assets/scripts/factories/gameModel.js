@@ -22,11 +22,18 @@ angular.module('PlaylinguaApp')
 
       self.getTotalExcerciseScore = function(excercise) {
         var totalScore = 0;
-        excercise[0].levels.forEach(function(level) {
+        var auxExcercise;
+        if (!excercise.levels) {
+          auxExcercise = excercise[0];
+        } else {
+          auxExcercise = excercise;
+        }
+        auxExcercise.levels.forEach(function(level) {
           totalScore += level.totalScore;
         })
         return totalScore;
       };
+
 
       self.isExcercises = function() {
         return (self.excercises.length!=0);

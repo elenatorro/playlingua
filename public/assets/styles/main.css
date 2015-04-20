@@ -1,7 +1,18 @@
-@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
 /*Import from general*/
 /* BASIC PALETTE */
 /* headers */
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Regular.ttf');
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'FingerPaint';
+  src: url('../fonts/FingerPaint-Regular.ttf');
+  font-weight: normal;
+  font-style: normal; }
+
 /* Custom Stylesheet */
 /**
  * Use this file to override Materialize files so you can update
@@ -14,18 +25,7 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-  /*background-image: url('cohete.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: #00bfa5;
-
-  // background-color: #fff;
-  // background-image:
-  // linear-gradient(#eee .2em, transparent .2em);
-  // background-size: 100% 2em;
-*/ }
+  background-size: cover; }
 
 body.main-page {
   background: url('../images/bubbles.jpg') no-repeat center center fixed;
@@ -42,7 +42,7 @@ body.main-page {
   border: none; }
 
 .navbar-brand.main-tittle {
-  font-family: 'Finger Paint';
+  font-family: 'FingerPaint';
   color: white; }
 
 ul.nav.navbar-nav > li > a {
@@ -79,6 +79,10 @@ ul.nav.navbar-nav > li > a {
   margin: 0 auto 0 auto;
   width: 100%; }
 
+.social-icon {
+  font-size: 60px;
+  color: #36BBA6; }
+
 /*!
 * Start Bootstrap - One Page Wonder HTML Template (http://startbootstrap.com)
 * Code licensed under the Apache License v2.0.
@@ -95,23 +99,22 @@ ul.nav.navbar-nav > li > a {
   /*background: rgba(255,255,255,0.6);*/ }
 
 .headline h1 {
-  font-size: 130px;
-  font-family: 'Finger Paint';
+  font-size: 90px;
+  font-family: 'FingerPaint';
   color: white;
   text-shadow: 2px 0px gray; }
 
 .headline h2 {
-  font-size: 77px;
-  font-family: 'Finger Paint';
+  font-size: 60px;
+  font-family: 'FingerPaint';
   color: white;
   text-shadow: 2px 0px gray; }
 
-.featurette-divider {
-  margin: 80px 0; }
-
-.featurette {
-  overflow: hidden;
-  padding: 10px; }
+.main-info {
+  min-width: 100%;
+  padding: 50px 100px;
+  background-color: white;
+  color: #36BBA6; }
 
 .featurette-image.pull-left {
   margin-right: 40px; }
@@ -122,8 +125,20 @@ ul.nav.navbar-nav > li > a {
 .featurette-heading {
   font-size: 50px; }
 
+.img-info {
+  width: 150px;
+  margin: 0 auto 0 auto; }
+
+fieldset {
+  border: none; }
+
 footer {
-  margin: 50px 0; }
+  margin: 50px 0;
+  background-color: #36BBA6;
+  color: white;
+  min-width: 100%;
+  margin: 0px 0px;
+  padding: 50px 100px; }
 
 @media (max-width: 1200px) {
   .headline h1 {
@@ -145,7 +160,7 @@ footer {
   .headline h2 {
     font-size: 50px; }
   .featurette-divider {
-    margin: 40px 0; }
+    margin: 0px 40px; }
   .featurette-image {
     max-width: 50%; }
   .featurette-image.pull-left {
@@ -156,8 +171,6 @@ footer {
     font-size: 30px; } }
 
 @media (max-width: 768px) {
-  .container {
-    margin: 0 15px; }
   .featurette-divider {
     margin: 40px 0; }
   .featurette-heading {
@@ -1261,6 +1274,9 @@ footer {
 
 .heart {
   margin: 5px; }
+
+.list-group {
+  text-align: left; }
 
 .character {
   width: 100%; }

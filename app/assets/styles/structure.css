@@ -1,15 +1,4 @@
 /*
-  ✰✰✰✰✰✰✰✰✰✰✰✰✰✰ 
-
-  Simple Login Form
-  HTML5/CSS3 Coded by: $hekh@r d-Ziner, CSSJunction.com
-  PSD by:PremiumPixels.com
-  
-  Uuage: Free. You can modify, remove our links and use wherever you want ☺.
-  
-  ✰✰✰✰✰✰✰✰✰✰✰✰✰✰✰ 
-  
-*/
 body {
 	background: #eff3f6;
 	background: url(../images/background.jpeg) repeat scroll;
@@ -383,7 +372,7 @@ div#menu ul.menu>li:hover>a span {
 }
 
 div#menu li {
-	
+
 }
 
 div#menu li.last {
@@ -447,7 +436,7 @@ div#menu li.back .left {
 	position: absolute;
 	z-index:999;
 	font-size:16px;
-	color: #F0F2F5; 
+	color: #F0F2F5;
    font: bold 16px Helvetica, Arial, Sans-Serif;
    text-shadow: 2px 2px 4px #000;
 }
@@ -457,5 +446,5 @@ div#menu li.back .left {
 }
 #reminder a{
 	text-decoration:none;
-	color:#E26262;	
-}
+	color:#E26262;
+}*/

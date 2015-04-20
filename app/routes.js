@@ -15,24 +15,83 @@ module.exports = function(app, passport,server) {
 	app.get('/user', auth, function(request, response) {
     response.setHeader('Content-Type', 'application/json');
     response.end(JSON.stringify({username: request.user.user.username,
-                                 totalScore: request.user.user.totalScore}));
+                                 totalScore: request.user.user.totalScore,
+                                 user: request.user.user.followers,
+                                 following: request.user.user.following}));
 	});
 
   app.get('/dashboard/*', auth, function(request, response) {
     response.render('main.html');
 	});
 
-  app.get('/excercises', auth, function(request, response) {
-    var query = Excercise.find({username: request.user.user.username});
-    query.exec(function(err, data) {
+  app.get('/excercises/:username?', auth, function(request, response) {
+    var username = request.params.username;
+    if (!username) username = request.user.user.username;
+    var query = Excercise.find({username: username});
+    query.exec(function(err, excercises) {
       if (err) {
         response.end(JSON.stringify(err));
       } else {
         response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-        response.end(JSON.stringify(data));
+        response.end(JSON.stringify(excercises));
       }
     });
   });
+
+  app.get('/userdata/:username', auth, function(request, response) {
+    var query = Excercise.find({username: request.params.username}, {'_id': 0});
+    query.select('name levels');
+    query.exec(function(err, userdata) {
+        if (!err) {
+           if (userdata.length!=0) {
+             var user = {
+               username: request.params.username,
+               excercises: userdata
+             };
+             response.send(JSON.stringify(user), {
+                  'Content-Type': 'application/json'
+             }, 200);
+           } else {
+             response.send(JSON.stringify({'message': 'no-user'}), {
+                  'Content-Type': 'application/json'
+             }, 404);
+           }
+
+        } else {
+           response.send(JSON.stringify(err), {
+                'Content-Type': 'application/json'
+           }, 404);
+        }
+     });
+  });
+
+  app.put('/follow/:username', auth, function(request, response) {
+    var response = {'message': ''};
+    var follow = User.find({'user.username': request.params.username}, {'_id': 0});
+    follow.select('user.username user.followers user.following');
+    follow.exec(function(err, user) {
+      if (!err) {
+        var userdata = user[0];
+        var updateFollowers = User.update({'user.username': userdata.user.username},{'$addToSet': {'user.followers': request.user.user.username}});
+        updateFollowers.exec(function(err, data) {
+          if(!err) {
+            var updateFollowing = User.update({'user.username': request.user.user.username}, {'$addToSet': {'user.following': userdata.user.username}});
+            updateFollowing.exec(function(err, data) {
+              if (!err) {
+                response.message = 'OK';
+              } else {
+                response = err;
+              }
+            })
+          } else {
+            response = err;
+          }
+        })
+      } else {
+        response = err;
+      }
+    })
+  })
 
   app.get('/:name/level/:levelnumber', function(request, response) {
     var query = Text.find({name: request.params.name, level: request.params.levelnumber});
@@ -199,26 +258,21 @@ module.exports = function(app, passport,server) {
 
 	});
 
-	app.get('/search_member', function(req, res) {
-   		var regex = new RegExp(req.query["term"], 'i');
-
-   		var query = User.find({ $and: [ {'user.name': regex}, { _id: { $ne: req.user._id } } ] } ).limit(20);
-
-      // Execute query in a callback and return users list
-  		query.exec(function(err, users) {
-      		if (!err) {
-         		// Method to construct the json result set
-
-         		res.send(users, {
-            			'Content-Type': 'application/json'
-         		}, 200);
-      		} else {
-         		res.send(JSON.stringify(err), {
-            			'Content-Type': 'application/json'
-         		}, 404);
-      		}
-   		});
-	});
+  app.get('/searchuser/:username', function(req, res) {
+      var query = User.find({ $and: [ {'user.username': req.params.username}, { _id: { $ne: req.user._id } } ] }, {'_id': 0} ).limit(20);
+      query.select('user.username');
+      query.exec(function(err, users) {
+          if (!err) {
+             res.send(users, {
+                  'Content-Type': 'application/json'
+             }, 200);
+          } else {
+             res.send(JSON.stringify(err), {
+                  'Content-Type': 'application/json'
+             }, 404);
+          }
+       });
+  });
 
 		app.post('/friend',  function (request, response){
 				Friend.findOne({ $and: [ {'friend.mainfriendid': request.param('mainfriendid')}, { 'friend.anotherfriendid': request.param('anotherfriendid') } ] }, function(err, friend) {

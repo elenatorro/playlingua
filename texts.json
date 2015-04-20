@@ -1,3 +1,85 @@
-{ "_id" : { "$oid" : "552981b149308c53dd2a6f9c" }, "name" : "sinonimos", "level" : "1", "elements" : [ { "words" : "Se lo podía ver en los días de buen tiempo, cuando el río fluía más lentamente y las aguas barrosas se aclaraban", "selected" : [ { "word" : "fluía", "value" : "fluctuaba" } ] }, { "words" : "El viento Sur, caliente y perezoso, empujaba las nubes blanquecinas que se rasgaban al correr hacia el Norte", "selected" : [ { "word" : "empujaba", "value" : "apretaba" } ] }, { "words" : "En aquel mundo los navíos abrían al partir sus velas radiantes, y el alba apagaba, poco a poco, las luces del puerto.", "selected" : [ { "word" : "apagaba", "value" : "extinguía" }, { "word" : "navíos", "value" : "barcos" } ] }, { "words" : "Era lo que ansiaban, y por eso se asustaron.", "selected" : [ { "word" : "ansiaban", "value" : "anhelaban" }, { "word" : "asustaron", "value" : "espantaron" } ] }, { "words" : "Un manto de nieve, raído, agujereado, tenue, cubría la tierra descolorida", "selected" : [ { "word" : "tenue", "value" : "débil" }, { "word" : "agujereado", "value" : "perforado" } ] }, { "words" : "Se entraba en ellos con los cuchillos romos, sin apetito, con una somnolencia perezosa", "selected" : [ { "word" : "apetito", "value" : "hambre" } ] }, { "words" : "Ya divisaba los llanos regados y, al término de una quebrada, vio humo y después un rancho", "selected" : [ { "word" : "regados", "value" : "rociados" } ] }, { "words" : "La lluvia fresca de la tarde había caído sobre el valle, humedeciendo el maíz en los sembrados de las laderas", "selected" : [ { "word" : "humedeciendo", "value" : "mojando" } ] } ] }
-{ "_id" : { "$oid" : "552981c049308c53dd2a6f9d" }, "name" : "sinonimos", "level" : "2", "elements" : [ { "words" : "Las caras rojas, barnizadas por el sol, brillaban con el reflejo de las llamas del hogar", "selected" : [ { "word" : "brillaban", "value" : "resplandecían" }, { "word" : "brillaban", "value" : "lucían" } ] }, { "words" : "bajo un cielo de color violeta en el que comenzaban a brillar las estrellas, veíanse los campos pálidos e indecisos en la penumbra del crepúsculo", "selected" : [ { "word" : "pálidos", "value" : "débiles" }, { "word" : "crepúsculo", "value" : "ocaso" }, { "word" : "penumbra", "value" : "oscuridad" } ] }, { "words" : "En otros tiempo más antiguos también había vivido el pirata, que relampagueaba de gritos en un aire de cuchillos, o el bruñido caballero de hierro-", "selected" : [ { "word" : "pirata", "value" : "bucanero" }, { "word" : "bruñido", "value" : "abrillantado" } ] }, { "words" : "Mi hacedor no me excusó de ellos, zarandeándome como el viento, de la buena ocasión a mal trance, enhestándome más para mejor derrocarme.", "selected" : [ { "word" : "excusó", "value" : "disculpó" }, { "word" : "zarandeándome", "value" : "maltratándome" }, { "word" : "trance", "value" : "hechizo" }, { "word" : "derrocarme", "value" : "derribarme" } ] }, { "words" : "En una emulación de la antigua democracia, hemos acordado que cada cuatro años su puesto deba someterse a elección.", "selected" : [ { "word" : "acordado", "value" : "determinado" }, { "word" : "puesto", "value" : "posición" }, { "word" : "puesto", "value" : "sitio" } ] }, { "words" : "Un manto de nieve, raído, agujereado, tenue, cubría la tierra descolorida.", "selected" : [ { "word" : "raído", "value" : "desgastado" }, { "word" : "raído", "value" : "raspado" }, { "word" : "manto", "value" : "capa" }, { "word" : "tenue", "value" : "débil" } ] }, { "words" : "A veces la interrumpía de pronto con un gesto implorante de la mano, para correr a un rincón del aposento.", "selected" : [ { "word" : "aposento", "value" : "cuarto" }, { "word" : "aposento", "value" : "habitación" } ] }, { "words" : "Cuando ella, con ademanes enérgicos, pasaba el cepillo por el suelo, se sentía desfallecer.", "selected" : [ { "word" : "ademanes", "value" : "gestos" }, { "word" : "enérgicos", "value" : "dinámicos" }, { "word" : "cepillo", "value" : "mostacho" } ] }, { "words" : "Cuando ella, con ademanes enérgicos, pasaba el cepillo por el suelo, se sentía desfallecer.", "selected" : [ { "word" : "ademanes", "value" : "posturas" }, { "word" : "ademanes", "value" : "gesticulación" } ] } ] }
-{ "_id" : { "$oid" : "552981c349308c53dd2a6f9e" }, "name" : "sinonimos", "level" : "3", "elements" : [ { "words" : "En las calles no había más ruido que el rumor estridente de los remolinos de polvo, trapos, pajas y papeles que iban de arroyo en arroyo, de acera en acera, de esquina en esquina revolando y persiguiéndose, como mariposas que se buscan y huyen y que el aire envuelve en sus pliegues invisibles.", "selected" : [ { "word" : "remolinos", "value" : "vórtices" }, { "word" : "trapos", "value" : "paños" }, { "word" : "arroyo", "value" : "corriente" }, { "word" : "pliegues", "value" : "ángulos" }, { "word" : "pliegues", "value" : "curvas" } ] }, { "words" : "Cual turbas de pilluelos, aquellas migajas de la basura, aquellas sobras de todo se juntaban en un montón, parábanse como dormidas un momento y brincaban de nuevo sobresaltadas.", "selected" : [ { "word" : "turbas", "value" : "muchedumbre" }, { "word" : "turbas", "value" : "masas" }, { "word" : "turbas", "value" : "multitudes" }, { "word" : "sobresaltadas", "value" : "galvanizadas" } ] }, { "words" : "Unos segados ya, exhalando por las resquebrajaduras de su corteza el calor del día, otros con ondulantes mantos de espigas, estremeciéndose bajo los primeros soplos de la brisa nocturna.", "selected" : [ { "word" : "sesgados", "value" : "cortados" }, { "word" : "exhalando", "value" : "emitiendo" }, { "word" : "estremeciéndose", "value" : "emocionándose" }, { "word" : "soplos", "value" : "insinuaciones" } ] }, { "words" : "Los hombres caminaban sobre el verde sonoro de las hierbas, o sobre la tierra yerma, o sobre los caminos de piedra.", "selected" : [ { "word" : "sonoro", "value" : "rotundo" }, { "word" : "hierbas", "value" : "césped" }, { "word" : "yerma", "value" : "estéril" }, { "word" : "yerma", "value" : "infructífera" } ] }, { "words" : "En otros tiempo más antiguos también había vivido el pirata, que relampagueaba de gritos en un aire de cuchillos, o el bruñido caballero de hierro", "selected" : [ { "word" : "bruñido", "value" : "pulimentado" }, { "word" : "bruñido", "value" : "abrillantado" }, { "word" : "pirata", "value" : "bucanero" } ] }, { "words" : "Francisca era lo que se llama, propia o impropiamente, un garbanzo, un poco relamida y menos desaseada que la generalidad del gremio.", "selected" : [ { "word" : "impropiamente", "value" : "de forma indecorosa" }, { "word" : "gremio", "value" : "club" }, { "word" : "gremio", "value" : "fraternidad" }, { "word" : "gremio", "value" : "asociación" } ] }, { "words" : "Los deshollinadores no podían desembarazarse de las cornejas, que, cual hojas negras animadas de vida, poblaban por las noches las ramas de los árboles frente a la iglesia.", "selected" : [ { "word" : "animadas", "value" : "exaltadas" }, { "word" : "poblaban", "value" : "habitaban" }, { "word" : "poblaban", "value" : "residían" } ] }, { "words" : "A veces la interrumpía de pronto con un gesto implorante de la mano, para correr a un rincón del aposento.", "selected" : [ { "word" : "interrumpía", "value" : "suspendía" }, { "word" : "interrumpía", "value" : "cortaba" }, { "word" : "aposento", "value" : "sala" } ] }, { "words" : "La lluvia fresca de la tarde había caído sobre el valle, humedeciendo el maíz en los sembrados de las laderas.", "selected" : [ { "word" : "humedeciendo", "value" : "mojando" }, { "word" : "humedeciendo", "value" : "rociando" }, { "word" : "laderas", "value" : "pendientes" }, { "word" : "laderas", "value" : "cuestas" } ] } ] }
+{
+    "_id" : { "$oid" : "55326a042385c8bee300307b" },
+    "name" : "definiciones",
+    "level" : "1",
+    "elements" : [
+        {
+            "words" : "Se lo podía ver en los días de buen tiempo, cuando el río fluía más lentamente y las aguas barrosas se aclaraban.",
+            "selected" : [
+                {
+                    "word" : "fluía",
+                    "value" : "Moverse o avanzar libremente como en una corriente."
+                },
+                {
+                    "word" : "aclaraban",
+                    "value" : "Ponerse claro lo que estaba oscuro."
+                }
+            ]
+        },
+        {
+            "words" : "Cuando lo tuve a tiro le disparé una pedrada que le dio justo en la cara.",
+            "selected" : [
+                {
+                    "word" : "disparé",
+                    "value" : "Acertar con un proyectil de un arma."
+                },
+                {
+                    "word" : "cara",
+                    "value" : "Parte frontal de la cabeza, donde se encuentran los ojos, nariz y boca."
+                }
+            ]
+        },
+        {
+            "words" : "En la cocina el horno del desayuno emitió un siseante suspiro, y de su tibio interior brotaron ocho tostadas perfectamente doradas.",
+            "selected" : [
+                {
+                    "word" : "suspiro",
+                    "value" : "Expresión hecha exhalando de forma audible."
+                },
+                {
+                    "word" : "brotaron",
+                    "value" : "Manar a borbotones en una corriente o chorro repentino."
+                }
+            ]
+        },
+        {
+            "words" : "De noche, la ciudad en ruinas emitía un resplandor radiactivo que podía verse desde kilómetros a la redonda.",
+            "selected" : [
+                {
+                    "word" : "ruinas",
+                    "value" : "Restos de arquitectura."
+                },
+                {
+                    "word" : "kilómetros",
+                    "value" : "Unidad de longitud equivalente a mil metros."
+                }
+            ]
+        },
+        {
+            "words" : "Los surtidores del jardín giraron en fuentes doradas llenando el aire de la mañana con rocíos de luz.",
+            "selected" : [
+                {
+                    "word" : "rocíos",
+                    "value" : "Fenómeno en el que la humedad del aire se condensa en forma de gotas."
+                },
+                {
+                    "word" : "dorado",
+                    "value" : "De color de oro."
+                }
+            ]
+        },
+        {
+            "words" : "Paradójicamente su fatiga venía a ser una fuerza, pues la obligaba a concentrarse en los pormenores de la aventura y le ocultaba el fondo y el fin.",
+            "selected" : [
+                {
+                    "word" : "aventura",
+                    "value" : "Acción que se emprende que resulta fascinante o emocionante."
+                },
+                {
+                    "word" : "fatiga",
+                    "value" : "Sensación física o mental de incapacidad o dificultad para poder continuar con una actividad prolongada."
+                }
+            ]
+        }
+    ]
+}

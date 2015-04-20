@@ -6,24 +6,12 @@
  * Made By MaterializeCSS.com
  */
 
-@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
 body {
   background: url('../images/bubbles.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /*background-image: url('cohete.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: #00bfa5;
-
-  // background-color: #fff;
-  // background-image:
-  // linear-gradient(#eee .2em, transparent .2em);
-  // background-size: 100% 2em;
-*/
 }
 
 body.main-page {
@@ -32,9 +20,6 @@ body.main-page {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  // background-image:
-  // linear-gradient(#eee .2em, transparent .2em);
-  // background-size: 100% 2em;
 }
 
 .navbar {
@@ -47,7 +32,7 @@ body.main-page {
 }
 
 .navbar-brand.main-tittle {
-  font-family: 'Finger Paint';
+  font-family: 'FingerPaint';
   color: $main-top-navbar-ul;
 }
 
@@ -95,6 +80,11 @@ ul.nav.navbar-nav > li > a {
   width: 100%;
 }
 
+.social-icon {
+  font-size: 60px;
+  color: $palette2;
+}
+
 /*!
 * Start Bootstrap - One Page Wonder HTML Template (http://startbootstrap.com)
 * Code licensed under the Apache License v2.0.
@@ -114,29 +104,25 @@ ul.nav.navbar-nav > li > a {
 }
 
 .headline h1 {
-  font-size: 130px;
-  font-family: 'Finger Paint';
+  font-size: 90px;
+  font-family: 'FingerPaint';
   color: $h1-color;
   text-shadow: 2px 0px gray;
 }
 
 .headline h2 {
-  font-size: 77px;
-  font-family: 'Finger Paint';
+  font-size: 60px;
+  font-family: 'FingerPaint';
   color: $h2-color;
   text-shadow: 2px 0px gray;
 }
 
-.featurette-divider {
-  margin: 80px 0;
+.main-info {
+  min-width: 100%;
+  padding: 50px 100px;
+  background-color: white;
+  color: $palette2;
 }
-
-.featurette {
-  overflow: hidden;
-  padding: 10px;
-}
-
-
 
 .featurette-image.pull-left {
   margin-right: 40px;
@@ -150,8 +136,22 @@ ul.nav.navbar-nav > li > a {
   font-size: 50px;
 }
 
+.img-info {
+  width: 150px;
+  margin: 0 auto 0 auto;
+}
+
+fieldset {
+  border: none;
+}
+
 footer {
   margin: 50px 0;
+  background-color: $palette2;
+  color: white;
+  min-width: 100%;
+  margin: 0px 0px;
+  padding: 50px 100px;
 }
 
 @media(max-width:1200px) {
@@ -190,7 +190,7 @@ footer {
   }
 
   .featurette-divider {
-    margin: 40px 0;
+    margin: 0px 40px;
   }
 
   .featurette-image {
@@ -211,10 +211,6 @@ footer {
 }
 
 @media(max-width:768px) {
-  .container {
-    margin: 0 15px;
-  }
-
   .featurette-divider {
     margin: 40px 0;
   }

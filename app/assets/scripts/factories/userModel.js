@@ -18,6 +18,7 @@ angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', fun
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
+            console.log(jsData);
             return new User(jsData);
           }
         }

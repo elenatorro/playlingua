@@ -8,7 +8,9 @@ var userSchema = mongoose.Schema({
       password     : String,
   	  name	       : String,
   	  address      : String,
-      totalScore   : { type: Number, default: 0 }
+      totalScore   : { type: Number, default: 0 },
+      following    : [],
+      followers    : []
     }
 });
 

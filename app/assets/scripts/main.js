@@ -19,7 +19,11 @@
         })
         .when("/dashboard/:name/:level", {
           templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
-          controller: "levelController"
+          controller: "LevelController"
+        })
+        .when("/dashboard/friends", {
+          templateUrl: "/views/users/friends.html",
+          controller: "FriendsController"
         })
         .otherwise({
            redirectTo: '/dashboard/user'
