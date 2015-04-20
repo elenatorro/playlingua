@@ -147,7 +147,7 @@ module.exports = function(passport) {
                               return done(null, user);
                           } else {
                             var password = '';
-                            createUser(req.body.username, profile.emails[0].value, password, done);
+                            createUser(profile.displayName, profile.emails[0].value, password, done);
                           }
 
                     });
