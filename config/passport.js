@@ -188,7 +188,7 @@ module.exports = function(passport) {
                         				return done(null, user);
                     				} else {
                               var password = '';
-                              var email = profile.emails[0].value;
+                              var email = '';
                               createUser(profile.displayName, email, password, done);
                     				}
 
