@@ -114,7 +114,7 @@ gulp.task("views", function() {
   gulp.src("./app/views/**/*")
   .pipe(gulp.dest("./public/views/"));
 
-	gulp.src("./app/assets/templates/*.html")
+	gulp.src(["./app/assets/templates/*.html", "./app/assets/templates/**/*.html"])
 	.pipe(gulp.dest("./public/assets/templates"));
 })
 

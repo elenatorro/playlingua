@@ -194,40 +194,6 @@ angular.module('PlaylinguaApp')
 
 
 'use strict';
-angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
-  var self = this;
-
-  self.information = {
-    'sinonimos': {
-    	'title':'Sinónimos',
-    	'help': 'Arrastra la palabra o las palabras que tienen el icono de una mano sobre la palabra de la frase'
-				+ ' que creas que es su sinónimo. Cuando completes todos los ejercicios, sumarás cinco puntos por cada corazón'
-    			+ ' que tengas. Cada vez que cometes un error, pierdes un corazón. Recuerda dos palabras son'
-    			+ ' sinónimas cuando tienen el mismo significado pero se escriben de diferente forma.',
-    	'extraHelp': {
-			'1': '¡Cuando consigas cien puntos, ganarás una estrella!',
-			'2': '¡Atención! Puede que varias palabras tengan el mismo sinónimo.',
-			'3': 'Recuerda que puede haber varias palabras con el mismo sinónimo.'
-    		}
-    	},
-    'definiciones': {
-    	'title':'Definiciones',
-    	'help': 'Arrastra cada definición sobre la palabra de la frase que creas que es su sinónimo. '
-				+ 'Cuando completes todos los ejercicios, sumarás cinco puntos por cada corazón'
-    			+ 'que tengas. Cada vez que cometes un error, pierdes un corazón.',
-    	'extraHelp': {
-			'1': '¡Cuando consigas cien puntos, ganarás una estrella!',
-			'2': '¡Atención! Puede que varias palabras en la frase tengan el mismo significado.',
-			'3': 'Recuerda que puede haber varias palabras con el mismo significado.'
-    		}
-    	}
-  };
-
-  self.get = function(name) {
-    return self.information[name];
-  }
-});
-'use strict';
 angular.module('PlaylinguaApp').factory('Excercises', 
   ['$resource', '$http', '$q', function($resource, $http, $q) {
     function Excercises(data) {
@@ -381,7 +347,6 @@ angular.module('PlaylinguaApp').factory('Level',
         self.muted      = false;
         self.title      = ExcercisesNames.get(self.name)['title'];
         self.help       = ExcercisesNames.get(self.name)['help'];
-        self.extraHelp  = ExcercisesNames.get(self.name)['extraHelp'][self.level];
         self.animal     = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
                           'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
 
@@ -399,8 +364,7 @@ angular.module('PlaylinguaApp').factory('Level',
 
         self.openHelp = function () {
           ngDialog.open({ 
-                template: '<h2>'+ self.help +'</h2>',
-                plain: true
+                template: self.help,
           });
         };
 
@@ -473,3 +437,23 @@ angular.module('PlaylinguaApp').factory('User',
 
     return User;
 }]);
+
+'use strict';
+angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
+  var self = this;
+
+  self.information = {
+    'sinonimos': {
+    	'title':'Sinónimos',
+      'help': '/assets/templates/help/sinonimos.html'
+    },
+    'definiciones': {
+    	'title':'Definiciones',
+    	'help': '/assets/templates/help/definiciones.html'
+    }
+  };
+
+  self.get = function(name) {
+    return self.information[name];
+  }
+});

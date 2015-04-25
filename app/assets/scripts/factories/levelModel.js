@@ -14,7 +14,6 @@ angular.module('PlaylinguaApp').factory('Level',
         self.muted      = false;
         self.title      = ExcercisesNames.get(self.name)['title'];
         self.help       = ExcercisesNames.get(self.name)['help'];
-        self.extraHelp  = ExcercisesNames.get(self.name)['extraHelp'][self.level];
         self.animal     = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
                           'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
 
@@ -32,8 +31,7 @@ angular.module('PlaylinguaApp').factory('Level',
 
         self.openHelp = function () {
           ngDialog.open({ 
-                template: '<h2>'+ self.help +'</h2>',
-                plain: true
+                template: self.help,
           });
         };
 

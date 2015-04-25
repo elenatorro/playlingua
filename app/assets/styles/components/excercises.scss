@@ -18,3 +18,14 @@
 .help:hover {
 	cursor: pointer;
 }
+
+.help-dialog {
+	padding: 10px;
+	> h1 {
+		color: $palette2;
+	}
+
+	> h2 {
+		color: $palette3;
+	}
+}

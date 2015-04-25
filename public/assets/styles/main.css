@@ -1330,6 +1330,13 @@ footer {
 .help:hover {
   cursor: pointer; }
 
+.help-dialog {
+  padding: 10px; }
+  .help-dialog > h1 {
+    color: #36BBA6; }
+  .help-dialog > h2 {
+    color: #EB7B59; }
+
 .character {
   width: 100%; }
 
