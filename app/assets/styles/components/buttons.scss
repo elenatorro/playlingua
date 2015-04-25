@@ -3,3 +3,26 @@
   color: $palette2;
   background-color: white;
 }
+
+.btn.btn.social {
+	padding: 15px;
+	color: white;
+
+	> i {
+		font-size: 28px;
+		margin-right: 10px;
+		display: inline-block;
+	}
+
+	&.btn-facebook {
+		background-color: #3B5998;
+	}
+
+	&.btn-twitter {
+		background-color: #55ACEE;
+	}
+
+	&.btn-google-plus {
+		background-color: #DD4B39;
+	}
+}

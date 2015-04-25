@@ -1271,6 +1271,20 @@ footer {
   color: #36BBA6;
   background-color: white; }
 
+.btn.btn.social {
+  padding: 15px;
+  color: white; }
+  .btn.btn.social > i {
+    font-size: 28px;
+    margin-right: 10px;
+    display: inline-block; }
+  .btn.btn.social.btn-facebook {
+    background-color: #3B5998; }
+  .btn.btn.social.btn-twitter {
+    background-color: #55ACEE; }
+  .btn.btn.social.btn-google-plus {
+    background-color: #DD4B39; }
+
 .bubble {
   background-color: white;
   text-align: center;

@@ -5,8 +5,10 @@
       <h2 id="hearts">
         <i class="fa fa-heart heart spin-toggle" ng-model="level.lifes" ng-repeat="life in getTimes(level.lifes) track by $index"></i>
       </h2>
+<!--       <img ng-src="../../../assets/images/birdlogo2.png" class="hvr-buzz character"/>
+ -->
       <img ng-src="../../../assets/images/{{level.animal}}.png" class="hvr-buzz character"/>
-    </div>
+     </div>
     <div class="col-lg-9">
       <sliderpanel level="level" contentarray="contentArray"/>
     </div>
