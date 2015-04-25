@@ -11,6 +11,7 @@ angular.module('PlaylinguaApp')
     link: function($scope, elem, attrs) {
       $scope.currentIndex = 0;
       $scope.isFinished = false;
+      $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
@@ -21,8 +22,9 @@ angular.module('PlaylinguaApp')
         };
 
         $scope.endGame = function(win) {
-          $scope.hideAll();
           $scope.isFinished = true;
+          $scope.hideAll();
+          $scope.level.play($scope.level.soundEnd);
           if (win) {
             var score = $scope.level.lifes * 5;
             $scope.level.updateScore(score);
@@ -57,9 +59,12 @@ angular.module('PlaylinguaApp')
 
         $scope.onDrop = function(word, object) {
           if (word == object.word) {
+            $scope.level.play($scope.level.soundRight);
+            $scope.corrects.push(object);
             $scope.dragWords.splice($scope.dragWords.indexOf(object), 1);
             if ($scope.dragWords.length == 0) $scope.next();
           } else {
+            $scope.level.play($scope.level.soundWrong);
             $scope.level.lifes--;
             if ($scope.level.lifes == 0) $scope.endGame(false);
           }

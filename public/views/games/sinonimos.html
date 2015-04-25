@@ -6,6 +6,11 @@
         <i class="fa fa-heart heart spin-toggle" ng-model="level.lifes" ng-repeat="life in getTimes(level.lifes) track by $index"></i>
       </h2>
       <img ng-src="../../../assets/images/{{level.animal}}.png" class="hvr-buzz character"/>
+      <div class="help-tooltip">
+        <div class="btn-tooltip">¿Necesitas ayuda?</div>
+        <div class="panel panel-help">¡Pues te aguantas!</div>
+      </div>
+
     </div>
     <div class="col-lg-9">
       <sliderpanel level="level" contentarray="contentArray"/>

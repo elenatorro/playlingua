@@ -80,12 +80,12 @@ angular.module('PlaylinguaApp')
       self.getTrophyTitle = function(excercise) {
         var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
         for (var points in self.trophyTitles) {
-          if ((score >= (parseInt(points))) && (score < (parseInt(points) + 25))) {
+          if ((score >= (parseInt(points) - 25)) && (score < (parseInt(points) + 25))) {
             return self.trophyTitles[points];
             break;
             }
           }
-        return self.trophyTitles[25];
+        return self.trophyTitles[300];
       };
 
       self.getStarsNumber = function() {

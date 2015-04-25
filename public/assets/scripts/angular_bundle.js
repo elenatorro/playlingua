@@ -1,6 +1,7 @@
 'use strict';
 
-  angular.module('PlaylinguaApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngDraggable', 'ngTouch'])
+  angular.module('PlaylinguaApp', ['ngResource',  'ngRoute',
+                                   'ngAnimate', 'ngDraggable', 'ngTouch', 'ngAudio'])
 
   .config([
     '$locationProvider',
@@ -18,7 +19,7 @@
           controller: "UserController"
         })
         .when("/dashboard/:name/:level", {
-          templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
+          templateUrl: function(params){ return '/views/games/index.html';   },
           controller: "LevelController"
         })
         .when("/dashboard/friends", {
@@ -33,20 +34,23 @@
 
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  '$scope', "$http", "User", "Game", "Excercises",
-  function($scope, $http, User, Game, Excercises) {
-    $scope.followingData = [];
-    User.get().$promise.then(function(user) {
-      $scope.user = user;
-      var game;
-      $scope.user.following.forEach(function(user) {
-        Excercises.get({'username': user}).$promise.then(function(excercises) {
-          game = new Game(excercises);
-          $scope.followingData.push({'username': user, 'game': game});
-        })
-      })
-    });
+  '$scope', "$http", "$route", "User", "Game", "Excercises",
+  function($scope, $http, $route, User, Game, Excercises) {
 
+    $scope.getUserData = function() {
+      $scope.followingData = [];
+      User.get().$promise.then(function(user) {
+        $scope.user = user;
+        var game;
+
+        $scope.user.following.forEach(function(user) {
+          Excercises.get({'username': user}).$promise.then(function(excercises) {
+            game = new Game(excercises);
+            $scope.followingData.push({'username': user, 'game': game});
+          })
+        })
+      });
+    };
 
     $scope.search = function(username) {
       $http.get('/userdata/' + username).then(function(user) {
@@ -57,11 +61,19 @@ angular.module('PlaylinguaApp')
 
     $scope.follow = function(username) {
       if (!_.contains($scope.user.following, username)) {
-        $http.put('/follow/' + username).then(function(message) {
-          /* TODO   update following data*/
-        });
+        $http.put('/follow/' + username);
+        $route.reload();
       }
     };
+
+    $scope.unfollow = function(username) {
+      if (_.contains($scope.user.following, username)) {
+        $http.put('/unfollow/' + username);
+        $route.reload();
+      }
+    }
+
+    $scope.getUserData();
   }
 ]);
 
@@ -119,6 +131,7 @@ angular.module('PlaylinguaApp')
     link: function($scope, elem, attrs) {
       $scope.currentIndex = 0;
       $scope.isFinished = false;
+      $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
@@ -129,8 +142,9 @@ angular.module('PlaylinguaApp')
         };
 
         $scope.endGame = function(win) {
-          $scope.hideAll();
           $scope.isFinished = true;
+          $scope.hideAll();
+          $scope.level.play($scope.level.soundEnd);
           if (win) {
             var score = $scope.level.lifes * 5;
             $scope.level.updateScore(score);
@@ -165,9 +179,12 @@ angular.module('PlaylinguaApp')
 
         $scope.onDrop = function(word, object) {
           if (word == object.word) {
+            $scope.level.play($scope.level.soundRight);
+            $scope.corrects.push(object);
             $scope.dragWords.splice($scope.dragWords.indexOf(object), 1);
             if ($scope.dragWords.length == 0) $scope.next();
           } else {
+            $scope.level.play($scope.level.soundWrong);
             $scope.level.lifes--;
             if ($scope.level.lifes == 0) $scope.endGame(false);
           }
@@ -178,6 +195,7 @@ angular.module('PlaylinguaApp')
       replace: 'true',
   };
 });
+
 
 'use strict';
 angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q', function($resource, $http, $q){
@@ -287,12 +305,12 @@ angular.module('PlaylinguaApp')
       self.getTrophyTitle = function(excercise) {
         var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
         for (var points in self.trophyTitles) {
-          if ((score >= (parseInt(points))) && (score < (parseInt(points) + 25))) {
+          if ((score >= (parseInt(points) - 25)) && (score < (parseInt(points) + 25))) {
             return self.trophyTitles[points];
             break;
             }
           }
-        return self.trophyTitles[25];
+        return self.trophyTitles[300];
       };
 
       self.getStarsNumber = function() {
@@ -318,7 +336,8 @@ angular.module('PlaylinguaApp')
 }]);
 
 'use strict';
-angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', function($resource, $http, $q){
+angular.module('PlaylinguaApp').factory('Level',
+['$resource', '$http', '$q', 'ngAudio', function($resource, $http, $q, ngAudio){
     function Level(data) {
         angular.extend(this, data);
         var self = this;
@@ -329,6 +348,20 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
 
         self.lifes = 5;
 
+        self.soundRight = ngAudio.load("/assets/sounds/goodshort.wav");
+        self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
+        self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
+
+        self.play = function(sound) {
+          if (!self.muted) sound.play();
+        };
+
+        self.muted = false;
+
+        self.mute = function(muted) {
+          self.muted = muted;
+        };
+        
         self.updateScore = function(score) {
           $http.put('/save/' + self.name + '/' + self.level + '/' + score)
           .success(function(data) {
@@ -349,7 +382,6 @@ angular.module('PlaylinguaApp').factory('Level', ['$resource', '$http', '$q', fu
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
-            console.log(response);
             var jsData = angular.fromJson(response);
             delete jsData.excercises[0]._id;
             return new Level(jsData.excercises[0]);

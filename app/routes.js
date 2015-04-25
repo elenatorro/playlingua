@@ -93,6 +93,34 @@ module.exports = function(app, passport,server) {
     })
   })
 
+  app.put('/unfollow/:username', auth, function(request, response) {
+    var response = {'message': ''};
+    var follow = User.find({'user.username': request.params.username}, {'_id': 0});
+    follow.select('user.username user.followers user.following');
+    follow.exec(function(err, user) {
+      if (!err) {
+        var userdata = user[0];
+        var updateFollowers = User.update({'user.username': userdata.user.username},{'$pull': {'user.followers': request.user.user.username}});
+        updateFollowers.exec(function(err, data) {
+          if(!err) {
+            var updateFollowing = User.update({'user.username': request.user.user.username}, {'$pull': {'user.following': userdata.user.username}});
+            updateFollowing.exec(function(err, data) {
+              if (!err) {
+                response.message = 'OK';
+              } else {
+                response = err;
+              }
+            })
+          } else {
+            response = err;
+          }
+        })
+      } else {
+        response = err;
+      }
+    })
+  })
+
   app.get('/:name/level/:levelnumber', function(request, response) {
     var query = Text.find({name: request.params.name, level: request.params.levelnumber});
     query.exec(function(err, texts) {

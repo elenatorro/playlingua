@@ -1,19 +1,22 @@
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  '$scope', "$http", "User", "Game", "Excercises",
-  function($scope, $http, User, Game, Excercises) {
-    $scope.followingData = [];
-    User.get().$promise.then(function(user) {
-      $scope.user = user;
-      var game;
-      $scope.user.following.forEach(function(user) {
-        Excercises.get({'username': user}).$promise.then(function(excercises) {
-          game = new Game(excercises);
-          $scope.followingData.push({'username': user, 'game': game});
-        })
-      })
-    });
+  '$scope', "$http", "$route", "User", "Game", "Excercises",
+  function($scope, $http, $route, User, Game, Excercises) {
 
+    $scope.getUserData = function() {
+      $scope.followingData = [];
+      User.get().$promise.then(function(user) {
+        $scope.user = user;
+        var game;
+
+        $scope.user.following.forEach(function(user) {
+          Excercises.get({'username': user}).$promise.then(function(excercises) {
+            game = new Game(excercises);
+            $scope.followingData.push({'username': user, 'game': game});
+          })
+        })
+      });
+    };
 
     $scope.search = function(username) {
       $http.get('/userdata/' + username).then(function(user) {
@@ -24,10 +27,18 @@ angular.module('PlaylinguaApp')
 
     $scope.follow = function(username) {
       if (!_.contains($scope.user.following, username)) {
-        $http.put('/follow/' + username).then(function(message) {
-          /* TODO   update following data*/
-        });
+        $http.put('/follow/' + username);
+        $route.reload();
       }
     };
+
+    $scope.unfollow = function(username) {
+      if (_.contains($scope.user.following, username)) {
+        $http.put('/unfollow/' + username);
+        $route.reload();
+      }
+    }
+
+    $scope.getUserData();
   }
 ]);

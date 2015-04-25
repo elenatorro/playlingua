@@ -1,6 +1,7 @@
 'use strict';
 
-  angular.module('PlaylinguaApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngDraggable', 'ngTouch'])
+  angular.module('PlaylinguaApp', ['ngResource',  'ngRoute',
+                                   'ngAnimate', 'ngDraggable', 'ngTouch', 'ngAudio'])
 
   .config([
     '$locationProvider',
@@ -18,7 +19,7 @@
           controller: "UserController"
         })
         .when("/dashboard/:name/:level", {
-          templateUrl: function(params){ return '/views/games/' + params.name + '.html';   },
+          templateUrl: function(params){ return '/views/games/index.html';   },
           controller: "LevelController"
         })
         .when("/dashboard/friends", {

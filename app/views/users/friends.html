@@ -30,12 +30,12 @@
 					<p>Mis amigos</p>
 				</div>
 				<div class="panel-body">
-					<div class="row" ng-model="followingData">
-						<div class="col-md-4"  ng-repeat="following in followingData" >
+					<div class="row">
+						<div class="col-md-4" ng-model="followingData" ng-repeat="following in followingData" >
 							<ul class="list-group">
 								<li class="list-group-item">
-							    <h2 class="list-group-item-heading">{{following.username}}</h2>
-							  </li>
+							    	<h2 class="list-group-item-heading">{{following.username}}</h2>
+							  	</li>
 								<li class="list-group-item">
 									<span class="badge" ng-repeat="star in following.game.stars track by $index">
 										<i class="fa fa-star"></i>
@@ -51,6 +51,9 @@
 									<span>{{following.game.getTrophyTitle(excercise.name)}} en {{excercise.title}}</span>
 								</li>
 							</div>
+								<li class="list-group-item">
+									<button class="btn btn-default" ng-click="unfollow(following.username)">Dejar de seguir</button>
+								</li>
 							</ul>
 						</div>
 					</div>

@@ -1,4 +1,4 @@
-<div class="sliderPanel">
+<div class="sliderPanel container">
   <div class="slide scale-fade" ng-repeat="slideContent in contentarray" ng-show="slideContent.visible">
     <div class="panel panel-words">
       <div class="panel-heading">
@@ -17,10 +17,14 @@
       </div>
       <div class="panel-footer">
         <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
-      </div>
     </div>
   </div>
-
+  <div class="correct-container" ng-repeat="correct in corrects track by $index">
+    <div class="bubble correct">
+      {{correct.value}} - {{correct.word}} <i class="fa fa-check"></i>
+    </div>
+  </div>
+</div>
   <div ng-show="isFinished">
     <div class="slide scale-fade">
       <div class="panel panel-words">
@@ -33,6 +37,11 @@
         </div>
         <div class="panel-footer">
           <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+        </div>
+      </div>
+      <div class="correct-container" ng-repeat="correct in corrects track by $index">
+        <div class="bubble correct">
+          {{correct.value}} - {{correct.word}} <i class="fa fa-check"></i>
         </div>
       </div>
     </div>

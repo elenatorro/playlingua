@@ -138,6 +138,13 @@ gulp.task("icons", function() {
   .pipe(gulp.dest("./public/assets/icons"));
 })
 
+/* sounds */
+gulp.task("sounds", function() {
+  //index
+  gulp.src("./app/assets/sounds/**/*.wav")
+  .pipe(gulp.dest("./public/assets/sounds"));
+})
+
 /* watch */
 gulp.task('watch', function() {
   gulp.watch(jsDependencies, ["jsDependencies"]);

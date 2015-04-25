@@ -29,9 +29,7 @@
 			<div class="panel panel-success info">
 				<div class="panel-heading">Estrellas</div>
 				<div class="panel-body">
-					<div ng-repeat="star in game.stars track by $index">
-						<img src="../assets/icons/star.png" class="progress-logo-small"/>
-					</div>
+						<img ng-repeat="star in game.stars track by $index" src="../assets/icons/star.png" class="progress-logo-small star"/>
 				</div>
 			</div>
 		</div>
