@@ -14,6 +14,7 @@ angular.module('PlaylinguaApp')
       $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
+          $scope.level.updateProgress($scope.contentarray.length);
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
         };
 

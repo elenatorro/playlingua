@@ -1,6 +1,6 @@
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  '$scope', "$http", "$route", "User", "Game", "Excercises",
+  "$scope", "$http", "$route", "User", "Game", "Excercises",
   function($scope, $http, $route, User, Game, Excercises) {
 
     $scope.getUserData = function() {

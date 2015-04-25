@@ -1,8 +1,8 @@
 'use strict';
-angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q', function($resource, $http, $q){
+angular.module('PlaylinguaApp').factory('Excercises', 
+  ['$resource', '$http', '$q', function($resource, $http, $q) {
     function Excercises(data) {
         angular.extend(this, data);
-        console.log(data);
         var self = this;
     };
 

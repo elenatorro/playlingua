@@ -1,8 +1,7 @@
 angular.module('PlaylinguaApp')
 .controller('LevelController', [
-  '$scope', "$http", "$routeParams","User", "Level",
+  "$scope", "$http", "$routeParams","User", "Level",
   function($scope, $http, $routeParams, User, Level) {
-    console.log($routeParams);
     Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;

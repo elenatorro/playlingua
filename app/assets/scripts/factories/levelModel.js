@@ -1,28 +1,48 @@
 'use strict';
 angular.module('PlaylinguaApp').factory('Level',
-['$resource', '$http', '$q', 'ngAudio', function($resource, $http, $q, ngAudio){
+['$resource', '$http', '$q', 'ngAudio', 'ExcercisesNames', 'ngDialog',
+ function($resource, $http, $q, ngAudio, ExcercisesNames, ngDialog){
     function Level(data) {
         angular.extend(this, data);
         var self = this;
+
+        self.lifes      = 5;
+        self.progress   = 0;
+        self.soundRight = ngAudio.load("/assets/sounds/goodshort.wav");
+        self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
+        self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
+        self.muted      = false;
+        self.title      = ExcercisesNames.get(self.name)['title'];
+        self.help       = ExcercisesNames.get(self.name)['help'];
+        self.extraHelp  = ExcercisesNames.get(self.name)['extraHelp'][self.level];
+        self.animal     = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
+                          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
 
         self.getContent = function() {
           return self.content;
         };
 
-        self.lifes = 5;
-
-        self.soundRight = ngAudio.load("/assets/sounds/goodshort.wav");
-        self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
-        self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
-
         self.play = function(sound) {
           if (!self.muted) sound.play();
         };
 
-        self.muted = false;
-
         self.mute = function(muted) {
           self.muted = muted;
+        };
+
+        self.openHelp = function () {
+          ngDialog.open({ 
+                template: '<h2>'+ self.help +'</h2>',
+                plain: true
+          });
+        };
+
+        self.updateProgress = function(excercisesNumber) {
+          self.progress += (100/excercisesNumber);
+        };
+
+        self.getProgress = function() {
+          return self.progress;
         };
         
         self.updateScore = function(score) {
@@ -33,8 +53,6 @@ angular.module('PlaylinguaApp').factory('Level',
           })
         };
 
-        self.animal = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
-          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
     };
 
     var resourceLevel = $resource(

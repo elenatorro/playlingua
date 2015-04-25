@@ -1,5 +1,7 @@
 'use strict';
-angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', function($resource, $http, $q){
+angular.module('PlaylinguaApp').factory('User', 
+  ['$resource', '$http', '$q', 
+  function($resource, $http, $q){
     function User(data) {
         angular.extend(this, data);
         var self = this;
@@ -18,7 +20,6 @@ angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', fun
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            console.log(jsData);
             return new User(jsData);
           }
         }

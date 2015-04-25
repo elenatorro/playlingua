@@ -16,8 +16,8 @@ var sass       = require('gulp-sass');
 
 /* bower */
 gulp.task('bower-files', function() {
-	  var jsFilter = gulpFilter('*.js');
-    var cssFilter = gulpFilter('*.css');
+	  var jsFilter = gulpFilter('/**/*.js');
+    var cssFilter = gulpFilter('/**/*.css');
     var fontFilter = gulpFilter(['*.eot', '*.woff', '*.svg', '*.ttf']);
     var dest_path = "./public/assets/bower_components";
 	return gulp.src(bowerFiles())

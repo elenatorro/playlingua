@@ -1,11 +1,8 @@
 'use strict';
 
-  angular.module('PlaylinguaApp', ['ngResource',  'ngRoute',
-                                   'ngAnimate', 'ngDraggable', 'ngTouch', 'ngAudio'])
-
-  .config([
-    '$locationProvider',
-    '$routeProvider',
+  angular.module('PlaylinguaApp', ['ngResource',  'ngRoute', 'djds4rce.angular-socialshare',
+                                    'ngAnimate', 'ngDraggable', 'ngTouch', 'ngAudio', 'ngDialog'])
+  .config(['$locationProvider', '$routeProvider',
     function($locationProvider, $routeProvider) {
 
       $locationProvider.html5Mode({
@@ -19,7 +16,7 @@
           controller: "UserController"
         })
         .when("/dashboard/:name/:level", {
-          templateUrl: function(params){ return '/views/games/index.html';   },
+          templateUrl:"/views/games/index.html",
           controller: "LevelController"
         })
         .when("/dashboard/friends", {
@@ -34,7 +31,7 @@
 
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  '$scope', "$http", "$route", "User", "Game", "Excercises",
+  "$scope", "$http", "$route", "User", "Game", "Excercises",
   function($scope, $http, $route, User, Game, Excercises) {
 
     $scope.getUserData = function() {
@@ -79,9 +76,8 @@ angular.module('PlaylinguaApp')
 
 angular.module('PlaylinguaApp')
 .controller('LevelController', [
-  '$scope', "$http", "$routeParams","User", "Level",
+  "$scope", "$http", "$routeParams","User", "Level",
   function($scope, $http, $routeParams, User, Level) {
-    console.log($routeParams);
     Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;
@@ -98,15 +94,14 @@ angular.module('PlaylinguaApp')
 
 angular.module('PlaylinguaApp')
 .controller('UserController', [
-  '$scope', "$http", "User", "Game", "Excercises",
+  "$scope", "$http", "User", "Game", "Excercises",
   function($scope, $http, User, Game, Excercises) {
     $scope.user = User.get();
 
     Excercises.get().$promise.then(function(excercises) {
       $scope.game = new Game(excercises);
     });
-  }
-]);
+ }]);
 
 angular.module('PlaylinguaApp')
 .directive('levelProgress',
@@ -134,6 +129,7 @@ angular.module('PlaylinguaApp')
       $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
+          $scope.level.updateProgress($scope.contentarray.length);
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
         };
 
@@ -198,10 +194,44 @@ angular.module('PlaylinguaApp')
 
 
 'use strict';
-angular.module('PlaylinguaApp').factory('Excercises', ['$resource', '$http', '$q', function($resource, $http, $q){
+angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
+  var self = this;
+
+  self.information = {
+    'sinonimos': {
+    	'title':'Sinónimos',
+    	'help': 'Arrastra la palabra o las palabras que tienen el icono de una mano sobre la palabra de la frase'
+				+ ' que creas que es su sinónimo. Cuando completes todos los ejercicios, sumarás cinco puntos por cada corazón'
+    			+ ' que tengas. Cada vez que cometes un error, pierdes un corazón. Recuerda dos palabras son'
+    			+ ' sinónimas cuando tienen el mismo significado pero se escriben de diferente forma.',
+    	'extraHelp': {
+			'1': '¡Cuando consigas cien puntos, ganarás una estrella!',
+			'2': '¡Atención! Puede que varias palabras tengan el mismo sinónimo.',
+			'3': 'Recuerda que puede haber varias palabras con el mismo sinónimo.'
+    		}
+    	},
+    'definiciones': {
+    	'title':'Definiciones',
+    	'help': 'Arrastra cada definición sobre la palabra de la frase que creas que es su sinónimo. '
+				+ 'Cuando completes todos los ejercicios, sumarás cinco puntos por cada corazón'
+    			+ 'que tengas. Cada vez que cometes un error, pierdes un corazón.',
+    	'extraHelp': {
+			'1': '¡Cuando consigas cien puntos, ganarás una estrella!',
+			'2': '¡Atención! Puede que varias palabras en la frase tengan el mismo significado.',
+			'3': 'Recuerda que puede haber varias palabras con el mismo significado.'
+    		}
+    	}
+  };
+
+  self.get = function(name) {
+    return self.information[name];
+  }
+});
+'use strict';
+angular.module('PlaylinguaApp').factory('Excercises', 
+  ['$resource', '$http', '$q', function($resource, $http, $q) {
     function Excercises(data) {
         angular.extend(this, data);
-        console.log(data);
         var self = this;
     };
 
@@ -337,29 +367,49 @@ angular.module('PlaylinguaApp')
 
 'use strict';
 angular.module('PlaylinguaApp').factory('Level',
-['$resource', '$http', '$q', 'ngAudio', function($resource, $http, $q, ngAudio){
+['$resource', '$http', '$q', 'ngAudio', 'ExcercisesNames', 'ngDialog',
+ function($resource, $http, $q, ngAudio, ExcercisesNames, ngDialog){
     function Level(data) {
         angular.extend(this, data);
         var self = this;
+
+        self.lifes      = 5;
+        self.progress   = 0;
+        self.soundRight = ngAudio.load("/assets/sounds/goodshort.wav");
+        self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
+        self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
+        self.muted      = false;
+        self.title      = ExcercisesNames.get(self.name)['title'];
+        self.help       = ExcercisesNames.get(self.name)['help'];
+        self.extraHelp  = ExcercisesNames.get(self.name)['extraHelp'][self.level];
+        self.animal     = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
+                          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
 
         self.getContent = function() {
           return self.content;
         };
 
-        self.lifes = 5;
-
-        self.soundRight = ngAudio.load("/assets/sounds/goodshort.wav");
-        self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
-        self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
-
         self.play = function(sound) {
           if (!self.muted) sound.play();
         };
 
-        self.muted = false;
-
         self.mute = function(muted) {
           self.muted = muted;
+        };
+
+        self.openHelp = function () {
+          ngDialog.open({ 
+                template: '<h2>'+ self.help +'</h2>',
+                plain: true
+          });
+        };
+
+        self.updateProgress = function(excercisesNumber) {
+          self.progress += (100/excercisesNumber);
+        };
+
+        self.getProgress = function() {
+          return self.progress;
         };
         
         self.updateScore = function(score) {
@@ -370,8 +420,6 @@ angular.module('PlaylinguaApp').factory('Level',
           })
         };
 
-        self.animal = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
-          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
     };
 
     var resourceLevel = $resource(
@@ -395,7 +443,9 @@ angular.module('PlaylinguaApp').factory('Level',
 }]);
 
 'use strict';
-angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', function($resource, $http, $q){
+angular.module('PlaylinguaApp').factory('User', 
+  ['$resource', '$http', '$q', 
+  function($resource, $http, $q){
     function User(data) {
         angular.extend(this, data);
         var self = this;
@@ -414,7 +464,6 @@ angular.module('PlaylinguaApp').factory('User', ['$resource', '$http', '$q', fun
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            console.log(jsData);
             return new User(jsData);
           }
         }
