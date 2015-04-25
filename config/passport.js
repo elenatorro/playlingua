@@ -16,7 +16,7 @@ var TWITTER_CONSUMER_SECRET = "4iJ8K1F3aP3wP4kScseVy7zojjZJ3oXXMIvfmHJXhBS6ClK9x
 
 // Google authentication
 // For more details go to https://github.com/jaredhanson/passport-google-oauth
-var GOOGLE_CONSUMER_KEY = "864648951920-n80hr3gnob47kqu2cmada0cinrm7eair.apps.googleusercontent.com";
+var GOOGLE_CONSUMER_KEY = "864648951920-n80hr3gnob47kqu2cmada0cinrm7eair";
 var GOOGLE_CONSUMER_SECRET = "wml2W1ELHmWtBS3dEDw-N645";
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy
 
