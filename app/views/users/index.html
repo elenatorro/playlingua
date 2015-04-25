@@ -9,14 +9,6 @@
 					<h4>Tienes {{user.totalScore}} puntos</h4>
 				</div>
 			</div>
-			<div class="panel panel-danger info">
-				<div class="panel-heading">Reto semanal</div>
-				<div class="panel-body">
-					<img src="../assets/icons/unlocked.png" class="progress-logo-small"/>
-					<img src="../assets/icons/unlocked.png" class="progress-logo-small"/>
-					<img src="../assets/icons/locked.png" class="progress-logo-small"/>
-				</div>
-			</div>
 			<div class="panel panel-warning info">
 				<div class="panel-heading">Trofeos</div>
 				<div class="panel-body">
@@ -30,6 +22,13 @@
 				<div class="panel-heading">Estrellas</div>
 				<div class="panel-body">
 						<img ng-repeat="star in game.stars track by $index" src="../assets/icons/star.png" class="progress-logo-small star"/>
+				</div>
+			</div>
+			<div class="panel panel-danger info">
+				<div class="panel-heading">Redes sociales</div>
+				<div class="panel-body">
+					<a class="social-icon" href="http://twitter.com/playlingua"><i class="fa fa-twitter-square"></i></a>
+					<a class="social-icon" href="https://www.facebook.com/pages/Playlingua/651914998286764?ref=hl"><i class="fa fa-facebook-square"></i></a>
 				</div>
 			</div>
 		</div>
