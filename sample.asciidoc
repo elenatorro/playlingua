@@ -1,0 +1,6 @@
+Your First AsciiDoc
+===================
+Jane Blogs
+:Author Initials: JB
+
+This is your first AsciiDoc file - yay for you!

@@ -1,6 +1,6 @@
 <div id="main-content" class="container">
   <div ng-if="contentArray" class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-3 game-info">
       <h3>Nivel {{level.level}} de {{level.title}}</h3>
       <h2 id="hearts">
         <i class="fa fa-heart heart spin-toggle" ng-model="level.lifes" ng-repeat="life in getTimes(level.lifes) track by $index"></i>
@@ -9,7 +9,7 @@
       <div class="progress progress-striped active">
         <div class="progress-bar progress-bar-info" style="width: {{level.getProgress()}}%"></div>
       </div>
-      <span class="help" ng-click="level.openHelp()"><i class="fa fa-question-circle" ></i> Ayuda</span>
+      <span class="btn help" ng-click="level.openHelp()"><i class="fa fa-question-circle" ></i> Instrucciones </span>
      </div>
     <div class="col-lg-9">
       <sliderpanel level="level" contentarray="contentArray"/>

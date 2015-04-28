@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<book lang="en">
+<bookinfo>
+    <title>Your First AsciiDoc</title>
+    <author>
+        <firstname>Jane</firstname>
+        <surname>Blogs</surname>
+    </author>
+    <authorinitials>JB</authorinitials>
+</bookinfo>
+<preface>
+<title></title>
+<simpara>This is your first AsciiDoc file - yay for you!</simpara>
+</preface>
+</book>

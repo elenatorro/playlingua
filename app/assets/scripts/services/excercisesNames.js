@@ -10,6 +10,10 @@ angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
     'definiciones': {
     	'title':'Definiciones',
     	'help': '/assets/templates/help/definiciones.html'
+    },
+    'completar': {
+      'title':'Completar',
+      'help': '/assets/templates/help/completar.html'
     }
   };
 

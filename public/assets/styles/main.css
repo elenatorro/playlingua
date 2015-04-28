@@ -1257,9 +1257,19 @@ footer {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-size: 1em; }
+  .panel-words > .panel-heading > .row {
+    padding: 10px; }
 
 .panel-words > .panel-body {
   font-size: 1.7em; }
+  .panel-words > .panel-body > form > .btn-success {
+    font-size: 1em;
+    margin-top: 20px; }
+
+.bubble-input {
+  font-size: 1em;
+  margin-left: 10px;
+  color: gray; }
 
 .panel-words > .panel-footer {
   background-color: white;
@@ -1324,11 +1334,21 @@ footer {
 .list-group {
   text-align: left; }
 
+.game-info {
+  text-align: center;
+  margin: 0 auto 0 auto; }
+
 .help {
-  font-size: 25px; }
+  font-size: 25px;
+  background-color: #CF4647;
+  padding: 10px;
+  width: 80%;
+  text-align: center; }
 
 .help:hover {
-  cursor: pointer; }
+  cursor: pointer;
+  color: white;
+  background-color: #EB7B59; }
 
 .help-dialog {
   padding: 10px; }

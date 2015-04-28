@@ -45,10 +45,27 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-size: 1em;
+
+  > .row {
+    padding: 10px;
+  }
 }
 
 .panel-words > .panel-body {
   font-size: 1.7em;
+
+    > form {
+      > .btn-success {
+        font-size: 1em;
+        margin-top: 20px;
+      }
+    }
+}
+
+.bubble-input {
+  font-size: 1em;
+  margin-left: 10px;
+  color: gray;
 }
 
 

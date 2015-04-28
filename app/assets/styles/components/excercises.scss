@@ -11,12 +11,23 @@
   text-align: left;
 }
 
+.game-info {
+	text-align: center;
+	margin: 0 auto 0 auto;
+}
+
 .help {
 	font-size: 25px;
+	background-color: $palette1;
+	padding: 10px;
+	width: 80%;
+	text-align: center;
 }
 
 .help:hover {
 	cursor: pointer;
+	color: white;
+	background-color: $palette3;
 }
 
 .help-dialog {

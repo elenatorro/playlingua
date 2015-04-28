@@ -16,7 +16,7 @@
           controller: "UserController"
         })
         .when("/dashboard/:name/:level", {
-          templateUrl:"/views/games/index.html",
+          templateUrl: function(params){ return "/views/games/" + params.name + ".html";},
           controller: "LevelController"
         })
         .when("/dashboard/friends", {

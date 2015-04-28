@@ -48,6 +48,13 @@ var createUser = function(username, email, password, done) {
         definitions.levels = [{number:1},{number:2},{number:3}];
         definitions.save();
 
+        var complete = new Excercise();
+        definitions.name = 'completar';
+        definitions.title = 'Completar';
+        definitions.username = username;
+        definitions.levels = [{number:1},{number:2},{number:3}];
+        definitions.save();
+
         return done(null, newUser);
       }
 

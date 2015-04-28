@@ -1,0 +1,46 @@
+<div class="sliderPanel container">
+  <div class="slide scale-fade" ng-repeat="slideContent in contentarray" ng-show="slideContent.visible">
+    <div class="panel panel-words">
+      <div class="panel-heading">
+        <div class="row">
+          <h3>Completa la frase rellenando los huecos con la forma correcta de la palabra que aparece sobre ellos.</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+      <form ng-submit="checkWords()">
+        <div class="row">
+          <div class="bubble" ng-repeat="word in words track by $index">
+            <span ng-show="word.input==false">{{word.word}}</span>
+            <span ng-show="word.input==true">
+              {{word.value}}
+              <input class="bubble-input" type="text" ng-model="corrects[word.word]"/>
+            </span>
+          </div>
+        </div>
+        <input class="btn btn-success" type="submit" value="Comprobar" autofocus/>
+      </form>
+      </div>
+      <div class="panel-footer">
+        <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+    </div>
+  </div>
+</div>
+  <div ng-show="isFinished">
+    <div class="slide scale-fade">
+      <div class="panel panel-words">
+        <div class="panel-heading">
+          <p>Fin del juego</p>
+        </div>
+        <div class="panel-body">
+          <h2>{{message}}</h2>
+          <h2>{{score}}</h2>
+          <h3>¡Compártelo con los demás!</h3>
+            <a twitter  data-lang="es" data-count='horizontal' data-url='http://playlingua.herokuapp.com' data-via='playlingua' data-size="medium" data-text='¡He ganado {{level.lifes*5}} puntos en el Nivel {{level.level}} de {{level.title}} de Playlingua!' ></a>
+        </div>
+        <div class="panel-footer">
+          <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
