@@ -29,29 +29,270 @@
     }
   ]);
 
-'use strict';
-angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
-  var self = this;
+angular.module('PlaylinguaApp')
+.controller('FriendsController', [
+  "$scope", "$http", "$route", "User", "Game", "Excercises",
+  function($scope, $http, $route, User, Game, Excercises) {
 
-  self.information = {
-    'sinonimos': {
-    	'title':'Sinónimos',
-      'help': '/assets/templates/help/sinonimos.html'
-    },
-    'definiciones': {
-    	'title':'Definiciones',
-    	'help': '/assets/templates/help/definiciones.html'
-    },
-    'completar': {
-      'title':'Completar',
-      'help': '/assets/templates/help/completar.html'
+    $scope.getUserData = function() {
+      $scope.followingData = [];
+      User.get().$promise.then(function(user) {
+        $scope.user = user;
+        var game;
+
+        $scope.user.following.forEach(function(user) {
+          Excercises.get({'username': user}).$promise.then(function(excercises) {
+            game = new Game(excercises);
+            $scope.followingData.push({'username': user, 'game': game});
+          })
+        })
+      });
+    };
+
+    $scope.search = function(username) {
+      $http.get('/userdata/' + username).then(function(user) {
+        $scope.foundUser = user.data;
+        $scope.foundUser.isFriend = _.contains($scope.user.following, user.data.username);
+      });
+    };
+
+    $scope.follow = function(username) {
+      if (!_.contains($scope.user.following, username)) {
+        $http.put('/follow/' + username);
+        $route.reload();
+      }
+    };
+
+    $scope.unfollow = function(username) {
+      if (_.contains($scope.user.following, username)) {
+        $http.put('/unfollow/' + username);
+        $route.reload();
+      }
     }
-  };
 
-  self.get = function(name) {
-    return self.information[name];
+    $scope.getUserData();
   }
+]);
+
+angular.module('PlaylinguaApp')
+.controller('LevelController', [
+  "$scope", "$http", "$routeParams","User", "Level",
+  function($scope, $http, $routeParams, User, Level) {
+    Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
+      $scope.contentArray = _.sample(level.elements, 3);
+      $scope.level = level;
+      $scope.level.progressImage = $scope.progressImage;
+    });
+
+    User.get().$promise.then(function(user) {
+      $scope.user = user;
+    });
+
+    $scope.getTimes = function(number) {
+      return new Array(number);
+    };
+}]);
+
+angular.module('PlaylinguaApp')
+.controller('UserController', [
+  "$scope", "$http", "User", "Game", "Excercises",
+  function($scope, $http, User, Game, Excercises) {
+    $scope.user = User.get();
+
+    Excercises.get().$promise.then(function(excercises) {
+      $scope.game = new Game(excercises);
+    });
+ }]);
+
+angular.module('PlaylinguaApp')
+.directive('completepanel',
+  function($timeout, $q) {
+  return {
+    restrict: 'E',
+    scope: {
+      level: '=',
+      contentarray: '='
+    },
+
+    link: function($scope, elem, attrs) {
+      $scope.currentIndex = 0;
+      $scope.isFinished = false;
+      $scope.corrects = {};
+      $q.when($scope.level).then(function(level) {
+        $scope.next = function() {
+          $scope.level.updateProgress($scope.contentarray.length);
+          $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
+        };
+
+        $scope.prev = function() {
+          $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.contentarray.length - 1;
+        };
+
+        $scope.endGame = function(win) {
+          $scope.isFinished = true;
+          $scope.hideAll();
+          $scope.level.play($scope.level.soundEnd);
+          if (win) {
+            var score = $scope.level.lifes * 5;
+            $scope.level.updateScore(score);
+            $scope.message = "¡Felicidades!";
+            $scope.score   = "¡Has ganado " + score + " puntos!";
+          } else {
+            $scope.message = "Ups!";
+            $scope.score   = "No pasa nada, puedes volver a intentarlo :)";
+          }
+        };
+
+        $scope.$watch('currentIndex', function() {
+          $scope.hideAll();
+          $scope.contentarray[$scope.currentIndex].visible = true;
+          $scope.selectedWords = $scope.getSelectedWords($scope.contentarray[$scope.currentIndex]);
+          $scope.words         = $scope.getWords($scope.contentarray[$scope.currentIndex], $scope.selectedWords);
+        });
+
+        $scope.getWords = function(content, selectedWords) {
+          var words = content.words.split(" ");
+          var parsedWords = [];
+          var selected;
+          words.forEach(function(word) {
+            selected = _.where(selectedWords, {"value":word});
+            if (selected.length!=0) {
+              parsedWords.push({"word":word, "value": selected[0].word, "input":true});
+            } else {
+              parsedWords.push({"word":word, "input":false})
+            }
+          })
+          return parsedWords;
+        };
+
+        $scope.getSelectedWords = function(content) {
+          return content.selected;
+        };
+
+        $scope.hideAll = function() {
+          $scope.contentarray.forEach(function(content) {
+            content.visible = false;
+          });
+        };
+
+        $scope.checkWords = function() {
+          var win = true;
+          for (var key in $scope.selectedWords) {
+            if ($scope.corrects[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
+              win = false;
+              $scope.lose();
+            }     
+          }
+          if (win) $scope.win();
+        };
+
+        $scope.win = function() {
+          $scope.level.play($scope.level.soundRight);
+          $scope.next();
+        };
+
+        $scope.lose = function() {
+            $scope.level.play($scope.level.soundWrong);
+            $scope.level.lifes--;
+            if ($scope.level.lifes == 0) $scope.endGame(false);
+        };
+      })
+    },
+    templateUrl: '/assets/templates/completePanel.html',
+      replace: 'true',
+  };
 });
+
+angular.module('PlaylinguaApp')
+.directive('levelProgress',
+  function() {
+  return {
+    template: '<div class="progress progress-striped">' +
+      '<div class="progress-bar progress-bar-info" style="width: {{progressWidth}}%"></div>' +
+      '</div>',
+    };
+  });
+
+angular.module('PlaylinguaApp')
+.directive('sliderpanel',
+  function($timeout, $q) {
+  return {
+    restrict: 'E',
+    scope: {
+      level: '=',
+      contentarray: '='
+    },
+
+    link: function($scope, elem, attrs) {
+      $scope.currentIndex = 0;
+      $scope.isFinished = false;
+      $scope.corrects = [];
+      $q.when($scope.level).then(function(level) {
+        $scope.next = function() {
+          $scope.level.updateProgress($scope.contentarray.length);
+          $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
+        };
+
+        $scope.prev = function() {
+          $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.contentarray.length - 1;
+        };
+
+        $scope.endGame = function(win) {
+          $scope.isFinished = true;
+          $scope.hideAll();
+          $scope.level.play($scope.level.soundEnd);
+          if (win) {
+            var score = $scope.level.lifes * 5;
+            $scope.level.updateScore(score);
+            $scope.message = "¡Felicidades!";
+            $scope.score   = "¡Has ganado " + score + " puntos!";
+          } else {
+            $scope.message = "Ups!";
+            $scope.score   = "No pasa nada, puedes volver a intentarlo :)";
+          }
+        };
+
+        $scope.$watch('currentIndex', function() {
+          $scope.hideAll();
+          $scope.contentarray[$scope.currentIndex].visible = true;
+          $scope.words     = $scope.getWords($scope.contentarray[$scope.currentIndex]);
+          $scope.dragWords = $scope.getDragWords($scope.contentarray[$scope.currentIndex]);
+        });
+
+        $scope.getWords = function(content) {
+          return content.words.replace(/[,;:.-]/g, "").split(" ");
+        };
+
+        $scope.getDragWords = function(content) {
+          return content.selected;
+        };
+
+        $scope.hideAll = function() {
+          $scope.contentarray.forEach(function(content) {
+            content.visible = false;
+          });
+        };
+
+        $scope.onDrop = function(word, object) {
+          if (word == object.word) {
+            $scope.level.play($scope.level.soundRight);
+            $scope.corrects.push(object);
+            $scope.dragWords.splice($scope.dragWords.indexOf(object), 1);
+            if ($scope.dragWords.length == 0) $scope.next();
+          } else {
+            $scope.level.play($scope.level.soundWrong);
+            $scope.level.lifes--;
+            if ($scope.level.lifes == 0) $scope.endGame(false);
+          }
+        };
+      })
+    },
+    templateUrl: '/assets/templates/sliderPanel.html',
+      replace: 'true',
+  };
+});
+
+
 'use strict';
 angular.module('PlaylinguaApp').factory('Excercises', 
   ['$resource', '$http', '$q', function($resource, $http, $q) {
@@ -294,266 +535,26 @@ angular.module('PlaylinguaApp').factory('User',
     return User;
 }]);
 
-angular.module('PlaylinguaApp')
-.directive('completepanel',
-  function($timeout, $q) {
-  return {
-    restrict: 'E',
-    scope: {
-      level: '=',
-      contentarray: '='
+'use strict';
+angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
+  var self = this;
+
+  self.information = {
+    'sinonimos': {
+    	'title':'Sinónimos',
+      'help': '/assets/templates/help/sinonimos.html'
     },
-
-    link: function($scope, elem, attrs) {
-      $scope.currentIndex = 0;
-      $scope.isFinished = false;
-      $scope.corrects = {};
-      $q.when($scope.level).then(function(level) {
-        $scope.next = function() {
-          $scope.level.updateProgress($scope.contentarray.length);
-          $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
-        };
-
-        $scope.prev = function() {
-          $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.contentarray.length - 1;
-        };
-
-        $scope.endGame = function(win) {
-          $scope.isFinished = true;
-          $scope.hideAll();
-          $scope.level.play($scope.level.soundEnd);
-          if (win) {
-            var score = $scope.level.lifes * 5;
-            $scope.level.updateScore(score);
-            $scope.message = "¡Felicidades!";
-            $scope.score   = "¡Has ganado " + score + " puntos!";
-          } else {
-            $scope.message = "Ups!";
-            $scope.score   = "No pasa nada, puedes volver a intentarlo :)";
-          }
-        };
-
-        $scope.$watch('currentIndex', function() {
-          $scope.hideAll();
-          $scope.contentarray[$scope.currentIndex].visible = true;
-          $scope.selectedWords = $scope.getSelectedWords($scope.contentarray[$scope.currentIndex]);
-          $scope.words         = $scope.getWords($scope.contentarray[$scope.currentIndex], $scope.selectedWords);
-        });
-
-        $scope.getWords = function(content, selectedWords) {
-          var words = content.words.split(" ");
-          var parsedWords = [];
-          var selected;
-          words.forEach(function(word) {
-            selected = _.where(selectedWords, {"value":word});
-            if (selected.length!=0) {
-              parsedWords.push({"word":word, "value": selected[0].word, "input":true});
-            } else {
-              parsedWords.push({"word":word, "input":false})
-            }
-          })
-          return parsedWords;
-        };
-
-        $scope.getSelectedWords = function(content) {
-          return content.selected;
-        };
-
-        $scope.hideAll = function() {
-          $scope.contentarray.forEach(function(content) {
-            content.visible = false;
-          });
-        };
-
-        $scope.checkWords = function() {
-          var win = true;
-          for (var key in $scope.selectedWords) {
-            if ($scope.corrects[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
-              win = false;
-              $scope.lose();
-            }     
-          }
-          if (win) $scope.win();
-        };
-
-        $scope.win = function() {
-          $scope.level.play($scope.level.soundRight);
-          $scope.next();
-        };
-
-        $scope.lose = function() {
-            $scope.level.play($scope.level.soundWrong);
-            $scope.level.lifes--;
-            if ($scope.level.lifes == 0) $scope.endGame(false);
-        };
-      })
+    'definiciones': {
+    	'title':'Definiciones',
+    	'help': '/assets/templates/help/definiciones.html'
     },
-    templateUrl: '/assets/templates/completePanel.html',
-      replace: 'true',
-  };
-});
-
-angular.module('PlaylinguaApp')
-.directive('levelProgress',
-  function() {
-  return {
-    template: '<div class="progress progress-striped">' +
-      '<div class="progress-bar progress-bar-info" style="width: {{progressWidth}}%"></div>' +
-      '</div>',
-    };
-  });
-
-angular.module('PlaylinguaApp')
-.directive('sliderpanel',
-  function($timeout, $q) {
-  return {
-    restrict: 'E',
-    scope: {
-      level: '=',
-      contentarray: '='
-    },
-
-    link: function($scope, elem, attrs) {
-      $scope.currentIndex = 0;
-      $scope.isFinished = false;
-      $scope.corrects = [];
-      $q.when($scope.level).then(function(level) {
-        $scope.next = function() {
-          $scope.level.updateProgress($scope.contentarray.length);
-          $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
-        };
-
-        $scope.prev = function() {
-          $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.contentarray.length - 1;
-        };
-
-        $scope.endGame = function(win) {
-          $scope.isFinished = true;
-          $scope.hideAll();
-          $scope.level.play($scope.level.soundEnd);
-          if (win) {
-            var score = $scope.level.lifes * 5;
-            $scope.level.updateScore(score);
-            $scope.message = "¡Felicidades!";
-            $scope.score   = "¡Has ganado " + score + " puntos!";
-          } else {
-            $scope.message = "Ups!";
-            $scope.score   = "No pasa nada, puedes volver a intentarlo :)";
-          }
-        };
-
-        $scope.$watch('currentIndex', function() {
-          $scope.hideAll();
-          $scope.contentarray[$scope.currentIndex].visible = true;
-          $scope.words     = $scope.getWords($scope.contentarray[$scope.currentIndex]);
-          $scope.dragWords = $scope.getDragWords($scope.contentarray[$scope.currentIndex]);
-        });
-
-        $scope.getWords = function(content) {
-          return content.words.replace(/[,;:.-]/g, "").split(" ");
-        };
-
-        $scope.getDragWords = function(content) {
-          return content.selected;
-        };
-
-        $scope.hideAll = function() {
-          $scope.contentarray.forEach(function(content) {
-            content.visible = false;
-          });
-        };
-
-        $scope.onDrop = function(word, object) {
-          if (word == object.word) {
-            $scope.level.play($scope.level.soundRight);
-            $scope.corrects.push(object);
-            $scope.dragWords.splice($scope.dragWords.indexOf(object), 1);
-            if ($scope.dragWords.length == 0) $scope.next();
-          } else {
-            $scope.level.play($scope.level.soundWrong);
-            $scope.level.lifes--;
-            if ($scope.level.lifes == 0) $scope.endGame(false);
-          }
-        };
-      })
-    },
-    templateUrl: '/assets/templates/sliderPanel.html',
-      replace: 'true',
-  };
-});
-
-
-angular.module('PlaylinguaApp')
-.controller('FriendsController', [
-  "$scope", "$http", "$route", "User", "Game", "Excercises",
-  function($scope, $http, $route, User, Game, Excercises) {
-
-    $scope.getUserData = function() {
-      $scope.followingData = [];
-      User.get().$promise.then(function(user) {
-        $scope.user = user;
-        var game;
-
-        $scope.user.following.forEach(function(user) {
-          Excercises.get({'username': user}).$promise.then(function(excercises) {
-            game = new Game(excercises);
-            $scope.followingData.push({'username': user, 'game': game});
-          })
-        })
-      });
-    };
-
-    $scope.search = function(username) {
-      $http.get('/userdata/' + username).then(function(user) {
-        $scope.foundUser = user.data;
-        $scope.foundUser.isFriend = _.contains($scope.user.following, user.data.username);
-      });
-    };
-
-    $scope.follow = function(username) {
-      if (!_.contains($scope.user.following, username)) {
-        $http.put('/follow/' + username);
-        $route.reload();
-      }
-    };
-
-    $scope.unfollow = function(username) {
-      if (_.contains($scope.user.following, username)) {
-        $http.put('/unfollow/' + username);
-        $route.reload();
-      }
+    'completar': {
+      'title':'Completar',
+      'help': '/assets/templates/help/completar.html'
     }
+  };
 
-    $scope.getUserData();
+  self.get = function(name) {
+    return self.information[name];
   }
-]);
-
-angular.module('PlaylinguaApp')
-.controller('LevelController', [
-  "$scope", "$http", "$routeParams","User", "Level",
-  function($scope, $http, $routeParams, User, Level) {
-    Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
-      $scope.contentArray = _.sample(level.elements, 3);
-      $scope.level = level;
-      $scope.level.progressImage = $scope.progressImage;
-    });
-
-    User.get().$promise.then(function(user) {
-      $scope.user = user;
-    });
-
-    $scope.getTimes = function(number) {
-      return new Array(number);
-    };
-}]);
-
-angular.module('PlaylinguaApp')
-.controller('UserController', [
-  "$scope", "$http", "User", "Game", "Excercises",
-  function($scope, $http, User, Game, Excercises) {
-    $scope.user = User.get();
-
-    Excercises.get().$promise.then(function(excercises) {
-      $scope.game = new Game(excercises);
-    });
- }]);
+});
