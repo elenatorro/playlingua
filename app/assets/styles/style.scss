@@ -6,20 +6,16 @@
  * Made By MaterializeCSS.com
  */
 
-body {
-  background: url('../images/bubbles.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
+ body {
+      background-color: $body-background
+ }
 body.main-page {
-  background: url('../images/bubbles.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  // background: url('../images/bubbles.jpg') no-repeat center center fixed;
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  // background-size: cover;
+
 }
 
 .navbar {
@@ -67,6 +63,13 @@ ul.nav.navbar-nav > li > a {
 
 .progress-logo-small {
   width: 50px;
+}
+
+.main-logo {
+  width: 200px;
+  -webkit-box-shadow: 0px 0px 38px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 38px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 38px -2px rgba(0,0,0,0.75);
 }
 
 .star {

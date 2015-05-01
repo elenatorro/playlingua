@@ -5,7 +5,7 @@
       <h2 id="hearts">
         <i class="fa fa-heart heart spin-toggle" ng-model="level.lifes" ng-repeat="life in getTimes(level.lifes) track by $index"></i>
       </h2>
-      <img ng-src="../../../assets/images/{{level.animal}}.png" class="hvr-buzz character"/>
+      <img ng-src="../../../assets/images/playlingualogo.png" class="hvr-buzz character" ng-model="progressImage" />
       <div class="progress progress-striped active">
         <div class="progress-bar progress-bar-info" style="width: {{level.getProgress()}}%"></div>
       </div>

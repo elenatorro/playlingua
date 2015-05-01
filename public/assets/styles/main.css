@@ -21,18 +21,7 @@
  * Made By MaterializeCSS.com
  */
 body {
-  background: url('../images/bubbles.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; }
-
-body.main-page {
-  background: url('../images/bubbles.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; }
+  background-color: #E6E6E6; }
 
 .navbar {
   background-color: #36BBA6;
@@ -70,6 +59,12 @@ ul.nav.navbar-nav > li > a {
 .progress-logo-small {
   width: 50px; }
 
+.main-logo {
+  width: 200px;
+  -webkit-box-shadow: 0px 0px 38px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 38px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 38px -2px rgba(0, 0, 0, 0.75); }
+
 .star {
   display: inline-block;
   margin: 5px; }
@@ -105,13 +100,13 @@ ul.nav.navbar-nav > li > a {
 .headline h1 {
   font-size: 90px;
   font-family: 'FingerPaint';
-  color: white;
+  color: #36BBA6;
   text-shadow: 2px 0px gray; }
 
 .headline h2 {
   font-size: 60px;
   font-family: 'FingerPaint';
-  color: white;
+  color: #36BBA6;
   text-shadow: 2px 0px gray; }
 
 .main-info {
@@ -1336,7 +1331,8 @@ footer {
 
 .game-info {
   text-align: center;
-  margin: 0 auto 0 auto; }
+  margin: 0 auto 0 auto;
+  color: black; }
 
 .help {
   font-size: 25px;
@@ -1358,7 +1354,7 @@ footer {
     color: #EB7B59; }
 
 .character {
-  width: 100%; }
+  width: 80%; }
 
 @-webkit-keyframes ngdialog-fadeout {
   0% {

@@ -14,8 +14,6 @@ angular.module('PlaylinguaApp').factory('Level',
         self.muted      = false;
         self.title      = ExcercisesNames.get(self.name)['title'];
         self.help       = ExcercisesNames.get(self.name)['help'];
-        self.animal     = _.sample(['lion','elephant','cok','castor', 'chicken', 'cow',
-                          'dog','donkey','duck','monkey','penguin','pig','puppy','seal','zebra']);
 
         self.getContent = function() {
           return self.content;
@@ -50,7 +48,6 @@ angular.module('PlaylinguaApp').factory('Level',
           .error(function(data) {
           })
         };
-
     };
 
     var resourceLevel = $resource(

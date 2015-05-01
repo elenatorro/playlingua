@@ -5,6 +5,7 @@ angular.module('PlaylinguaApp')
     Level.get({'name': $routeParams.name, 'levelnumber': $routeParams.level}).$promise.then(function(level) {
       $scope.contentArray = _.sample(level.elements, 3);
       $scope.level = level;
+      $scope.level.progressImage = $scope.progressImage;
     });
 
     User.get().$promise.then(function(user) {

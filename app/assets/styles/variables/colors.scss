@@ -5,11 +5,12 @@ $palette3: #EB7B59;
 $palette4: #A7C5BD;
 $palette5: #E5DDCB;
 $palette6: #B8008A;
+$palette7: #E6E6E6;
 
 $main-top-navbar: $palette2;
 $main-top-navbar-ul: white;
-$body-background: $palette5;
+$body-background: $palette7;
 
 /* headers */
-$h1-color: white;
-$h2-color: white;
+$h1-color: $palette2;
+$h2-color: $palette2;
