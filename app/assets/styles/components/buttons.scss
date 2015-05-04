@@ -2,6 +2,11 @@
   border-color: $palette2;
   color: $palette2;
   background-color: white;
+  line-height: 1.5em;
+
+  > i {
+  	font-size: 1.5em;
+  }
 }
 
 .btn.btn.social {

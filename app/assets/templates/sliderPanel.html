@@ -16,7 +16,8 @@
         </div>
       </div>
       <div class="panel-footer">
-        <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+        <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+        <button class="btn btn-default" ng-click="level.openHelp()"><i class="fa fa-question-circle" ></i> Instrucciones</button>
     </div>
   </div>
   <div class="correct-container" ng-repeat="correct in corrects track by $index">
@@ -38,7 +39,7 @@
             <a twitter  data-lang="es" data-count='horizontal' data-url='http://playlingua.herokuapp.com' data-via='playlingua' data-size="medium" data-text='¡He ganado {{level.lifes*5}} puntos en el Nivel {{level.level}} de {{level.title}} de Playlingua!' ></a>
         </div>
         <div class="panel-footer">
-          <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+          <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
         </div>
       </div>
       <div class="correct-container" ng-repeat="correct in corrects track by $index">

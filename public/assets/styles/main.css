@@ -114,6 +114,14 @@ ul.nav.navbar-nav > li > a {
   padding: 50px 100px;
   background-color: white;
   color: #36BBA6; }
+  .main-info > .row {
+    margin-bottom: 50px;
+    padding: 20px;
+    width: 85%;
+    margin: 0 auto 0 auto; }
+    .main-info > .row h2 {
+      font-size: 2.5em;
+      text-align: center; }
 
 .featurette-image.pull-left {
   margin-right: 40px; }
@@ -137,7 +145,7 @@ footer {
   color: white;
   min-width: 100%;
   margin: 0px 0px;
-  padding: 50px 100px; }
+  padding: 30px 50px; }
 
 @media (max-width: 1200px) {
   .headline h1 {
@@ -1259,12 +1267,8 @@ footer {
   font-size: 1.7em; }
   .panel-words > .panel-body > form > .btn-success {
     font-size: 1em;
-    margin-top: 20px; }
-
-.bubble-input {
-  font-size: 1em;
-  margin-left: 10px;
-  color: gray; }
+    margin-top: 20px;
+    border: none; }
 
 .panel-words > .panel-footer {
   background-color: white;
@@ -1274,7 +1278,10 @@ footer {
 .btn-default {
   border-color: #36BBA6;
   color: #36BBA6;
-  background-color: white; }
+  background-color: white;
+  line-height: 1.5em; }
+  .btn-default > i {
+    font-size: 1.5em; }
 
 .btn.btn.social {
   padding: 15px;
@@ -1306,6 +1313,16 @@ footer {
     display: inline-block; }
     .bubble.correct i {
       color: green; }
+
+.bubble-input-word {
+  display: block;
+  text-align: center;
+  font-size: 0.6em; }
+  .bubble-input-word .bubble-input {
+    font-size: 1em;
+    margin-left: 10px;
+    color: gray;
+    display: block; }
 
 .correct-container {
   display: inline-block; }

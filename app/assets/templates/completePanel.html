@@ -12,7 +12,7 @@
           <div class="bubble" ng-repeat="word in words track by $index">
             <span ng-show="word.input==false">{{word.word}}</span>
             <span ng-show="word.input==true">
-              {{word.value}}
+              <span class="bubble-input-word">{{word.value}}</span>
               <input class="bubble-input" type="text" ng-model="corrects[word.word]"/>
             </span>
           </div>
@@ -21,7 +21,8 @@
       </form>
       </div>
       <div class="panel-footer">
-        <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+        <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+        <button class="btn btn-default" ng-click="level.openHelp()"><i class="fa fa-question-circle" ></i> Instrucciones</button>
     </div>
   </div>
 </div>
@@ -38,7 +39,7 @@
             <a twitter  data-lang="es" data-count='horizontal' data-url='http://playlingua.herokuapp.com' data-via='playlingua' data-size="medium" data-text='¡He ganado {{level.lifes*5}} puntos en el Nivel {{level.level}} de {{level.title}} de Playlingua!' ></a>
         </div>
         <div class="panel-footer">
-          <a type="button" class="btn btn-default" href="/dashboard/user">Volver</a>
+          <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
         </div>
       </div>
     </div>

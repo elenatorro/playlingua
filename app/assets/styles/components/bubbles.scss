@@ -20,6 +20,22 @@
   }
 }
 
+
+.bubble-input-word {
+  display: block;
+  text-align: center;
+  font-size: 0.6em;
+
+  .bubble-input {
+  font-size: 1em;
+  margin-left: 10px;
+  color: gray;
+  display: block;
+}
+}
+
+
+
 .correct-container {
   display: inline-block;
 };
