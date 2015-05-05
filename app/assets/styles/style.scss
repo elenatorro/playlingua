@@ -111,14 +111,14 @@ ul.nav.navbar-nav > li > a {
   font-size: 90px;
   font-family: 'FingerPaint';
   color: $h1-color;
-  text-shadow: 5px 5px black;
+  text-shadow: 5px 5px $palette2;
 }
 
 .headline h2 {
   font-size: 60px;
   font-family: 'FingerPaint';
   color: $h2-color;
-  text-shadow: 5px 5px black;
+  text-shadow: 5px 5px $palette2;
 }
 
 .main-info {

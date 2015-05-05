@@ -105,13 +105,13 @@ ul.nav.navbar-nav > li > a {
   font-size: 90px;
   font-family: 'FingerPaint';
   color: white;
-  text-shadow: 5px 5px black; }
+  text-shadow: 5px 5px #36BBA6; }
 
 .headline h2 {
   font-size: 60px;
   font-family: 'FingerPaint';
   color: white;
-  text-shadow: 5px 5px black; }
+  text-shadow: 5px 5px #36BBA6; }
 
 .main-info {
   min-width: 100%;
