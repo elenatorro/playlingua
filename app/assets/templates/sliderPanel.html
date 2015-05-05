@@ -3,6 +3,7 @@
     <div class="panel panel-words">
       <div class="panel-heading">
         <div class="row">
+                  <h3>Arrastra el contenido que aparece junto al icono de una mano <i class="fa fa-hand-o-up"></i> sobre la palabra correcta dentro de la frase de abajo.</h3>
           <div ng-repeat="word in dragWords track by $index" ng-drag="true" ng-drag-data="word" data-allow-transform="true" class="bubble drag">
             <i class="fa fa-hand-o-up"></i> {{word.value}}
           </div>

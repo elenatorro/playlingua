@@ -11,16 +11,25 @@ angular.module('PlaylinguaApp')
     link: function($scope, elem, attrs) {
       $scope.currentIndex = 0;
       $scope.isFinished = false;
-      $scope.corrects = {};
+      $scope.answered = {};
+      $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
+          console.log($scope.answered);
           $scope.level.updateProgress($scope.contentarray.length);
+          $scope.saveCorrects();
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
         };
 
         $scope.prev = function() {
           $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.contentarray.length - 1;
         };
+
+        $scope.saveCorrects = function() {
+          $scope.selectedWords.forEach(function(correct) {
+            $scope.corrects.push(correct);
+          })
+        }
 
         $scope.endGame = function(win) {
           $scope.isFinished = true;
@@ -72,7 +81,7 @@ angular.module('PlaylinguaApp')
         $scope.checkWords = function() {
           var win = true;
           for (var key in $scope.selectedWords) {
-            if ($scope.corrects[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
+            if ($scope.answered[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
               win = false;
               $scope.lose();
             }     
