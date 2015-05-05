@@ -21,7 +21,11 @@
  * Made By MaterializeCSS.com
  */
 body {
-  background-color: #E6E6E6; }
+  background: url('../images/background.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
 
 .navbar {
   background-color: #36BBA6;
@@ -100,14 +104,14 @@ ul.nav.navbar-nav > li > a {
 .headline h1 {
   font-size: 90px;
   font-family: 'FingerPaint';
-  color: #36BBA6;
-  text-shadow: 2px 0px gray; }
+  color: white;
+  text-shadow: 5px 5px black; }
 
 .headline h2 {
   font-size: 60px;
   font-family: 'FingerPaint';
-  color: #36BBA6;
-  text-shadow: 2px 0px gray; }
+  color: white;
+  text-shadow: 5px 5px black; }
 
 .main-info {
   min-width: 100%;

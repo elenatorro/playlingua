@@ -36,8 +36,8 @@
 			<div class="panel panel-info info">
 				<div class="panel-heading">Progreso de Juego</div>
 				<div class="panel-body" ng-repeat="excercise in game.excercises track by $index">
-					<h1>{{excercise.title}}</h1>
-					<h4>{{excercise.totalScore}} puntos</h4>
+					<h1>{{excercise.title}}
+					<span class="badge">{{excercise.totalScore}} puntos</span></h1>
 					<img ng-src="../assets/icons/{{excercise.name}}/main.png" class="progress-logo-big"/>
 					<div class="row">
 						<div class="col-md-4" ng-repeat="levelData in excercise.levels track by $index" ng-init="$parentIndex = $index">
