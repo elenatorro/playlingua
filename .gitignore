@@ -3,7 +3,9 @@ node_modules
 .sass-cache
 app/assets/bower_components
 test/bower_components
-old_public
 insert_text.js
 .DS_Store
 config/database.js
+config/passport.js
+app/routes.js
+Procfile
