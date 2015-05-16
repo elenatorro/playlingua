@@ -301,7 +301,6 @@ angular.module('PlaylinguaApp')
   };
 });
 
-
 'use strict';
 angular.module('PlaylinguaApp').factory('Excercises', 
   ['$resource', '$http', '$q', function($resource, $http, $q) {
