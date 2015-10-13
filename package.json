@@ -4,23 +4,23 @@
   "version": "0.0.1",
   "license": "MIT",
   "main": "app.js",
-  "engines":{
+  "engines": {
     "node": "0.10.x",
     "npm": "2.5.0"
   },
   "dependencies": {
-    "express": "3.4.8",
-    "ejs": "0.8.5",
-    "connect-flash": "0.1.1",
-    "mongoose": "3.8.8",
-    "passport": "0.2.0",
-    "passport-local": "0.1.6",
-    "passport-facebook": ">= 0.0.0",
-    "passport-twitter": ">= 0.0.0",
-    "passport-google-oauth": ">= 0.0.0",
-    "bcrypt-nodejs": "latest",
-    "now": ">=0.0.1",
     "async": "latest",
+    "bcrypt-nodejs": "latest",
+    "connect-flash": "0.1.1",
+    "ejs": "0.8.5",
+    "express": "3.4.8",
+    "mongoose": "^4.1.11",
+    "now": ">=0.0.1",
+    "passport": "0.2.0",
+    "passport-facebook": ">= 0.0.0",
+    "passport-google-oauth": ">= 0.0.0",
+    "passport-local": "0.1.6",
+    "passport-twitter": ">= 0.0.0",
     "socket.io": "latest"
   },
   "devDependencies": {
