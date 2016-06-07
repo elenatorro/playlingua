@@ -15,7 +15,6 @@ angular.module('PlaylinguaApp')
       $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
-          console.log($scope.answered);
           $scope.level.updateProgress($scope.contentarray.length);
           $scope.saveCorrects();
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
@@ -84,7 +83,7 @@ angular.module('PlaylinguaApp')
             if ($scope.answered[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
               win = false;
               $scope.lose();
-            }     
+            }
           }
           if (win) $scope.win();
         };

@@ -1330,6 +1330,9 @@ footer {
     color: gray;
     display: block; }
 
+.bubble-checkbox[type=checkbox] {
+  margin-right: 10px; }
+
 .correct-container {
   display: inline-block; }
 

@@ -2,41 +2,41 @@
 angular.module('PlaylinguaApp')
 .factory('Game', ['$http', '$q', function($http, $q) {
     function Game(data) {
-      this.excercises = data.excercises;
-      this.excercises.forEach(function(excercise) {
-        excercise = excercise[0];
+      this.exercises = data.exercises;
+      this.exercises.forEach(function(exercise) {
+        exercise = exercise[0];
       })
       var self = this;
 
-      self.setExcercises = function(excercises) {
-        self.excercises = excercises;
+      self.setExercises = function(exercises) {
+        self.exercises = exercises;
       };
 
-      self.getExcercises = function() {
-        return self.excercises;
+      self.getExercises = function() {
+        return self.exercises;
       };
 
-      self.getExcercise = function(name) {
-        return _.where(self.excercises, {name: name});
+      self.getExercise = function(name) {
+        return _.where(self.exercises, {name: name});
       };
 
-      self.getTotalExcerciseScore = function(excercise) {
+      self.getTotalExerciseScore = function(exercise) {
         var totalScore = 0;
-        var auxExcercise;
-        if (!excercise.levels) {
-          auxExcercise = excercise[0];
+        var auxExercise;
+        if (!exercise.levels) {
+          auxExercise = exercise[0];
         } else {
-          auxExcercise = excercise;
+          auxExercise = exercise;
         }
-        auxExcercise.levels.forEach(function(level) {
+        auxExercise.levels.forEach(function(level) {
           totalScore += level.totalScore;
         })
         return totalScore;
       };
 
 
-      self.isExcercises = function() {
-        return (self.excercises.length!=0);
+      self.isExercises = function() {
+        return (self.exercises.length!=0);
       }
 
       self.createLevels = function(name) {
@@ -45,11 +45,11 @@ angular.module('PlaylinguaApp')
         })
       };
 
-      self.getProgress = function(excercise, level) {
-        if (self.isExcercises()) {
-        var findExcercise =  _.findWhere(self.excercises, {'name':excercise});
-          if (findExcercise.levels[level]) {
-            return findExcercise.levels[level].totalScore;
+      self.getProgress = function(exercise, level) {
+        if (self.isExercises()) {
+        var findExercise =  _.findWhere(self.exercises, {'name':exercise});
+          if (findExercise.levels[level]) {
+            return findExercise.levels[level].totalScore;
           } else {
             return 0;
           }
@@ -77,8 +77,8 @@ angular.module('PlaylinguaApp')
         return self.trophyTitles[points];
       };
 
-      self.getTrophyTitle = function(excercise) {
-        var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
+      self.getTrophyTitle = function(exercise) {
+        var score = self.getTotalExerciseScore(self.getExercise(exercise));
         for (var points in self.trophyTitles) {
           if ((score >= (parseInt(points) - 25)) && (score < (parseInt(points) + 25))) {
             return self.trophyTitles[points];
@@ -90,8 +90,8 @@ angular.module('PlaylinguaApp')
 
       self.getStarsNumber = function() {
         var stars = 0;
-        self.excercises.forEach(function(excercise) {
-          excercise.levels.forEach(function(level) {
+        self.exercises.forEach(function(exercise) {
+          exercise.levels.forEach(function(level) {
             if (level.totalScore >= 100) stars++;
           })
         })

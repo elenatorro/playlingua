@@ -1,10 +1,10 @@
 angular.module('PlaylinguaApp')
 .controller('UserController', [
-  "$scope", "$http", "User", "Game", "Excercises",
-  function($scope, $http, User, Game, Excercises) {
+  "$scope", "$http", "User", "Game", "Exercises",
+  function($scope, $http, User, Game, Exercises) {
     $scope.user = User.get();
 
-    Excercises.get().$promise.then(function(excercises) {
-      $scope.game = new Game(excercises);
+    Exercises.get().$promise.then(function(exercises) {
+      $scope.game = new Game(exercises);
     });
  }]);

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var excerciseSchema = mongoose.Schema({
+var exerciseSchema = mongoose.Schema({
     name: String,
     username: String,
     title: String,
@@ -14,5 +14,9 @@ var excerciseSchema = mongoose.Schema({
     }]
 });
 
+exerciseSchema.methods.createExercise = function(request, done) {
+  
+}
 
-module.exports = mongoose.model('Excercise', excerciseSchema);
+
+module.exports = mongoose.model('Exercise', exerciseSchema);

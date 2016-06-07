@@ -20,6 +20,7 @@
     "passport-facebook": ">= 0.0.0",
     "passport-google-oauth": ">= 0.0.0",
     "passport-local": "0.1.6",
+    "passport-localapikey": "0.0.3",
     "passport-twitter": ">= 0.0.0",
     "socket.io": "latest"
   },

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
+angular.module('PlaylinguaApp').service('ExercisesNames', function() {
   var self = this;
 
   self.information = {

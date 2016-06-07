@@ -42,13 +42,13 @@
 									</span>
 									Estrellas
 								</li>
-								<div ng-repeat="excercise in following.game.excercises">
+								<div ng-repeat="exercise in following.game.exercises">
 								<li class="list-group-item">
 									<span class="badge">
 										<i class="fa fa-trophy"></i>
-										{{following.game.getTotalExcerciseScore(excercise)}}
+										{{following.game.getTotalExerciseScore(exercise)}}
 									</span>
-									<span>{{following.game.getTrophyTitle(excercise.name)}} en {{excercise.title}}</span>
+									<span>{{following.game.getTrophyTitle(exercise.name)}} en {{exercise.title}}</span>
 								</li>
 							</div>
 								<li class="list-group-item">

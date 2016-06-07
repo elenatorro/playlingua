@@ -12,6 +12,8 @@ angular.module('PlaylinguaApp')
       $scope.currentIndex = 0;
       $scope.isFinished = false;
       $scope.corrects = [];
+      $scope.checkedWord = "";
+      $scope.checkedValue = "";
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
           $scope.level.updateProgress($scope.contentarray.length);
@@ -70,6 +72,17 @@ angular.module('PlaylinguaApp')
             if ($scope.level.lifes == 0) $scope.endGame(false);
           }
         };
+
+         $scope.checkedPair = {
+          word : 'word',
+          value : 'value'
+        };
+
+        $scope.checkValues = function() {
+          if (($scope.checkedPair.word != "") && ($scope.checkedPair.value != "")) {
+            $scope.onDrop($scope.checkedPair.value, {"word": $scope.checkedPair.word});
+          }
+        }
       })
     },
     templateUrl: '/assets/templates/sliderPanel.html',

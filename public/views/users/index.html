@@ -12,8 +12,8 @@
 			<div class="panel panel-warning info">
 				<div class="panel-heading">Trofeos</div>
 				<div class="panel-body">
-					<div ng-repeat="excercise in game.excercises">
-					<h4>{{game.getTrophyTitle(excercise.name)}} en {{excercise.title}}</h4>
+					<div ng-repeat="exercise in game.exercises">
+					<h4>{{game.getTrophyTitle(exercise.name)}} en {{exercise.title}}</h4>
 					<img src="../assets/icons/trophy.png" class="progress-logo"/>
 				</div>
 				</div>
@@ -35,18 +35,18 @@
 		<div class="col-lg-9">
 			<div class="panel panel-info info">
 				<div class="panel-heading">Progreso de Juego</div>
-				<div class="panel-body" ng-repeat="excercise in game.excercises track by $index">
-					<h1>{{excercise.title}}
-					<span class="badge">{{excercise.totalScore}} puntos</span></h1>
-					<img ng-src="../assets/icons/{{excercise.name}}/main.png" class="progress-logo-big"/>
+				<div class="panel-body" ng-repeat="exercise in game.exercises track by $index">
+					<h1>{{exercise.title}}
+					<span class="badge">{{exercise.totalScore}} puntos</span></h1>
+					<img ng-src="../assets/icons/{{exercise.name}}/main.png" class="progress-logo-big"/>
 					<div class="row">
-						<div class="col-md-4" ng-repeat="levelData in excercise.levels track by $index" ng-init="$parentIndex = $index">
+						<div class="col-md-4" ng-repeat="levelData in exercise.levels track by $index" ng-init="$parentIndex = $index">
 							<h3>Nivel {{$index+1}}</h3>
-							<a href="/dashboard/{{excercise.name}}/{{$index+1}}"><img ng-src="../assets/icons/{{excercise.name}}/level{{$index+1}}.png"  class="progress-logo hvr-pop"/></a>
+							<a href="/dashboard/{{exercise.name}}/{{$index+1}}"><img ng-src="../assets/icons/{{exercise.name}}/level{{$index+1}}.png"  class="progress-logo hvr-pop"/></a>
 							<div class="progress progress-striped">
 								<div class="progress-bar progress-bar-info" style="width: {{game.getProgress(levelData.totalScore)}}%"></div>
 							</div>
-								<a type="button" class="btn btn-default" href="/dashboard/{{excercise.name}}/{{$index+1}}">Jugar</a>
+								<a type="button" class="btn btn-default" href="/dashboard/{{exercise.name}}/{{$index+1}}">Jugar</a>
 						</div>
 					</div>
 				</div>

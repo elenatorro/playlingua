@@ -31,8 +31,8 @@
 
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  "$scope", "$http", "$route", "User", "Game", "Excercises",
-  function($scope, $http, $route, User, Game, Excercises) {
+  "$scope", "$http", "$route", "User", "Game", "Exercises",
+  function($scope, $http, $route, User, Game, Exercises) {
 
     $scope.getUserData = function() {
       $scope.followingData = [];
@@ -41,8 +41,8 @@ angular.module('PlaylinguaApp')
         var game;
 
         $scope.user.following.forEach(function(user) {
-          Excercises.get({'username': user}).$promise.then(function(excercises) {
-            game = new Game(excercises);
+          Exercises.get({'username': user}).$promise.then(function(exercises) {
+            game = new Game(exercises);
             $scope.followingData.push({'username': user, 'game': game});
           })
         })
@@ -95,12 +95,12 @@ angular.module('PlaylinguaApp')
 
 angular.module('PlaylinguaApp')
 .controller('UserController', [
-  "$scope", "$http", "User", "Game", "Excercises",
-  function($scope, $http, User, Game, Excercises) {
+  "$scope", "$http", "User", "Game", "Exercises",
+  function($scope, $http, User, Game, Exercises) {
     $scope.user = User.get();
 
-    Excercises.get().$promise.then(function(excercises) {
-      $scope.game = new Game(excercises);
+    Exercises.get().$promise.then(function(exercises) {
+      $scope.game = new Game(exercises);
     });
  }]);
 
@@ -121,7 +121,6 @@ angular.module('PlaylinguaApp')
       $scope.corrects = [];
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
-          console.log($scope.answered);
           $scope.level.updateProgress($scope.contentarray.length);
           $scope.saveCorrects();
           $scope.currentIndex < $scope.contentarray.length -1 ? $scope.currentIndex++ : $scope.endGame(true);
@@ -190,7 +189,7 @@ angular.module('PlaylinguaApp')
             if ($scope.answered[$scope.selectedWords[key].value] != $scope.selectedWords[key].value) {
               win = false;
               $scope.lose();
-            }     
+            }
           }
           if (win) $scope.win();
         };
@@ -236,6 +235,8 @@ angular.module('PlaylinguaApp')
       $scope.currentIndex = 0;
       $scope.isFinished = false;
       $scope.corrects = [];
+      $scope.checkedWord = "";
+      $scope.checkedValue = "";
       $q.when($scope.level).then(function(level) {
         $scope.next = function() {
           $scope.level.updateProgress($scope.contentarray.length);
@@ -294,6 +295,17 @@ angular.module('PlaylinguaApp')
             if ($scope.level.lifes == 0) $scope.endGame(false);
           }
         };
+
+         $scope.checkedPair = {
+          word : 'word',
+          value : 'value'
+        };
+
+        $scope.checkValues = function() {
+          if (($scope.checkedPair.word != "") && ($scope.checkedPair.value != "")) {
+            $scope.onDrop($scope.checkedPair.value, {"word": $scope.checkedPair.word});
+          }
+        }
       })
     },
     templateUrl: '/assets/templates/sliderPanel.html',
@@ -302,74 +314,73 @@ angular.module('PlaylinguaApp')
 });
 
 'use strict';
-angular.module('PlaylinguaApp').factory('Excercises', 
+angular.module('PlaylinguaApp').factory('Exercises',
   ['$resource', '$http', '$q', function($resource, $http, $q) {
-    function Excercises(data) {
+    function Exercises(data) {
       angular.extend(this, data);
       var self = this;
-      console.log(self);
-      self.excercises.forEach(function(excercise) {
-         excercise.totalScore = excercise.levels[0].totalScore + excercise.levels[1].totalScore + excercise.levels[2].totalScore;
+      self.exercises.forEach(function(exercise) {
+         exercise.totalScore = exercise.levels[0].totalScore + exercise.levels[1].totalScore + exercise.levels[2].totalScore;
       })
     };
 
-    var resourceExcercises = $resource(
-      '/excercises/:username',
+    var resourceExercises = $resource(
+      '/exercises/:username',
       {},
       {
         'get':{
           method: 'GET',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
-            return new Excercises({excercises: JSON.parse(response)});
+            return new Exercises({exercises: JSON.parse(response)});
           }
         }
       });
 
-    angular.extend(Excercises, resourceExcercises);
+    angular.extend(Exercises, resourceExercises);
 
-    return Excercises;
+    return Exercises;
 }]);
 
 'use strict';
 angular.module('PlaylinguaApp')
 .factory('Game', ['$http', '$q', function($http, $q) {
     function Game(data) {
-      this.excercises = data.excercises;
-      this.excercises.forEach(function(excercise) {
-        excercise = excercise[0];
+      this.exercises = data.exercises;
+      this.exercises.forEach(function(exercise) {
+        exercise = exercise[0];
       })
       var self = this;
 
-      self.setExcercises = function(excercises) {
-        self.excercises = excercises;
+      self.setExercises = function(exercises) {
+        self.exercises = exercises;
       };
 
-      self.getExcercises = function() {
-        return self.excercises;
+      self.getExercises = function() {
+        return self.exercises;
       };
 
-      self.getExcercise = function(name) {
-        return _.where(self.excercises, {name: name});
+      self.getExercise = function(name) {
+        return _.where(self.exercises, {name: name});
       };
 
-      self.getTotalExcerciseScore = function(excercise) {
+      self.getTotalExerciseScore = function(exercise) {
         var totalScore = 0;
-        var auxExcercise;
-        if (!excercise.levels) {
-          auxExcercise = excercise[0];
+        var auxExercise;
+        if (!exercise.levels) {
+          auxExercise = exercise[0];
         } else {
-          auxExcercise = excercise;
+          auxExercise = exercise;
         }
-        auxExcercise.levels.forEach(function(level) {
+        auxExercise.levels.forEach(function(level) {
           totalScore += level.totalScore;
         })
         return totalScore;
       };
 
 
-      self.isExcercises = function() {
-        return (self.excercises.length!=0);
+      self.isExercises = function() {
+        return (self.exercises.length!=0);
       }
 
       self.createLevels = function(name) {
@@ -378,11 +389,11 @@ angular.module('PlaylinguaApp')
         })
       };
 
-      self.getProgress = function(excercise, level) {
-        if (self.isExcercises()) {
-        var findExcercise =  _.findWhere(self.excercises, {'name':excercise});
-          if (findExcercise.levels[level]) {
-            return findExcercise.levels[level].totalScore;
+      self.getProgress = function(exercise, level) {
+        if (self.isExercises()) {
+        var findExercise =  _.findWhere(self.exercises, {'name':exercise});
+          if (findExercise.levels[level]) {
+            return findExercise.levels[level].totalScore;
           } else {
             return 0;
           }
@@ -410,8 +421,8 @@ angular.module('PlaylinguaApp')
         return self.trophyTitles[points];
       };
 
-      self.getTrophyTitle = function(excercise) {
-        var score = self.getTotalExcerciseScore(self.getExcercise(excercise));
+      self.getTrophyTitle = function(exercise) {
+        var score = self.getTotalExerciseScore(self.getExercise(exercise));
         for (var points in self.trophyTitles) {
           if ((score >= (parseInt(points) - 25)) && (score < (parseInt(points) + 25))) {
             return self.trophyTitles[points];
@@ -423,8 +434,8 @@ angular.module('PlaylinguaApp')
 
       self.getStarsNumber = function() {
         var stars = 0;
-        self.excercises.forEach(function(excercise) {
-          excercise.levels.forEach(function(level) {
+        self.exercises.forEach(function(exercise) {
+          exercise.levels.forEach(function(level) {
             if (level.totalScore >= 100) stars++;
           })
         })
@@ -548,7 +559,7 @@ angular.module('PlaylinguaApp').factory('User',
 }]);
 
 'use strict';
-angular.module('PlaylinguaApp').service('ExcercisesNames', function() {
+angular.module('PlaylinguaApp').service('ExercisesNames', function() {
   var self = this;
 
   self.information = {

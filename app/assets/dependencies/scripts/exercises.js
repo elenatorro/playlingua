@@ -34,9 +34,6 @@
   [].slice.call( document.querySelectorAll( '#drop-area .drop-area__item' )).forEach(function(el, index) {
     droppableArr.push( new Droppable( el,  {
       onDrop : function( instance, draggableEl ) {
-        console.log(document.getElementsByClassName('grid__item'));
-        console.log(words[index]);
-        console.log(answers[draggableEl.id.split('word_')[1]]);
         if (words[index] == answers[draggableEl.id.split('word_')[1]]) {
           grid.removeChild(draggableEl);
           if (hasWon()) showModal(modal, {title: 'Enhorabuena', content: '¡Has superado el nivel!'});

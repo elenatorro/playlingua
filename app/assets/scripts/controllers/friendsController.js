@@ -1,7 +1,7 @@
 angular.module('PlaylinguaApp')
 .controller('FriendsController', [
-  "$scope", "$http", "$route", "User", "Game", "Excercises",
-  function($scope, $http, $route, User, Game, Excercises) {
+  "$scope", "$http", "$route", "User", "Game", "Exercises",
+  function($scope, $http, $route, User, Game, Exercises) {
 
     $scope.getUserData = function() {
       $scope.followingData = [];
@@ -10,8 +10,8 @@ angular.module('PlaylinguaApp')
         var game;
 
         $scope.user.following.forEach(function(user) {
-          Excercises.get({'username': user}).$promise.then(function(excercises) {
-            game = new Game(excercises);
+          Exercises.get({'username': user}).$promise.then(function(exercises) {
+            game = new Game(exercises);
             $scope.followingData.push({'username': user, 'game': game});
           })
         })

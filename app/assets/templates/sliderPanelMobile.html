@@ -1,0 +1,54 @@
+<div class="sliderPanel container">
+  <div class="slide scale-fade" ng-repeat="slideContent in contentarray" ng-show="slideContent.visible">
+    <div class="panel panel-words">
+      <div class="panel-heading">
+        <div class="row">
+            <h3>Encuentra el sinónimo de las siguientes palabras en la frase de abajo. Selecciona dos palabras y haz click en 'comprobar'</h3>
+            <button class="btn btn-success" ng-click="checkValues()">Comprobar</button>
+          <div ng-repeat="word in dragWords track by $index" class="bubble">
+            <input class="bubble-checkbox" type="radio" name="{{word.value}} + {{$index}}" value="{{word.value}}" ng-check="checkedPair.word">{{word.value}}
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="bubble drop" ng-repeat="word in words track by $index">
+            <input class="bubble-checkbox" type="radio" name="{{word}}" value="{{word}}" ng-bind="checkedPair.value">{{word}}
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+        <button class="btn btn-default" ng-click="level.openHelp()"><i class="fa fa-question-circle" ></i>Instrucciones</button>
+    </div>
+  </div>
+  <div class="correct-container" ng-repeat="correct in corrects track by $index">
+    <div class="bubble correct">
+      {{correct.value}} - {{correct.word}} <i class="fa fa-check"></i>
+    </div>
+  </div>
+</div>
+  <div ng-show="isFinished">
+    <div class="slide scale-fade">
+      <div class="panel panel-words">
+        <div class="panel-heading">
+          <p>Fin del juego</p>
+        </div>
+        <div class="panel-body">
+          <h2>{{message}}</h2>
+          <h2>{{score}}</h2>
+          <h3>¡Compártelo con los demás!</h3>
+            <a twitter  data-lang="es" data-count='horizontal' data-url='http://playlingua.herokuapp.com' data-via='playlingua' data-size="medium" data-text='¡He ganado {{level.lifes*5}} puntos en el Nivel {{level.level}} de {{level.title}} de Playlingua!' ></a>
+        </div>
+        <div class="panel-footer">
+          <a type="button" class="btn btn-default" href="/dashboard/user"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+        </div>
+      </div>
+      <div class="correct-container" ng-repeat="correct in corrects track by $index">
+        <div class="bubble correct">
+          {{correct.value}} - {{correct.word}} <i class="fa fa-check"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

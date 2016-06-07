@@ -16,45 +16,19 @@ var sass       = require('gulp-sass');
 
 /* bower */
 gulp.task('bower-files', function() {
-	  var jsFilter = gulpFilter('/**/*.js');
-    var cssFilter = gulpFilter('/**/*.css');
-    var fontFilter = gulpFilter(['*.eot', '*.woff', '*.svg', '*.ttf']);
-    var dest_path = "./public/assets/bower_components";
-	return gulp.src(bowerFiles())
-
-	// grab vendor js files from bower_components, minify and push in /public
-	.pipe(jsFilter)
-	.pipe(gulp.dest(dest_path + '/js/vendor'))
-	.pipe(rename({
-        suffix: ".min"
-    }))
-	.pipe(gulp.dest(dest_path + '/js/vendor'))
-	.pipe(jsFilter.restore())
-
-	// grab vendor css files from bower_components, minify and push in /public
-	.pipe(cssFilter)
-	.pipe(gulp.dest(dest_path + '/css'))
-	.pipe(minifycss())
-	.pipe(rename({
-        suffix: ".min"
-    }))
-	.pipe(gulp.dest(dest_path + '/css'))
-	.pipe(cssFilter.restore())
-
-	// grab vendor font files from bower_components and push in /public
-	.pipe(fontFilter)
-	.pipe(flatten())
-	.pipe(gulp.dest(dest_path + '/fonts'))
+    return gulp.src('./app/assets/bower_components/**/*')
+    .pipe(gulp.dest('./public/assets/bower_components/'));
 });
 
 /* javascript dependencies */
 var jsDepPath      = "./app/assets/dependencies/scripts/";
 var jsDepDest      = "./public/assets/dependencies/scripts"
-var jsDependencies = [jsDepPath + "jquery-1.11.2.min.js",
-                      jsDepPath + "modernizr.custom.js",
-                      jsDepPath + "bootstrap.min.js",
-                      jsDepPath + "underscore.js"
-											];
+var jsDependencies = [
+	jsDepPath + "jquery-1.11.2.min.js",
+  jsDepPath + "modernizr.custom.js",
+  jsDepPath + "bootstrap.min.js",
+  jsDepPath + "underscore.js"
+];
 
 gulp.task("jsDependencies", function() {
   return gulp.src(jsDependencies)
@@ -65,10 +39,6 @@ gulp.task("jsDependencies", function() {
 /* javascript angular browserify */
 gulp.task("bundle", function() {
   gulp.src(["app/assets/scripts/main.js", "app/assets/scripts/**/*.js"])
-  // .pipe(browserify({
-  //   insertGlobals: true,
-  //   debug: true
-  // }))
   .pipe(concat("angular_bundle.js"))
   .pipe(gulp.dest("./public/assets/scripts"));
 })
@@ -77,11 +47,11 @@ gulp.task("bundle", function() {
 var cssDepPath = "./app/assets/dependencies/styles/";
 var cssDepDest = "./public/assets/dependencies/styles/";
 var cssDependencies = [
-                       cssDepPath + "bootstrap.css",
-                       cssDepPath + "bootswatch.css",
-											 cssDepPath + "normalize.css",
-											 cssDepPath + "hover-min.css"
-                     ];
+   cssDepPath + "bootstrap.css",
+   cssDepPath + "bootswatch.css",
+	 cssDepPath + "normalize.css",
+	 cssDepPath + "hover-min.css"
+ ];
 
  gulp.task("cssDependencies", function() {
    return gulp.src(cssDependencies)
@@ -140,9 +110,8 @@ gulp.task("icons", function() {
 
 /* sounds */
 gulp.task("sounds", function() {
-  //index
-  gulp.src("./app/assets/sounds/**/*.wav")
-  .pipe(gulp.dest("./public/assets/sounds"));
+  gulp.src("./app/assets/sounds/**/*")
+  .pipe(gulp.dest("./public/assets/sounds/"));
 })
 
 /* watch */
@@ -162,9 +131,9 @@ gulp.task("run", function() {
 })
 
 gulp.task("build", ["bower-files", "jsDependencies", "cssDependencies",
-                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts"]);
+                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts", "sounds"]);
 
 gulp.task("deploy", ["jsDependencies", "cssDependencies",
-                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts"]);
+                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts", "sounds"]);
 
 gulp.task("default", ["build", "run", "watch"]);

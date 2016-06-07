@@ -8,4 +8,6 @@ insert_text.js
 config/database.js
 config/passport.js
 app/routes.js
+public
 Procfile
+config/variables.js
