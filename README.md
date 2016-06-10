@@ -12,3 +12,41 @@ The purpose of this study is to design and develop a web application, named Play
 LICENSE
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Playlingua</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/elenatorro/playlingua" property="cc:attributionName" rel="cc:attributionURL">Elena Torro</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/elenatorro/playlingua" rel="dct:source">https://github.com/elenatorro/playlingua</a>.
+
+INSTRUCTIONS
+
+* Clone the repo
+
+```
+```
+
+* Install npm dependencies
+
+```
+$ npm install
+```
+
+* Install bower dependencies
+
+```
+bower install
+```
+
+* Configure global configuration variables
+
+You have a sample in config > variables_sample.js (remove '\_sample')
+
+## Run local
+* Run mongodb database (you should have mongodb already installed)
+
+```
+$ sudo mongod
+
+```
+
+In your variables.js file, set 'environment' to 'development'.
+
+Deploy:
+
+* You'll have to tell your server to run app.js. For heroku it's already setted in the Procfile.
+* In your variables.js file, set 'environment' to 'production'.

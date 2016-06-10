@@ -5,7 +5,6 @@ app/assets/bower_components
 test/bower_components
 insert_text.js
 .DS_Store
-config/database.js
 config/passport.js
 app/routes.js
 public

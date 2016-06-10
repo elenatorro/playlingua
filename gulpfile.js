@@ -133,7 +133,4 @@ gulp.task("run", function() {
 gulp.task("build", ["bower-files", "jsDependencies", "cssDependencies",
                       "style", "customStyle", "bundle", "views", "images", "icons", "fonts", "sounds"]);
 
-gulp.task("deploy", ["jsDependencies", "cssDependencies",
-                      "style", "customStyle", "bundle", "views", "images", "icons", "fonts", "sounds"]);
-
 gulp.task("default", ["build", "run", "watch"]);
