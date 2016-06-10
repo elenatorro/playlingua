@@ -384,9 +384,9 @@ angular.module('PlaylinguaApp')
       }
 
       self.createLevels = function(name) {
-        $http.post('/createlevels/' + name).success(function(data) {
-        }).error(function(data) {
-        })
+        $http.post('/createlevels/' + name)
+        .success(function(data) {})
+        .error(function(data) {})
       };
 
       self.getProgress = function(exercise, level) {
@@ -444,7 +444,6 @@ angular.module('PlaylinguaApp')
 
       self.stars = new Array(self.getStarsNumber());
 
-
       self.getProgress = function(score) {
         if (score > 100) return 100;
         else return score;
@@ -456,8 +455,8 @@ angular.module('PlaylinguaApp')
 
 'use strict';
 angular.module('PlaylinguaApp').factory('Level',
-['$resource', '$http', '$q', 'ngAudio', 'ExcercisesNames', 'ngDialog',
- function($resource, $http, $q, ngAudio, ExcercisesNames, ngDialog){
+['$resource', '$http', '$q', 'ngAudio', 'ExercisesNames', 'ngDialog',
+ function($resource, $http, $q, ngAudio, ExercisesNames, ngDialog){
     function Level(data) {
         angular.extend(this, data);
         var self = this;
@@ -468,8 +467,8 @@ angular.module('PlaylinguaApp').factory('Level',
         self.soundWrong = ngAudio.load("/assets/sounds/wrongshort.wav");
         self.soundEnd   = ngAudio.load("/assets/sounds/endshort.wav");
         self.muted      = false;
-        self.title      = ExcercisesNames.get(self.name)['title'];
-        self.help       = ExcercisesNames.get(self.name)['help'];
+        self.title      = ExercisesNames.get(self.name)['title'];
+        self.help       = ExercisesNames.get(self.name)['help'];
 
         self.getContent = function() {
           return self.content;
@@ -484,25 +483,23 @@ angular.module('PlaylinguaApp').factory('Level',
         };
 
         self.openHelp = function () {
-          ngDialog.open({ 
+          ngDialog.open({
                 template: self.help,
           });
         };
 
-        self.updateProgress = function(excercisesNumber) {
-          self.progress += (100/excercisesNumber);
+        self.updateProgress = function(exercisesNumber) {
+          self.progress += (100/exercisesNumber);
         };
 
         self.getProgress = function() {
           return self.progress;
         };
-        
+
         self.updateScore = function(score) {
           $http.put('/save/' + self.name + '/' + self.level + '/' + score)
-          .success(function(data) {
-          })
-          .error(function(data) {
-          })
+          .success(function(data) {})
+          .error(function(data) {})
         };
     };
 
@@ -515,8 +512,8 @@ angular.module('PlaylinguaApp').factory('Level',
           headers: {'Content-Type': 'application/json'},
           transformResponse: function(response){
             var jsData = angular.fromJson(response);
-            delete jsData.excercises[0]._id;
-            return new Level(jsData.excercises[0]);
+            delete jsData.exercises[0]._id;
+            return new Level(jsData.exercises[0]);
           }
         }
       });
@@ -563,15 +560,15 @@ angular.module('PlaylinguaApp').service('ExercisesNames', function() {
   var self = this;
 
   self.information = {
-    'sinonimos': {
+    sinonimos: {
     	'title':'Sinónimos',
       'help': '/assets/templates/help/sinonimos.html'
     },
-    'definiciones': {
+    definiciones: {
     	'title':'Definiciones',
     	'help': '/assets/templates/help/definiciones.html'
     },
-    'completar': {
+    completar: {
       'title':'Completar',
       'help': '/assets/templates/help/completar.html'
     }

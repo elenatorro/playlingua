@@ -3,15 +3,15 @@ angular.module('PlaylinguaApp').service('ExercisesNames', function() {
   var self = this;
 
   self.information = {
-    'sinonimos': {
+    sinonimos: {
     	'title':'Sinónimos',
       'help': '/assets/templates/help/sinonimos.html'
     },
-    'definiciones': {
+    definiciones: {
     	'title':'Definiciones',
     	'help': '/assets/templates/help/definiciones.html'
     },
-    'completar': {
+    completar: {
       'title':'Completar',
       'help': '/assets/templates/help/completar.html'
     }

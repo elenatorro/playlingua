@@ -31,6 +31,7 @@ module.exports = function(app, auth, passport, server) {
 
   app.put('/save/:name/:levelnumber/:score', auth, function(request, response) {
     var userData = request.user;
+
     var levelNumber = parseInt(request.params.levelnumber) - 1;
     var score = parseInt(request.params.score);
     var name = request.params.name;

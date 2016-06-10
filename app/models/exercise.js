@@ -14,9 +14,4 @@ var exerciseSchema = mongoose.Schema({
     }]
 });
 
-exerciseSchema.methods.createExercise = function(request, done) {
-  
-}
-
-
 module.exports = mongoose.model('Exercise', exerciseSchema);

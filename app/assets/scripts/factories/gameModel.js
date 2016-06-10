@@ -40,9 +40,9 @@ angular.module('PlaylinguaApp')
       }
 
       self.createLevels = function(name) {
-        $http.post('/createlevels/' + name).success(function(data) {
-        }).error(function(data) {
-        })
+        $http.post('/createlevels/' + name)
+        .success(function(data) {})
+        .error(function(data) {})
       };
 
       self.getProgress = function(exercise, level) {
@@ -99,7 +99,6 @@ angular.module('PlaylinguaApp')
       };
 
       self.stars = new Array(self.getStarsNumber());
-
 
       self.getProgress = function(score) {
         if (score > 100) return 100;
