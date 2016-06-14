@@ -31,7 +31,7 @@ module.exports = {
   },
 
   production: {
-    'database':   'mongodb://heroku_...'
+    'database':   'mongodb://heroku_...',
     'publicPath': 'public',
     'path':       '/public',
     'views':      '/public/views',
