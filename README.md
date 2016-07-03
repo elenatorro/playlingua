@@ -46,7 +46,27 @@ $ sudo mongod
 
 In your variables.js file, set 'environment' to 'development'.
 
-Deploy:
+* Run gulp
+
+```
+$ gulp
+```
+
+Now, open localhost in the port you've chosen. You can build the whole project with:
+
+```
+$ gulp build
+```
+
+
+### Deploy
 
 * You'll have to tell your server to run app.js. For heroku it's already setted in the Procfile.
 * In your variables.js file, set 'environment' to 'production'.
+
+## Future work:
+
+* Refactor
+* Instructions & tools to build playlingua for another language (it's currently in Spanish)
+
+Any feedback is very welcome!

@@ -1,8 +1,10 @@
-var User       = require('../../app/models/user');
-var Exercise  = require('../../app/models/exercise');
-var Text       = require('../../app/models/text');
+var
+ User =      require('../../app/models/user'),
+ Exercise =  require('../../app/models/exercise'),
+ Text =      require('../../app/models/text');
 
 module.exports = function(app, auth, passport, server) {
+
   app.get('/exercises/:username?', auth, function(request, response) {
     var username = request.params.username;
     if (!username) username = request.user.user.username;
