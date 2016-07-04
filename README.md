@@ -18,6 +18,7 @@ INSTRUCTIONS
 * Clone the repo
 
 ```
+git clone https://github.com/elenatorro/playlingua.git
 ```
 
 * Install npm dependencies
