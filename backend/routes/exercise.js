@@ -1,94 +1,114 @@
 var
- User =      require('../../app/models/user'),
- Exercise =  require('../../app/models/exercise'),
- Text =      require('../../app/models/text');
+  User = require('../models/user'),
+  Exercise = require('../models/exercise'),
+  Text = require('../models/text'),
+  Response = require('../utils/response'),
+  ResponseCodes = require('../constants/response-codes');
 
-module.exports = function(app, auth, passport, server) {
+module.exports = function (app, auth, passport, server) {
 
-  app.get('/exercises/:username?', auth, function(request, response) {
-    var username = request.params.username;
-    if (!username) username = request.user.user.username;
-    var query = Exercise.find({username: username});
-    query.exec(function(err, exercises) {
-      if (err) {
-        response.end(JSON.stringify(err));
-      } else {
-        response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-        response.end(JSON.stringify(exercises));
-      }
+  /* Get Exercises by User */
+  app.get('/exercises/:username?', auth, function (request, response) {
+    var username, query;
+
+    username = request.params.username ? request.params.username : request.user.username;
+
+    query = Exercise.find({ username: username });
+
+    query.exec(function (err, exercises) {
+      Response.setJsonHeader(response);
+
+      return err ?
+        Response.send(response, err, ResponseCodes.NOT_FOUND) :
+        Response.send(response, exercises, ResponseCodes.SUCCESS);
     });
   });
 
-  app.get('/:name/level/:levelnumber', function(request, response) {
-    var query = Text.find({name: request.params.name, level: request.params.levelnumber});
-    query.exec(function(err, texts) {
-      response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-      var game = {
-        exercises: texts,
-        levelNumber: request.params.levelnumber,
-      };
-      response.end(JSON.stringify(game));
+  /* Get Exercise Level Texts */
+  app.get('/:name/level/:levelnumber', function (request, response) {
+    var query;
+
+    query = Text.find({ name: request.params.name, level: request.params.levelnumber });
+
+    query.exec(function (err, texts) {
+      Response.setJsonHeader(response);
+
+      return err ?
+        Response.send(response, err, ResponseCodes.NOT_FOUND) :
+        Response.send(response, { texts: texts, levelNumber: request.params.levelnumber }, ResponseCodes.SUCCESS);
     });
   });
 
-  app.put('/save/:name/:levelnumber/:score', auth, function(request, response) {
-    var userData = request.user;
+  /* Update Exercise Score  */
+  app.put('/save/:name/:levelnumber/:score', auth, function (request, response) {
+    var updateUserQuery, user, levelNumber, score, exerciseName, levelScoreData, levelField, exerciseUpdateData;
 
-    var levelNumber = parseInt(request.params.levelnumber) - 1;
-    var score = parseInt(request.params.score);
-    var name = request.params.name;
-    var totalScore = parseInt(userData.user.totalScore) + parseInt(score);
-    var maxScore, timesPlayed, lastScore, levelField, exerciseScore;
-    var query = User.update({'user.username': userData.user.username},{$set:{'user.totalScore': totalScore}});
-    Exercise.find({'name': name, 'username': userData.user.username}, function(err, exercise) {
-      if (exercise[0].levels[levelNumber]) {
-        maxScore = Math.max(exercise[0].levels[levelNumber].maxScore, score);
-        timesPlayed = exercise[0].levels[levelNumber].timesPlayed;
-        number = exercise[0].levels[levelNumber].number;
-        lastScore = score;
-        exerciseScore = exercise[0].levels[levelNumber].totalScore + score;
+    user = request.user;
+    levelNumber = parseInt(request.params.levelnumber);
+    score = parseInt(request.params.score);
+    exerciseName = request.params.name;
+    totalScore = parseInt(user.totalScore) + parseInt(score);
 
-      } else {
-        maxScore = score;
-        timesPlayed = 0;
-        lastScore = score;
-        number = levelNumber + 1;
-        exerciseScore = score;
-      }
+    updateUserQuery = User.update({ username: user.username }, { $set: { totalScore: totalScore } });
 
-      levelField = 'levels.' + (levelNumber).toString();
-      timesPlayed++;
+    Exercise.find({ name: exerciseName, username: user.username }, function (err, exercise) {
+      var levels;
 
-      var exerciseData = {
-        name: name,
-        username: userData.user.username
-      };
+      exercise = exercise[0];
+      levels = exercise.levels[levelNumber];
 
-      var exerciseUpdate = {$set: {}};
-      exerciseUpdate['$set'][levelField] = {
-            maxScore: maxScore,
-            timesPlayed: timesPlayed,
-            number: number,
-            lastScore: lastScore,
-            totalScore: exerciseScore
-          };
+      levelScoreData = levels ?
+        _updateUserExerciseScore.call(this, exercise, levelNumber, score) :
+        _initUserExerciseScore.call(this, levelNumber, score);
 
-      Exercise.update(exerciseData, exerciseUpdate, function(err, data) {
-          if (err) {
-            response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-            response.end(JSON.stringify(err));
-          } else {
-            query.exec(function(err, data) {
-              if (err) {
-                response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-                response.end(JSON.stringify(err));
-              } else {
-                response.setHeader('Content-Type', 'application/json;  charset=utf-8');
-                response.end(JSON.stringify(data));
-              };
-            });
-          };
+      exerciseUpdateData = _getExerciseUpdateData.call(this, levelNumber, levelScoreData);
+
+      Exercise.update({ name: exerciseName, username: user.username }, exerciseUpdateData, function (err, data) {
+        Response.setJsonHeader(response);
+
+        return err ?
+          Response.send(response, err, ResponseCodes.NOT_FOUND) :
+          _updateUser.call(this, response, updateUserQuery);
       })
     });
   });
+}
+
+/* Private */
+function _initUserExerciseScore(levelNumber, score) {
+  return {
+    exerciseScore: score,
+    lastScore: score,
+    maxScore: score,
+    number: levelNumber,
+    timesPlayed: 1
+  }
+}
+
+function _updateUserExerciseScore(exercise, levelNumber, score) {
+  return {
+    exerciseScore: exercise.levels[levelNumber].totalScore + score,
+    lastScore: score,
+    maxScore: Math.max(exercise.levels[levelNumber].maxScore, score),
+    number: exercise.levels[levelNumber].number,
+    timesPlayed: exercise.levels[levelNumber].timesPlayed++
+  }
+}
+
+function _updateUser(response, updateUserQuery) {
+  updateUserQuery.exec(function (err, data) {
+
+    return err ?
+      Response.send(response, err, ResponseCodes.NOT_FOUND) :
+      Response.send(response, data, ResponseCodes.SUCCESS);
+  });
+}
+
+function _getExerciseUpdateData(levelNumber, levelScoreData) {
+  var exercise, levelField;
+
+  exercise = { $set: {} };
+  exercise['$set']['levels.' + (levelNumber).toString()] = levelScoreData;
+
+  return exercise;
 }
