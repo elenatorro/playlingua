@@ -52,13 +52,13 @@ module.exports = function (app, auth, passport, server) {
     updateUserQuery = User.update({ username: user.username }, { $set: { totalScore: totalScore } });
 
     Exercise.find({ name: exerciseName, username: user.username }, function (err, exercise) {
-      var levels;
+      var level;
 
       exercise = exercise[0];
-      levels = exercise.levels[levelNumber];
+      level = exercise.levels[levelNumber - 1];
 
-      levelScoreData = levels ?
-        _updateUserExerciseScore.call(this, exercise, levelNumber, score) :
+      levelScoreData = level ?
+        _updateUserExerciseScore.call(this, exercise, level, levelNumber, score) :
         _initUserExerciseScore.call(this, levelNumber, score);
 
       exerciseUpdateData = _getExerciseUpdateData.call(this, levelNumber, levelScoreData);
@@ -77,21 +77,21 @@ module.exports = function (app, auth, passport, server) {
 /* Private */
 function _initUserExerciseScore(levelNumber, score) {
   return {
-    exerciseScore: score,
     lastScore: score,
     maxScore: score,
-    number: levelNumber,
-    timesPlayed: 1
+    number: levelNumber - 1,
+    timesPlayed: 1,
+    totalScore: score
   }
 }
 
-function _updateUserExerciseScore(exercise, levelNumber, score) {
+function _updateUserExerciseScore(exercise, level, levelNumber, score) {
   return {
-    exerciseScore: exercise.levels[levelNumber].totalScore + score,
     lastScore: score,
-    maxScore: Math.max(exercise.levels[levelNumber].maxScore, score),
-    number: exercise.levels[levelNumber].number,
-    timesPlayed: exercise.levels[levelNumber].timesPlayed++
+    maxScore: Math.max(level.maxScore, score),
+    number: level.number - 1,
+    timesPlayed: level.timesPlayed++,
+    totalScore: level.totalScore + score
   }
 }
 
@@ -108,7 +108,13 @@ function _getExerciseUpdateData(levelNumber, levelScoreData) {
   var exercise, levelField;
 
   exercise = { $set: {} };
-  exercise['$set']['levels.' + (levelNumber).toString()] = levelScoreData;
+  levelField = _levelField.call(this, levelNumber);
+
+  exercise['$set'][levelField] = levelScoreData;
 
   return exercise;
+}
+
+function _levelField(levelNumber) {
+  return 'levels.' + (levelNumber - 1).toString();
 }
